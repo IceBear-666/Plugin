@@ -86,59 +86,9 @@ window.jmLogin = {
         window.jmLogin.checkLogin();
     },
     webCheckLoginStatus: function(){
-       // window.jmLogin.checkLogin();
-        console.log(localStorage.jm_login);
-        console.log(localStorage.jm_login);
-        console.log(localStorage.jm_login.ot_home_login);
-
-        // function getCookie(cookie_name)
-        // {
-        // var allcookies = document.cookie;
-        // var cookie_pos = allcookies.indexOf(cookie_name);
-
-        // // 如果找到了索引，就代表cookie存在，
-        // // 反之，就说明不存在。
-        // if (cookie_pos != -1){
-        //     // 把cookie_pos放在值的开始，只要给值加1即可。
-        //     cookie_pos += cookie_name.length + 1;
-        //     var cookie_end = allcookies.indexOf(";", cookie_pos);
-
-        //     if (cookie_end == -1){
-        //         cookie_end = allcookies.length;
-        //     }
-        //     var value = unescape(allcookies.substring(cookie_pos, cookie_end));
-        // }
-        //     return value;
-        // }
-        // var cookie_val = getCookie("ot_home_ez_uid");
-        // console.log(cookie_val);
-        // if (cookie_val) {
-        //     KISSY.use("jmPopup", 
-        //     function(a, b) {
-        //         jm_global_popup_obj = new b;
-        //     }); 
-        // }
         if(!window.jm_jminer.login || window.jm_jminer.login.login != true){
 
-             var webCLS =  function(){
 
-                jm_tools.checkWebSite && jm_tools.checkWebSite() && jm_tools.getMessageFromBackground({
-                    operate: "checkIsLogin",
-                    data: {}
-                },
-                function(a) {
-                    console.log('checkIsLogin---a:' + a);
-                    if(a && JSON.parse(a).login == true){
-                        //window.jmLogin.checkLogin();
-                        //检验sessionid
-                        KISSY.use("jmPopup", 
-                        function(a, b) {
-                            jm_global_popup_obj = new b;
-                        }); 
-                       
-                    }
-                });
-            };
             // var webCLS =  setInterval(function(){
             //     jm_tools.checkWebSite && jm_tools.checkWebSite() && jm_tools.getMessageFromBackground({
             //         operate: "checkIsLogin",
@@ -157,9 +107,26 @@ window.jmLogin = {
             //         }
             //     });
             // },1000);
-           
+            var webCLS =  function(){
 
-         
+                jm_tools.checkWebSite && jm_tools.checkWebSite() && jm_tools.getMessageFromBackground({
+                    operate: "checkIsLogin",
+                    data: {}
+                },
+                function(a) {
+                    console.log('checkIsLogin---a:' + a);
+                    if(a && JSON.parse(a).login == true){
+                        //window.jmLogin.checkLogin();
+                        //检验sessionid
+                        KISSY.use("jmPopup", 
+                        function(a, b) {
+                            jm_global_popup_obj = new b;
+                        }); 
+                        clearInterval(webCLS);
+                    }
+                });
+            };
+            console.log(document.cookie);
         }
         //var webBasicCLS =  setInterval(function(){
         var webBasicCLS =  function(){

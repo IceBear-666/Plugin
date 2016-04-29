@@ -1,8 +1,6 @@
  function jm_init() {
-
     jm_tools.checkWebSite() && (jm_tools.loadExtraResource(), dealWebsite())
 }
-
  function jm_init_home() {
     jm_tools.checkWebSite() && (jm_tools.loadExtraResource(), dealHomeWebsite())
 }
@@ -584,6 +582,13 @@ function(a,b,c,d) {
         var g = {};
         
         var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+          jm_tools.getMessageFromBackground({
+                operate: "getLocalStorage",
+                data: {"key": 'jm_login'}
+            }, function(data) {
+                 
+                console.log('jdFunction------' + data);
+            });
        // if (isLogin.toString() == "true") {
             var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
             var host = jm_get_remote_js("matchHost");
@@ -3461,60 +3466,29 @@ function(a,b,c,d) {
 KISSY.add("jobsminerFunction", 
 function(a,b,c,d) {
     function e(){
-        var g = {};
-       //setBackgroundLocalStore({jm_login: document.cookie});
-            //console.log("end:" + localStorage.jm_login);
-       //window.jmLogin.init();
-       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-        if (isLogin.toString() == "true") {
-        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
-        var host = jm_get_remote_js("matchHost");
-        if(jm_get_remote_js("jobwebshowpos") && window.location.host == host){
-            var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
-            itemnode && itemnode.append(h);  
+        function getCookie(name){
+            return (document.cookie.match(new RegExp("(^"+name+"| "+name+")=([^;]*)"))==null)?"":RegExp.$2;
+        }
+        var isLogin = getCookie("ot_home_login");
+        var homeUid = getCookie("ot_home_uid");
+        var ezHomeUid = getCookie("ot_home_ez_uid");
+        var a = {"ot_home_ez_uid":ezHomeUid,"ot_home_uid":homeUid,"ot_home_login":isLogin,"login":"true"};
+        if(isLogin == 1){
+            jm_tools.setBackgroundLocalStore({
+                //login :{"ot_home_ez_uid":ezHomeUid,"ot_home_uid":homeUid,"ot_home_login":isLogin}
+                
 
-            //用判断cookie是否存在,只有该页面一打开默认锁上
-            var iscookie=document.cookie.indexOf("firstVisit="); //得到分割的cookie名值
-            if(iscookie==-1){ //判断cookie是否存在
-                document.cookie="firstVisit=1";
-                window.jm_jminer.isLock = "true";
-            }
-            // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-            console.log(new Date().getTime() + '----' + isLogin);
+                jm_login: JSON.stringify(a)
+            });
             jm_tools.getMessageFromBackground({
                 operate: "getLocalStorage",
-                data: {"key": 'gotourl'}
+                data: {"key": 'jm_login'}
             }, function(data) {
-                var gotourl = data ? data.value : '';
-                window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
-                if(isLogin.toString() == "true" && !gotourl){
-                    //已登录
-                    KISSY.use("jmPopup", 
-                    function(a, b) {
-                        jm_global_popup_obj = new b;
-                    });
-                }else if(!gotourl){
-                    //未登录
-                    window.jmLogin.logout();
-                }else{
-                    if(gotourl.indexOf('wapbasic_iframe') > -1){
-                        KISSY.one(".jm-register iframe").attr("height",'480px');
-                    }
-                    KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
-                    KISSY.all('.jm-register,#jm-logo').show();
-
-                    // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
-                    //     isLock: "true"
-                    // });
-                    window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
-                        isLock: "false"
-                    });
-                    KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
-                }
-            });
+                console.log('jobsminer------' + data);
             
-            }
+            });
         } 
+        
     }
     
     function u() {}

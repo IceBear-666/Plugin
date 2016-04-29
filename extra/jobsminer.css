@@ -1305,7 +1305,7 @@ content:"...";
 .ot_delete_pop .ot_del_cancel{background: #fff; color: #482929}
 .ot_delete_pop .ot_del_ok{background: #482929; color: #fff}
 #jm_qiuck_cover {
-  position: fixed;
+    position: fixed;
   top: 50%;
   left: 50%;
   margin: -73px 0 0 -73px;
