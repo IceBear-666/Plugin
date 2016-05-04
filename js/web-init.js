@@ -216,7 +216,7 @@ function(a, b, c, d, e, f) {
             var formlink =  window.location.href;
             if (checkuserid) {
                 //var src = '123';
-                var src='https://www.google-analytics.com/collect?v=1&t=pageview&tid=UA-76243985-1&cid='+checkuserid+'dp=plugin-display&dr='+formlink;
+                var src='https://www.google-analytics.com/collect?v=1&t=pageview&tid=UA-76243985-1&cid='+checkuserid+'&dp=plugin-display&dr='+formlink;
                 KISSY.all('#jm_pop_tab .analyticsuid').attr('src',src);
             }
         });
