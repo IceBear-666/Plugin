@@ -214,6 +214,7 @@ function(a, b, c, d, e, f) {
             console.log(checkuserid);
             console.log('user------' +  checkuserid);
             var formlink =  window.location.href;
+            formlink +='-display';
             if (checkuserid) {
                 //var src = '123';
                 var src='https://www.google-analytics.com/collect?v=1&t=pageview&tid=UA-76243985-1&cid='+checkuserid+'&dp=plugin-display&dr='+formlink;
