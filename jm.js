@@ -3472,7 +3472,7 @@ function(a,b,c,d) {
         var isLogin = getCookie("ot_home_login");
         var homeUid = getCookie("ot_home_uid");
         var ezHomeUid = getCookie("ot_home_ez_uid");
-        var a = {"ot_home_ez_uid":ezHomeUid,"ot_home_uid":homeUid,"ot_home_login":isLogin,"login":"true"};
+        var a = {"ot_home_ez_uid":homeUid,"ot_home_uid":homeUid,"ot_home_login":isLogin,"login":"true"};
         if(isLogin == 1){
             jm_tools.setBackgroundLocalStore({
                 //login :{"ot_home_ez_uid":ezHomeUid,"ot_home_uid":homeUid,"ot_home_login":isLogin}

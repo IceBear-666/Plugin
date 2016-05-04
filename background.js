@@ -272,7 +272,7 @@ jm_tools = {
     showGuide: function() {
         //return;
         localStorage.getItem("alijmLoaded") || (localStorage.setItem("alijmLoaded", "true"), chrome.tabs.create({
-            url: "http://www.jobsminer.cc/Plugin/plugin.html"
+            url: "http://www.jobsminer.cc/Plugin/plugin.html?utm_source=plugin_install&utm_medium=plugin&utm_campaign=install_redirect"
         }))
     },
     statistics: function() {
