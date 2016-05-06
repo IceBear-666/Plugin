@@ -56,7 +56,7 @@ select {
 .jm-register-input{width: 283px; height: 100px; border: 1px solid #d5d5d5; border-radius: 4px; }
 .jm-register-xy{  height: 20px;   margin-top: 6px;}
  .ipt_nor{border: none; height: 49px; width: 100%; font-size: 14px; text-indent: 16.3px; background-color: #fffcf0}
-#email{ border-bottom: 2px solid #e2e2e2;}
+#email{ /*border-bottom: 2px solid #e2e2e2;*/}
 #jm-register{  /*margin: 58px 23px 0 28px;*/ overflow: hidden;   border-left: 1px solid rgba(117, 117, 125, 0.59);  background-color: #fff;/*  border-bottom: 1px solid rgba(117, 117, 125, 0.59);*/}
     
 #submitLogin{width: 283px; height: 37px; background-color: #ffda44; border-radius: 2px; border: none;/* margin-top: 36px;*/margin-bottom: 5px;}
@@ -726,7 +726,7 @@ content:"...";
 .plugin_quickwrite a{
   text-decoration: none;
 }
-.plugin_quickwrite ul{
+.plugin_quickwrite ul.qw-nav{
   width: 38px;
   position: absolute;
   top: 50%;
@@ -780,6 +780,10 @@ content:"...";
 .plugin_quickwrite ul li.notLogin a{
   height: 314px;
 }
+.plugin_quickwrite ul.bottom-btn{
+  position: absolute;
+  bottom: 0;
+}
 #notLogin .message_list i.message {
   height: 26px;
   width: 26px;
@@ -810,11 +814,13 @@ content:"...";
 }
 
 /*Hover effect*/
-.plugin_quickwrite ul.qw-nav li {
+.plugin_quickwrite ul.qw-nav li ,
+.plugin_quickwrite ul.bottom-btn li{
   position: relative;
 }
-.plugin_quickwrite ul.qw-nav li a span{
-    width: 110px;
+.plugin_quickwrite ul.qw-nav li a span,
+.plugin_quickwrite ul.bottom-btn li a span{
+    width: 120px;
     height: 50px;
     line-height: 50px;
     /*padding: 10px;*/
@@ -839,7 +845,9 @@ content:"...";
     transition: all 0.2s ease-in-out;
 }
 .plugin_quickwrite ul.qw-nav li a span:before,
-.plugin_quickwrite ul.qw-nav li a span:after{
+.plugin_quickwrite ul.qw-nav li a span:after,
+.plugin_quickwrite ul.bottom-btn li a span:before,
+.plugin_quickwrite ul.bottom-btn li a span:after{
     z-index: 10;
     content: '';
     position: absolute;
@@ -853,9 +861,28 @@ content:"...";
     border-left: 6px solid #482929;;
    
 }
-.plugin_quickwrite ul.qw-nav li a:hover span{
+.plugin_quickwrite ul.bottom-btn li a.qw-feedback {
+  background: url(http://www.jobsminer.cc/Public/static/client.jobsminer.cc/godimage/ot/plugin-fb.png) no-repeat center;
+  background-position: 10px;
+}
+.plugin_quickwrite ul.bottom-btn li a.qw-share {
+  background: url(http://www.jobsminer.cc/Public/static/client.jobsminer.cc/godimage/ot/plugin-share.png) no-repeat center;
+  background-position: 10px;
+}
+.plugin_quickwrite ul.bottom-btn li .sharetowx{
+  display: none;
+  width: 116px;
+  height: 116px;
+  position: absolute;
+  bottom: 15px;
+  left: -130px;
+  background: url(http://www.jobsminer.cc/Public/static/client.jobsminer.cc/godimage/ot/sharewx.png) no-repeat center;
+  background-size: 116px 116px;
+}
+.plugin_quickwrite ul.qw-nav li a:hover span,
+.plugin_quickwrite ul.bottom-btn li a:hover span{
     opacity: 0.9;
-    left: -120px;
+    left: -130px;
 }
 #jm_pop_tab{
   overflow-x: hidden; 
@@ -1174,7 +1201,7 @@ content:"...";
   width: 125px;
 }
 #jm_homebar ul.jm_hbul li> ul li{
-  width: 100px !important;
+  width: 129px !important;
 }
 #jm_homebar ul.jm_hbul li:first-child img{
   padding: 9px 12px;
@@ -1187,12 +1214,15 @@ content:"...";
 #jm_homebar ul.jm_hbul li:hover ul {
   display: block;
 }
+#jm_homebar ul.jm_hbul li:hover ul li{
+  border: none;
+}
 #jm_homebar ul.jm_hbul li> ul{
   display: none;
   position: absolute;
   left: 0;
   top: -98px;
-  width: 100px;
+  width: 129px;
   border-top: 3px solid #ffd733;
   box-shadow: 0 0 4px 0 rgba(74, 73, 74, 0.3);
   background-color: #ffffff;
@@ -1205,9 +1235,14 @@ content:"...";
   border-bottom:1px solid #e5e5e5;
 }
 #jm_homebar ul.jm_hbul li> ul li span{
-  padding-left: 35px;
+  padding-left: 50px;
 }
-  
+  #jm_homebar ul.jm_hbul li> ul li.current{
+    border: none;
+  }
+  #jm_homebar ul.jm_hbul li> ul li.current:first-child{
+  border-bottom: 1px solid #e5e5e5;;
+}
 #jm_homebar .jm_pluginicon ,#jm_homebar .jm_baikeicon,#jm_homebar .jm_collecticon{
   position: absolute;
   top: 12px;
@@ -1216,10 +1251,11 @@ content:"...";
   height: 24px;
   display: inline-block;
 }
-#jm_homebar .jm_resumeicon ,#jm_homebar .jm_listicon{
+#jm_homebar .jm_resumeicon ,#jm_homebar .jm_listicon,
+#jm_homebar .jm_bearicon ,#jm_homebar .jm_fbicon{
   position: absolute;
   top: 16px;
-  left: 10px;
+  left: 25px;
   width: 16px;
   height: 16px;
   display: inline-block;
@@ -1238,6 +1274,12 @@ content:"...";
 }
 #jm_homebar .jm_listicon{
  background: url(http://www.jobsminer.cc/Public/static/client.jobsminer.cc/godimage/ot/list-small.png) no-repeat center;
+}
+#jm_homebar .jm_bearicon {
+ background: url(http://www.jobsminer.cc/Public/static/client.jobsminer.cc/godimage/ot/footer-au.png) no-repeat center;
+}
+#jm_homebar .jm_fbicon{
+ background: url(http://www.jobsminer.cc/Public/static/client.jobsminer.cc/godimage/ot/footer-fb.png) no-repeat center;
 }
 #jm_homebar .arrow-left{
   position: absolute;
@@ -1295,6 +1337,31 @@ content:"...";
   display: inline-block;
   background: url(http://www.jobsminer.cc/Public/static/client.jobsminer.cc/godimage/ot/ot-close.png) no-repeat center;
 }
+#jm_notlogin_notice_right{
+  display: none;
+  position: fixed;
+  font-size: 14px;
+  bottom: 60px;
+  right: 60px;
+  width: 200px;
+  height: 110px;
+  line-height: 110px;
+  box-sizing: border-box;
+  padding: 0 12px;
+  border-radius: 2px;
+  background-color: #ffd733;
+  color: #482929;
+  z-index: 9999999;
+}
+#jm_notlogin_notice_right .jm_hbclose{
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  height: 25px;
+  width: 25px;
+  display: inline-block;
+  background: url(http://www.jobsminer.cc/Public/static/client.jobsminer.cc/godimage/ot/ot-close.png) no-repeat center;
+}
 .hb_hidden{
   display: none;
 }
@@ -1336,7 +1403,7 @@ content:"...";
     border-left: 13px solid transparent;
 }
 .plugin_quickwrite #resumeEmptyNotice{
-    z-index: 1;
+    z-index: 99999;
     width: 324px;
     height: 125px;
     line-height: 32px;

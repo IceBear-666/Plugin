@@ -200,8 +200,8 @@ function(a, b, c, d, e, f) {
 
         // KISSY.all('#jm_homebar').hide();
 
-        //去掉登录框
         
+        //拼接用户标识和网址url到img追踪数据
        jm_tools.getMessageFromBackground({
             operate: "getLocalStorage",
             data: {"key": 'jm_login'}
@@ -234,15 +234,18 @@ function(a, b, c, d, e, f) {
         KISSY.all('.jm-register,#jm-logo').fadeOut();
         KISSY.all('.plugin_quickwrite').fadeIn();
         KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
-        // if(KISSY.all('.plugin_quickwrite').hasClass("open")){
-        //        KISSY.all('#jm-content').show();
-        // }else{
-        //     KISSY.all('#jm-content').hide();
-        // }
+
+        //right-bar 分享
+         $(".plugin_quickwrite ul.bottom-btn li a.qw-share").hover(function(){
+                KISSY.one('.plugin_quickwrite ul.bottom-btn li .sharetowx').css('display','block');
+        },function(){
+            KISSY.one('.plugin_quickwrite ul.bottom-btn li .sharetowx').css('display','none');
+        });
  
         //KISSY.all('#loginTips').fadeIn;
          //KISSY.one('#loginTips').show();
-        //new version
+        //new version 
+        //right-bar 缩小面板
         KISSY.all("#jm_pop_tab .plugin_quickwrite #nav-close").on("click", 
         function(event) {
             new f('.plugin_quickwrite', 'width:0', 0.05, 'easeOut', 
@@ -2921,7 +2924,7 @@ KISSY.add('jmPopOpenQuestion', function(S, Node, Base, IO) {
 
         new IO({
             url: "http://www.jobsminer.cc/Resume/userCustomize?access=1",
-            type: 'GET',
+            type: 'POST',
             data: ss,
             dataType: 'json',
             success: function(data) {
