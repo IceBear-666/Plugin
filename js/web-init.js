@@ -73,9 +73,6 @@ function(a, b, c, d, e, f) {
         KISSY.all('.plugin_quickwrite').hide();
         KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
 
- 
-    
-
 
         //避免出现背景問題
         if(window.jm_jminer.isLock == "false"){
@@ -293,6 +290,14 @@ function(a, b, c, d, e, f) {
            KISSY.one('.plugin_quickwrite').toggleClass('open');
            KISSY.one('.qw-openqz').parent().toggleClass('current');
            KISSY.one('#jm_pop_tab').toggleClass('.jm_pop_tab_min');
+
+           if (KISSY.one('#jm_pop_tab').css('width') == '380px') {
+             $('#resumeEmptyNotice').addClass('jm_hidden');
+                $('.empty-flag').addClass('jm_hidden');
+                $('#jm_pop_tab').css('width','');
+                event.stopPropagation();
+           }
+        
            event.stopPropagation();
         });
        
@@ -2766,16 +2771,19 @@ KISSY.add('jmPopOpenQuestion', function(S, Node, Base, IO) {
         $('.qw-edit').find("span").text(resume_count);
         if (data.content.counter[1] == 0 || data.content.counter[1] == "") {
             $('.qw-nav .quick-write').css({ opacity:0.4});
-            $('#resumeEmptyNotice').removeClass('jm_hidden');
-            $('.empty-flag').removeClass('jm_hidden');
-            $('#jm_pop_tab').css('width','380px');
-            KISSY.one("#resumeEmptyNotice .jm_renclose").on("click", 
-            function(event) {
-                $('#resumeEmptyNotice').addClass('jm_hidden');
-                $('.empty-flag').addClass('jm_hidden');
-                $('#jm_pop_tab').css('width','');
-                event.stopPropagation();
-            });
+            if (KISSY.one('#jm_pop_tab').css('width') == '38px') {
+                $('#resumeEmptyNotice').removeClass('jm_hidden');
+                $('.empty-flag').removeClass('jm_hidden');
+                $('#jm_pop_tab').css('width','380px');
+                KISSY.one("#resumeEmptyNotice .jm_renclose").on("click", 
+                function(event) {
+                    $('#resumeEmptyNotice').addClass('jm_hidden');
+                    $('.empty-flag').addClass('jm_hidden');
+                    $('#jm_pop_tab').css('width','');
+                    event.stopPropagation();
+                });
+            }
+            
 
         }else{
             
@@ -2930,7 +2938,7 @@ KISSY.add('jmPopOpenQuestion', function(S, Node, Base, IO) {
 
         new IO({
             url: "http://www.jobsminer.cc/Resume/userCustomize?access=1",
-            type: 'POST',
+            type: 'GET',
             data: ss,
             dataType: 'json',
             success: function(data) {

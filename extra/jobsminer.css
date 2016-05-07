@@ -960,6 +960,15 @@ content:"...";
   z-index: 2;
   background: url(http://www.jobsminer.cc/Public/static/client.jobsminer.cc/godimage/ot/ot-add.png) no-repeat center;
 }
+#openqs-list h2{
+  padding: 20px 0 0 15px;
+  font-size: 16px;
+  color: #fff;
+  font-weight: normal;
+}
+#openqs-list .infopl{
+  color: #fff;
+}
 .oqs-tool {height: 30px; position: relative;}
 .oqs-back {
   width: 18px;
