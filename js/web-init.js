@@ -2755,6 +2755,10 @@ KISSY.add('jmPopOpenQuestion', function(S, Node, Base, IO) {
             $(".ot_delete_pop").removeClass("dn");
             var dataid = $(this).attr('data-id');
             var datatitle = $(this).attr('data-title');
+            if (datatitle.length>10) {
+                datatitle = datatitle.substr(0,10);
+                datatitle+='...';
+            }
             $(".ot_delete_pop .open-title").text(datatitle);
             $(".ot_delete_pop .ot_del_ok").attr('data-id',dataid);
           });
@@ -2793,10 +2797,14 @@ KISSY.add('jmPopOpenQuestion', function(S, Node, Base, IO) {
             html += '<div class="oqs-tool"><a  class="oqs-back"></a><i id="oqs-list" class="oqs-list"></i><i id="oqs-grid" class="oqs-grid-gery"></i></div>';
             var eList = data.content.customize_list;
             for(var i = eList.length - 1; i >= 0; i--){
-                if(eList[i].title){
+                if(eList[i].title.length >=10){
                     var title = eList[i].title.substr(0,10);
+                    html += '<div> <div class="infopl"><table width="100%" border="0" cellspacing="0" cellpadding="0"> <tbody>    <tr class="ft"> <td class="mt_base" id="mt_titleName">' + title +'...</td><td><div class="mt-edit dn" data-title="' + eList[i].title+ '" data-content="' + eList[i].content + '"><i></i></div></td></tr><tr class="scd"><td  class="mt_base"><pre id="mt_titleContent">' + eList[i].content + '</pre></td> </tr> </tbody> </table> </div>';
+                    html += '<div class="infopl infopl-edit" data-id="' + eList[i].id + '" data-title="' + eList[i].title + '" data-content="' + eList[i].content + '" >  <table width="100%" border="0" cellspacing="0" cellpadding="0"> <tbody> <tr>  <td><input type="text" id="mt_titleName" name="mt_titleName" class="ed_name mt_titleName" autocomplete="off" value="' + eList[i].title + '" placeholder="请输入自定义标题"></td> </tr> <tr style="display: none; "><td><span for="mr_name" generated="true" class="error">必填</span></td></tr> <tr>  <td> <textarea contenteditable="true" id="mt_titleContent" name="mt_titleContent" class="ed_name mt_titleContent" >' + (eList[i].content ? eList[i].content : '') + '</textarea></td> </tr> <tr style="display: none; "><td><span for="mr_name" generated="true" class="error">必填</span></td></tr> </tbody> </table> <div class="ot_button"><a class="ot-delete"  data-id="' + eList[i].id + '" data-title="' + eList[i].title + '" >删除</a>  <a href="javascript:;" class="mr_cancel">取消</a> <input type="submit" class="mr_save" value="保存">  </div> </div> </div>';
+                }else{
                     html += '<div> <div class="infopl"><table width="100%" border="0" cellspacing="0" cellpadding="0"> <tbody>    <tr class="ft"> <td class="mt_base" id="mt_titleName">' + title + '</td><td><div class="mt-edit dn" data-title="' + eList[i].title+ '" data-content="' + eList[i].content + '"><i></i></div></td></tr><tr class="scd"><td  class="mt_base"><pre id="mt_titleContent">' + eList[i].content + '</pre></td> </tr> </tbody> </table> </div>';
                     html += '<div class="infopl infopl-edit" data-id="' + eList[i].id + '" data-title="' + eList[i].title + '" data-content="' + eList[i].content + '" >  <table width="100%" border="0" cellspacing="0" cellpadding="0"> <tbody> <tr>  <td><input type="text" id="mt_titleName" name="mt_titleName" class="ed_name mt_titleName" autocomplete="off" value="' + eList[i].title + '" placeholder="请输入自定义标题"></td> </tr> <tr style="display: none; "><td><span for="mr_name" generated="true" class="error">必填</span></td></tr> <tr>  <td> <textarea contenteditable="true" id="mt_titleContent" name="mt_titleContent" class="ed_name mt_titleContent" >' + (eList[i].content ? eList[i].content : '') + '</textarea></td> </tr> <tr style="display: none; "><td><span for="mr_name" generated="true" class="error">必填</span></td></tr> </tbody> </table> <div class="ot_button"><a class="ot-delete"  data-id="' + eList[i].id + '" data-title="' + eList[i].title + '" >删除</a>  <a href="javascript:;" class="mr_cancel">取消</a> <input type="submit" class="mr_save" value="保存">  </div> </div> </div>';
+             
                 }
             }
             html += '<div class="jm_mt_edit_add"><i></i><input class="mt-edit-add" value="新建" type="button"/></div><div  class="ot_delete_pop dn"><p class="text">确认删除</p><p class="text">“<span class="open-title"></span>”？</p><div style="margin-top: 10px;"> <span class="ot_del_cancel">取消</span><span class="ot_del_ok" data-id="">确认</span> </div></div>';
