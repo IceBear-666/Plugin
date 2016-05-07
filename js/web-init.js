@@ -306,6 +306,8 @@ function(a, b, c, d, e, f) {
             KISSY.one('#jm-logo-login').css('display','none');
         }
 
+  
+
         // KISSY.all("#jm_pop_tab .jm_close") && KISSY.all("#jm_pop_tab .jm_close").on("click", 
         // function(event) {
         //     new f('#jm_pop_tab', 'width: 38px; ', 0.005, 'easeOut', 
@@ -388,6 +390,10 @@ function(a, b, c, d, e, f) {
                     isLock: "false"
                 })) : ""));
         });
+
+        //if(KISSY.one('#jm_qiuck_cover')){KISSY.one('#jm_qiuck_cover').fadeIn();setTimeout(\"KISSY.one('#jm_qiuck_cover').fadeOut()\",3000);}
+
+
 
         KISSY.one(".jm-logo-setting").on("click", 
         function(a) {

@@ -623,15 +623,13 @@ function(a,b,c,d) {
                             KISSY.all("#qw-notifications").hide();
                         });
                         KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
                             $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
                             KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
                         });
               
-                        KISSY.all("#jm_notlogin_notice_right .jm_hbclose").on("click", 
-                            function(event) {
-                                $('#jm_notlogin_notice_right').hide();          
-                            event.stopPropagation();
-                        });
+                 
                         KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
                        // window.jmLogin.logout();
                     }else{

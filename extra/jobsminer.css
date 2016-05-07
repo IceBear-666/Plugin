@@ -871,13 +871,13 @@ content:"...";
 }
 .plugin_quickwrite ul.bottom-btn li .sharetowx{
   display: none;
-  width: 116px;
-  height: 116px;
+  width: 238px;
+  height: 309px;
   position: absolute;
   bottom: 15px;
-  left: -130px;
+  left: -260px;
   background: url(http://www.jobsminer.cc/Public/static/client.jobsminer.cc/godimage/ot/sharewx.png) no-repeat center;
-  background-size: 116px 116px;
+  background-size: 238px 309px;
 }
 .plugin_quickwrite ul.qw-nav li a:hover span,
 .plugin_quickwrite ul.bottom-btn li a:hover span{
@@ -1337,31 +1337,7 @@ content:"...";
   display: inline-block;
   background: url(http://www.jobsminer.cc/Public/static/client.jobsminer.cc/godimage/ot/ot-close.png) no-repeat center;
 }
-#jm_notlogin_notice_right{
-  display: none;
-  position: fixed;
-  font-size: 14px;
-  bottom: 60px;
-  right: 60px;
-  width: 200px;
-  height: 110px;
-  line-height: 110px;
-  box-sizing: border-box;
-  padding: 0 12px;
-  border-radius: 2px;
-  background-color: #ffd733;
-  color: #482929;
-  z-index: 9999999;
-}
-#jm_notlogin_notice_right .jm_hbclose{
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  height: 25px;
-  width: 25px;
-  display: inline-block;
-  background: url(http://www.jobsminer.cc/Public/static/client.jobsminer.cc/godimage/ot/ot-close.png) no-repeat center;
-}
+
 .hb_hidden{
   display: none;
 }
@@ -1372,6 +1348,7 @@ content:"...";
 .ot_delete_pop .ot_del_cancel{background: #fff; color: #482929}
 .ot_delete_pop .ot_del_ok{background: #482929; color: #fff}
 #jm_qiuck_cover {
+  display: none;
     position: fixed;
   top: 50%;
   left: 50%;
