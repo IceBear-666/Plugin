@@ -126,7 +126,7 @@ window.jmLogin = {
                     }
                 });
             };
-            console.log(document.cookie);
+            //console.log(document.cookie);
         }
         //var webBasicCLS =  setInterval(function(){
         var webBasicCLS =  function(){

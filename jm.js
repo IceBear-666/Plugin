@@ -230,7 +230,7 @@ function startRun() {
         //console.log(window.jm_jminer.login);
         if(window.jm_jminer.config && window.jm_jminer.config.supportWebSite){
             allowWebSite = window.jm_jminer.config.supportWebSite;
-            console.log(allowWebSite);
+            //console.log(allowWebSite);
         }
 
         if(window.jm_jminer.config && window.jm_jminer.config.homeSupportWebSite){
@@ -3481,8 +3481,6 @@ function(a,b,c,d) {
         if(isLogin == 1){
             jm_tools.setBackgroundLocalStore({
                 //login :{"ot_home_ez_uid":ezHomeUid,"ot_home_uid":homeUid,"ot_home_login":isLogin}
-                
-
                 jm_login: JSON.stringify(a)
             });
             jm_tools.getMessageFromBackground({

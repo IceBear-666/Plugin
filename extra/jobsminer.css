@@ -766,6 +766,8 @@ content:"...";
     font-size: 18px;
     margin: 0;
     padding: 0 6px;
+    line-height: 30px;
+    text-align: center;
 }    
 .plugin_quickwrite ul li a.qw-btn {
   height: 160px;
@@ -1406,6 +1408,9 @@ content:"...";
     -o-transition: all 0.2s ease-in-out;
     -ms-transition: all 0.2s ease-in-out;
     transition: all 0.2s ease-in-out; 
+}
+.plugin_quickwrite #resumeEmptyNotice p{
+  line-height: 30px;
 }
 .plugin_quickwrite #resumeEmptyNotice i.jm_renclose{
   position: absolute;
