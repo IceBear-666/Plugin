@@ -38,6 +38,7 @@ function setBackgroundLocalStore(a) {
     },
     function() {})
 }
+
 function initEvent() {
     KISSY.one("#jm_pop_tab .logout") && KISSY.one("#jm_pop_tab .logout").on("click", 
     function() {
@@ -125,16 +126,54 @@ function popup_init() {
         setBackgroundLocalStore({
             gotourl: gotourl
         });
-        if(isLogin.toString() == "true" && !gotourl){
+        // getMessageFromBackground({
+        //     console.log(data);
+        // });
+        //从bg来判断
+        // jm_tools.getMessageFromBackground({
+        //     operate: "getLocalStorage",
+        //     data: {"key": 'jm_login'}
+        // }, function(data) {
+        //     console.log('jobsminer------' + data);
+        //     //console.log(eval(data));
+        //     var data1 = eval(data);
+        //    // console.log(data1["value"]);
+        //    var data2 = data1["value"];
+        //    data2 =JSON.parse(data2);
+        //     console.log(data2["ot_home_login"]);
+        //     if (data2["ot_home_login"]) {
+        //          KISSY.use("jmPopup", 
+        //         function(a, b) {
+        //             jm_global_popup_obj = new b;
+        //         });
+        //      }else{
+        //         if(isLogin.toString() == "true"){
+        //             //已登录
+        //             KISSY.use("jmPopup", 
+        //             function(a, b) {
+        //                 jm_global_popup_obj = new b;
+        //             });
+        //         // }else if(!gotourl){
+        //         //     //未登录
+        //         //      //window.jmLogin.logout();
+        //         //     KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+        //         }else{
+        //             KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+        //         }
+        //      }
+        // });
+      
+        //if(isLogin.toString() == "true" && !gotourl){
+        if(isLogin.toString() == "true"){
             //已登录
             KISSY.use("jmPopup", 
             function(a, b) {
                 jm_global_popup_obj = new b;
             });
-        }else if(!gotourl){
-            //未登录
-             //window.jmLogin.logout();
-            KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+        // }else if(!gotourl){
+        //     //未登录
+        //      //window.jmLogin.logout();
+        //     KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
         }else{
             KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
         }
