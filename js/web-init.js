@@ -276,30 +276,13 @@ function(a, b, c, d, e, f) {
         //     setTimeout("KISSY.one('#jm_pop_tab').css('width','60px')",200);
         // });
          $(".plugin_quickwrite").hover(function(){
-            if(KISSY.one('#jm_pop_tab').css('width') == '60px'){
+            if(KISSY.one('#jm_pop_tab').css('width') == '60px' || KISSY.one('#jm_pop_tab').css('width') == '38px'){
                 KISSY.one('#jm_pop_tab').addClass('hover_cover');
             }
         },function(){
             setTimeout("KISSY.one('#jm_pop_tab').removeClass('hover_cover');",200);
         });
-        KISSY.all("#jm_pop_tab .plugin_quickwrite .qw-openqz").on("click", 
-        function(event) {
-            //KISSY.use('jmPopOpenQuestion', function (a, b) {new b});
-            //new f('#jm_pop_tab', 'width: 300px; ', 0.005, 'easeOut').run(); 
-           KISSY.all('#jm-content').toggleClass('jm_hidden');
-           KISSY.one('.plugin_quickwrite').toggleClass('open');
-           KISSY.one('.qw-openqz').parent().toggleClass('current');
-           KISSY.one('#jm_pop_tab').toggleClass('.jm_pop_tab_min');
-
-           if (KISSY.one('#jm_pop_tab').css('width') == '380px') {
-             $('#resumeEmptyNotice').addClass('jm_hidden');
-                $('.empty-flag').addClass('jm_hidden');
-                $('#jm_pop_tab').css('width','');
-                event.stopPropagation();
-           }
-        
-           event.stopPropagation();
-        });
+       
        
         // KISSY.all(".plugin_quickwrite .quick-write").on("click",function(e){
         //     KISSY.all('#jm_qiuck_cover').toggleClass('jm_hidden');
@@ -442,6 +425,7 @@ function(a, b, c, d, e, f) {
                 KISSY.one('.jm-tab:eq('+b+')').addClass('tab-active');
             }
             if(b == 0){
+                KISSY.use('jmPopOpenQuestion', function (a, b) {new b});
                 KISSY.use('jmPopBase', function (a, b) {new b});
                 KISSY.use('jmPopEdu', function (a, b) {new b});
                 KISSY.use('jmPopExp', function (a, b) {new b});
@@ -454,7 +438,7 @@ function(a, b, c, d, e, f) {
                 KISSY.use('jmPopCertificate', function (a, b) {new b});
                 KISSY.use('jmPopTraining', function (a, b) {new b});
                 KISSY.use('jmPopOtherInfo', function (a, b) {new b});
-                KISSY.use('jmPopOpenQuestion', function (a, b) {new b});
+               // KISSY.use('jmPopOpenQuestion', function (a, b) {new b});
                 
             }
             if(b == 1) {
@@ -2772,6 +2756,34 @@ KISSY.add('jmPopOpenQuestion', function(S, Node, Base, IO) {
 
     var processCodeBaseData = function(data) {
         var resume_count = '网申简历 '+data.content.counter[1]+'/'+data.content.counter[0];
+        var userstatu = data.content.userstatu;
+        console.log("userstatu"+userstatu);
+        if (userstatu == "0") {
+            KISSY.all("#jm_pop_tab .plugin_quickwrite .qw-openqz").on("click", 
+            function(event) {
+                window.open('http://www.jobsminer.cc/user/recheckemail');
+                //window.location.href="http://www.jobsminer.cc/user/recheckemail";
+            });
+        }else{
+            KISSY.all("#jm_pop_tab .plugin_quickwrite .qw-openqz").on("click", 
+            function(event) {
+                //KISSY.use('jmPopOpenQuestion', function (a, b) {new b});
+                //new f('#jm_pop_tab', 'width: 300px; ', 0.005, 'easeOut').run(); 
+               KISSY.all('#jm-content').toggleClass('jm_hidden');
+               KISSY.one('.plugin_quickwrite').toggleClass('open');
+               KISSY.one('.qw-openqz').parent().toggleClass('current');
+               KISSY.one('#jm_pop_tab').toggleClass('.jm_pop_tab_min');
+
+               if (KISSY.one('#jm_pop_tab').css('width') == '380px') {
+                 $('#resumeEmptyNotice').addClass('jm_hidden');
+                    $('.empty-flag').addClass('jm_hidden');
+                    $('#jm_pop_tab').css('width','');
+                    event.stopPropagation();
+               }
+            
+               event.stopPropagation();
+            });
+        }
         $('.qw-edit').find("span").text(resume_count);
         if (data.content.counter[1] == 0 || data.content.counter[1] == "") {
             $('.qw-nav .quick-write').css({ opacity:0.4});
@@ -2970,6 +2982,84 @@ KISSY.add('jmPopOpenQuestion', function(S, Node, Base, IO) {
         });
     }
 
+    //去除decodeURIComponent方法不能解析的字符
+    var removeSpecailChar = function(_str) {
+        return _str.replace(/%[0-9a-z]{2}/gi, function(_) {
+            return _.indexOf('%2') > -1 ? _ : _.indexOf('%3') > -1 ? _ : '';
+        });
+    };
+
+    var shuffle = function(_str) {
+        try{
+            return decodeURIComponent(removeSpecailChar(_str));
+        }catch(e){
+            return _str;
+        }
+    };
+
+    return init;
+
+},
+{
+    requires: ["node", "base", "ajax"]
+});
+
+KISSY.add('jmPopUserStatu', function(S, Node, Base, IO) {
+        
+    var init = function(_config) {
+        requestBaseData();
+    };
+
+    var requestBaseData = function() {
+        getCode({type: 'edu'});
+        //getHistoryPrice({type: 'amazon'});
+    };
+
+    var getCode = function(_config) {
+        var type = _config.type,
+            url = 'http://www.jobsminer.cc/User/getOtherinfo';
+
+        new IO({
+            url: url,
+            type: 'get',
+            dataType: 'json',
+            success: function(data) {
+                console.log('request code base data is success!');
+                processCodeBaseData(data);
+            },
+            error: function() {
+                console.log('request code base data is error!');
+            }
+        });
+    };
+
+    var processCodeBaseData = function(data) {
+        var html = '';
+        if(data.content && data.content.otherinfo_list[0]){
+            var eList = data.content.otherinfo_list;
+            var ordering = 0;
+            for(var i = eList.length-1; i >= 0 ; i--){
+                html += '<div class="infopledu">  <div class="mt-title"><div class="metil mt10">其他信息' + (ordering+1) + '</div><div class="mt-edit"><i></i>编辑</div></div>  <div class="infopl" data-id="' + eList[i].id + '"> <table width="100%" border="0" cellspacing="0" cellpadding="0"> <tbody><tr> <td width="76" class="col999">自我评价</td> <td class="mt_base" id="mt_selfIntro">' + eList[i].selfIntro + '</td> </tr> <tr> <td width="76" class="col999">爱好特长</td> <td class="mt_base" id="mt_skill">' + eList[i].skill + '</td> </tr> <tr> <td width="76" class="col999">其他技能</td> <td class="mt_base" id="mt_hobbies">' + eList[i].hobbies + '</td> </tr> <tr> <td width="76" class="col999">个人成就</td> <td class="mt_base" id="mt_trainingPlace">' + eList[i].trainingPlace + '</td> </tr> <tr> <td width="76" class="col999">个人简介</td> <td class="mt_base" id="mt_profile">' + eList[i].profile + '</td> </tr> </tbody> </table> </div>';
+                
+                ordering++;
+                html += '<div class="infopl infopl-edit" data-id="' + eList[i].id + '">  <table width="100%" border="0" cellspacing="0" cellpadding="0"> <tbody>  <tr> <td width="76" class="col999">学历</td><td><select id="mt_education" name="mt_education" class="ed_name mt_education"><option value="大专" ' + ((eList[i].education) == "大专" ? "selected=\"selected\"" : "") + '>大专</option><option value="本科" ' + ((eList[i].education) == "本科" ? "selected=\"selected\"" : "") + '>本科</option><option value="硕士" ' + ((eList[i].education) == "硕士" ? "selected=\"selected\"" : "") + '>硕士</option><option value="博士" ' + ((eList[i].education) == "博士" ? "selected=\"selected\"" : "") + '>博士</option><option value="其他" ' + ((eList[i].education) == "其他" ? "selected=\"selected\"" : "") + '>其他</option></select></td>  </tr> <tr style="display: none; "><td><span for="mr_name" generated="true" class="error">必填</span></td></tr> <tr> <td width="76" class="col999">毕业学校</td> <td><input type="text" id="schoolName" name="schoolName" class="ed_name valid schoolName" autocomplete="off" value="' + eList[i].schoolName + '" placeholder="请输入毕业学校"> </tr> <tr style="display: none; "><td><span for="mr_name" generated="true" class="error">必填</span></td></tr> <tr> <td width="76" class="col999">毕业年份</td> <td><div class="mt_eduyear_div">';
+                html += '<select name="mt_endYear" id="mt_endYear" class="ed_name valid mt_endYear mt_eduyear" tip="tip3" validate="required"><option value="">请选择</option>';
+                for (var j = 2017; j >= 2000; j--) {
+                    html += '<option value="'+j+'" ' + (parseInt(eList[i].endDate) == j ? "selected=\"selected\"" : "") + '>&nbsp;'+j+'</option>';
+                };
+                html += '</select>年</div> </td> </tr> <tr style="display: none; "><td><span for="mr_name" generated="true" class="error">必填</span></td></tr> <tr> <td width="76" class="col999">所学专业</td> <td><input type="text" id="mt_professional" name="mt_professional" class="ed_name mt_professional" autocomplete="off" value="' + eList[i].professional + '" placeholder="请输入所学专业"></td> </tr> <tr style="display: none; "><td><span for="mr_name" generated="true" class="error">必填</span></td></tr> <tr> <td width="76" class="col999">奖惩情况</td> <td> <input type="text" id="mt_award" name="mt_award" class="ed_name mt_award" autocomplete="off" value="' + (eList[i].reward_punish ? eList[i].reward_punish : '') + '" placeholder="请输入奖励"></td> </tr> </tbody> </table> <div class="mr_ope"> <input type="submit" class="mr_save" value="保存"> <input type="submit" class="mr_del" value="删除"> <a href="javascript:;" class="mr_cancel">取消</a> </div> </div> </div>';
+            }
+            html += '<div class="mt-edit-add">添加<i></i></div>';
+        }else{
+            html += '<div class="mt-title"> <div class="metil mt10">社团经历</div>  </div> <div class="infopl">  <div class="mr_empty_add dn mt-edit-add" style="display: block;"> <i></i><span>添加校内实践</span> </div> </div>';
+        }
+        $('#otherinfo-list').html(html);
+        
+        
+    };
+
+
+ 
     //去除decodeURIComponent方法不能解析的字符
     var removeSpecailChar = function(_str) {
         return _str.replace(/%[0-9a-z]{2}/gi, function(_) {

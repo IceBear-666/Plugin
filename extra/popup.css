@@ -836,7 +836,8 @@ background: url(http://www.jobsminer.cc/Public/static/client.jobsminer.cc/godima
   height: 60px;
   width: 60px;
   margin:0 auto;
-  padding: 20px;
+ /* padding: 20px;*/
+ padding: 10px;
 }
 #jm_login_contrainer .plugin_tips{
   font-size: 12px;

@@ -890,7 +890,7 @@ content:"...";
   overflow-x: hidden; 
 }
 .hover_cover {
-  width: 250px !important;
+  width: 300px !important;
 }
 
 #jm-content{
@@ -1425,4 +1425,8 @@ content:"...";
 .plugin_quickwrite #resumeEmptyNotice p{
     padding: 15px 40px;
     font-size: 13px;
+}
+.analyticsuid{
+  height: 1px;
+  width: 1px;
 }

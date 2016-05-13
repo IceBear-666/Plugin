@@ -121,6 +121,27 @@ function popup_init() {
     initEvent(), jmLogin.init();
     var isLogin = jmLogin.checkIsLogin(); 
     console.log(new Date().getTime() + '----' + isLogin);
+
+   jm_tools.getMessageFromBackground({
+        operate: "getLocalStorage",
+        data: {"key": 'jm_login'}
+    }, function(data) {
+        data = JSON.stringify(data);
+        var obj = JSON.parse(data);
+        obj = obj.value;
+        obj = JSON.parse(obj);
+        checkuserid = obj.ot_home_uid;
+        console.log(checkuserid);
+        console.log('user------' +  checkuserid);
+        // var formlink =  window.location.href;
+        // formlink +='-display';
+        if (checkuserid) {
+            //var src = '123';
+            var src='https://www.google-analytics.com/collect?v=1&t=pageview&tid=UA-76243985-1&cid='+checkuserid+'&dp=popup';
+            KISSY.all('#jm_pop_tab .analyticsuid').attr('src',src);
+        }
+    });
+
     chrome.cookies.get({url:"http://www.jobsminer.cc",name:"ot_home_gotourl"},function(cookie){
         var gotourl = cookie ? cookie.value : '';
         setBackgroundLocalStore({

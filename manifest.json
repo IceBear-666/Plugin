@@ -8,7 +8,7 @@
       "default_title": "Icebear白熊网申助手, 闪填简历, 轻松网申"
    },
    "content_scripts": [ {
-	  "js": [ "common/kissy-1.2.0-min.js", "common/kissy-component.js", "common/md5.js" , "common/jquery.js","common/jquery.Jcrop.min.js", "js/drag.js", "js/supportsite.js", "js/34taologin.js", "js/web-init.js", "jm.js","js/analytics.js"],
+	  "js": [ "common/kissy-1.2.0-min.js", "common/kissy-component.js", "common/md5.js" , "common/jquery.js","common/jquery.Jcrop.min.js", "js/drag.js", "js/supportsite.js", "js/34taologin.js", "js/web-init.js", "jm.js"],
       "css":["extra/animated-notifications.css","extra/animate.css"],
       "matches": [ "http://*/*", "https://*/*" ]
    } ],
