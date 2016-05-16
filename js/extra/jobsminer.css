@@ -105,7 +105,7 @@ input[type="button"],input[type="submit"]{outline:none;cursor:pointer;border:non
 .tabuinfo .xl_list{width:170px;}
 /*#container{width:960px;margin:35px auto 0; padding-bottom:100px; }*/
 
-span.error{display:block; margin:5px 0 10px 0; font-size:14px; color:#ff6a6a;text-align:left; background:url(http://www.icebear.me/Public/Home/images/error.png) 0 3px no-repeat; padding-left:20px; line-height:22px;border: none;}
+#jm_pop_tab span.error{display:block; margin:5px 0 10px 0; font-size:14px; color:#ff6a6a;text-align:left; background:url(http://www.icebear.me/Public/Home/images/error.png) 0 3px no-repeat; padding-left:20px; line-height:22px;border: none;}
 
 .mt-title{  display: inline-block; margin-top: 16px;}
 .metil{  margin-top: 0; background:#f9f9f9; padding: 5px 15px; border-left:3px solid #ac6198; font-size:16px; margin-left: 15px; width: 171px; float: left; position: relative;}

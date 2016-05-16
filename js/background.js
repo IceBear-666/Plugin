@@ -95,7 +95,7 @@ function _backgrountInit() {
                 notification.create("notify_proxy_status", "Icebear网申助手1.0.0 版本上线啦! ", "支持最新最热的企业网申, 为你带来前所未有的方便体验.求职路上, 有我陪伴. 详情请猛击…",
                 function() {
                 chrome.tabs.create({
-                    url: "http://www.icebear.me/Plugin/plugin.html"
+                    url: "http://icebear.me/"
                     });
                 });
                 },
@@ -272,7 +272,7 @@ jm_tools = {
     showGuide: function() {
         //return;
         localStorage.getItem("alijmLoaded") || (localStorage.setItem("alijmLoaded", "true"), chrome.tabs.create({
-            url: "http://www.icebear.me/Plugin/plugin.html?utm_source=plugin_install&utm_medium=plugin&utm_campaign=install_redirect"
+            url: "http://icebear.me/?utm_source=plugin_install&utm_medium=plugin&utm_campaign=install_redirect"
         }))
     },
     statistics: function() {
