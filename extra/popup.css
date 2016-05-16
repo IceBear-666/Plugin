@@ -19,16 +19,16 @@ body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, fo
 #jm_pop_tab{width: 200px; height: 600px;margin:  0 auto;overflow-y: hidden;}
 #jm_pop_tab.jm_pop_tab_min{width: 36px;}
 #jm-logo{background-color: #ffda44;height: 46px;position: relative;border-left: 1px solid rgba(117, 117, 125, 0.59);display: block;}
-#jm-logo .jm-logo-img{background:url(http://www.jobsminer.cc/Public/static/client.jobsminer.cc/godimage/popup/logo.png) no-repeat center;width: 122px;height: 46px;line-height: 46px;display: block;margin: 0 auto;}
+#jm-logo .jm-logo-img{background:url(http://www.icebear.me/Public/static/client.jobsminer.cc/godimage/popup/logo.png) no-repeat center;width: 122px;height: 46px;line-height: 46px;display: block;margin: 0 auto;}
 #jm-logo .jm-logo-title{text-align: center; height: 30px;line-height: 30px;display: block;}
-#jm-logo .jm_close{background:url(http://www.jobsminer.cc/Public/static/client.jobsminer.cc/godimage/popup/close.png) no-repeat;height:20px;width:20px;text-indent:-9999px;cursor:pointer;position: absolute;margin-left:30px;top: 5px;right: 5px;}
+#jm-logo .jm_close{background:url(http://www.icebear.me/Public/static/client.jobsminer.cc/godimage/popup/close.png) no-repeat;height:20px;width:20px;text-indent:-9999px;cursor:pointer;position: absolute;margin-left:30px;top: 5px;right: 5px;}
 /* 登录后log */
 #jm-logo-login{background-color: #ffda44;height: 36px;margin-left: 36px;border-left: 1px solid rgba(117, 117, 125, 0.59);}
-#jm-logo-login .jm-logo-img{background:url(http://www.jobsminer.cc/Public/static/client.jobsminer.cc/godimage/popup/logo-login.png) no-repeat center;width: 90px;height: 36px;line-height: 36px;float: left;margin-left: 5px;background-size: 100%;}
-#jm-logo-login .jm-logo-lock{background: url(http://www.jobsminer.cc/Public/static/client.jobsminer.cc/godimage/popup/unlock.png) no-repeat center;background-size: 100%;height: 36px;width: 15px;line-height: 36px;text-indent:-9999px;cursor:pointer;position: relative;margin-right: 10px;float: right;/* border-right: 1px solid #ecc218; */}
-#jm-logo-login .jm-logo-lock.jm_chk_checked{background: url(http://www.jobsminer.cc/Public/static/client.jobsminer.cc/godimage/popup/lock.png) no-repeat center;background-size: 100%;height: 36px;width: 15px;line-height: 36px;text-indent:-9999px;cursor:pointer;position: relative;margin-right: 10px;float: right;/* border-right: 1px solid #ecc218; */}
-#jm-logo-login .jm_close{background:url(http://www.jobsminer.cc/Public/static/client.jobsminer.cc/godimage/popup/close-1.png) no-repeat center;height: 36px;width: 15px;line-height: 36px;text-indent:-9999px;cursor:pointer;position: relative;margin: 0 10px;float: right}
-.jm-logo-setting{background: url(http://www.jobsminer.cc/Public/static/client.jobsminer.cc/godimage/popup/setting.png) no-repeat center;/* background-size: 100%; */height: 36px;width: 20px;line-height: 36px;text-indent:-9999px;cursor:pointer;position: relative;padding: 0 8px;float: right;border-left: 1px solid #ecc218;border-right: 1px solid #ecc218;}
+#jm-logo-login .jm-logo-img{background:url(http://www.icebear.me/Public/static/client.jobsminer.cc/godimage/popup/logo-login.png) no-repeat center;width: 90px;height: 36px;line-height: 36px;float: left;margin-left: 5px;background-size: 100%;}
+#jm-logo-login .jm-logo-lock{background: url(http://www.icebear.me/Public/static/client.jobsminer.cc/godimage/popup/unlock.png) no-repeat center;background-size: 100%;height: 36px;width: 15px;line-height: 36px;text-indent:-9999px;cursor:pointer;position: relative;margin-right: 10px;float: right;/* border-right: 1px solid #ecc218; */}
+#jm-logo-login .jm-logo-lock.jm_chk_checked{background: url(http://www.icebear.me/Public/static/client.jobsminer.cc/godimage/popup/lock.png) no-repeat center;background-size: 100%;height: 36px;width: 15px;line-height: 36px;text-indent:-9999px;cursor:pointer;position: relative;margin-right: 10px;float: right;/* border-right: 1px solid #ecc218; */}
+#jm-logo-login .jm_close{background:url(http://www.icebear.me/Public/static/client.jobsminer.cc/godimage/popup/close-1.png) no-repeat center;height: 36px;width: 15px;line-height: 36px;text-indent:-9999px;cursor:pointer;position: relative;margin: 0 10px;float: right}
+.jm-logo-setting{background: url(http://www.icebear.me/Public/static/client.jobsminer.cc/godimage/popup/setting.png) no-repeat center;/* background-size: 100%; */height: 36px;width: 20px;line-height: 36px;text-indent:-9999px;cursor:pointer;position: relative;padding: 0 8px;float: right;border-left: 1px solid #ecc218;border-right: 1px solid #ecc218;}
 
 .jm_close:hover{}
 .jm-register-input{width: 283px; height: 100px; /*border: 1px solid #d5d5d5;*/ border-radius: 4px; }
@@ -86,16 +86,16 @@ input[type="button"],input[type="submit"]{outline:none;cursor:pointer;border:non
 .tabuinfo .xl_list{width:170px;}
 #container{width:960px;margin:35px auto 0; padding-bottom:100px; }
 
-span.error{display:block; margin:5px 0 10px 0; font-size:14px; color:#ff6a6a;text-align:left; background:url(http://www.jobsminer.cc/Public/Home/images/error.png) 0 3px no-repeat; padding-left:20px; line-height:22px;border: none;}
+span.error{display:block; margin:5px 0 10px 0; font-size:14px; color:#ff6a6a;text-align:left; background:url(http://www.icebear.me/Public/Home/images/error.png) 0 3px no-repeat; padding-left:20px; line-height:22px;border: none;}
 
 .mt-title{  display: inline-block; margin-top: 16px;}
 .metil{ /* margin-top: 16px; */background:#f9f9f9; padding: 5px 15px; border-left:3px solid #4a4a4a; font-size:16px; margin-left: 15px; width: 171px; float: left; position: relative;}
 #base-list .metil{margin-top: 0px;border-color: #ac6198;}
 .mt-edit{width: 55px; float: left; background: #ac6198; margin-left: 12px; padding: 5px 7px; font-size: 14px;text-indent: 22px;position: relative;color: #fff;cursor: pointer;}
 #other-list{  height: 21px; padding: 4px; line-height: 21px;} 
-.mt-edit i{width:15px; height:15px;background: url(http://www.jobsminer.cc/Public/static/client.jobsminer.cc/godimage/popup/edit.png) no-repeat center; position: absolute;top: 8px;left: 5px;}
+.mt-edit i{width:15px; height:15px;background: url(http://www.icebear.me/Public/static/client.jobsminer.cc/godimage/popup/edit.png) no-repeat center; position: absolute;top: 8px;left: 5px;}
 .mt-edit-add{width: 55px; float: right; margin-right: 10px;background-color: #ac6198; margin-left: 12px; padding: 5px 7px; font-size: 14px;text-indent: 8px;position: relative;color: #fff;cursor: pointer;margin-bottom: 10px;}
-.mt-edit-add i{width:15px; height:15px;background: url(http://www.jobsminer.cc/Public/static/client.jobsminer.cc/godimage/popup/down.png) no-repeat center; position: absolute;top: 8px;right: 5px;}
+.mt-edit-add i{width:15px; height:15px;background: url(http://www.icebear.me/Public/static/client.jobsminer.cc/godimage/popup/down.png) no-repeat center; position: absolute;top: 8px;right: 5px;}
 
 .edit-status .metil{width: 251px;}
 .edit-status .mt-edit{display: none;}
@@ -129,10 +129,10 @@ span.error{display:block; margin:5px 0 10px 0; font-size:14px; color:#ff6a6a;tex
 
 .tounav{ background:#eee; height:44px; padding-left:24px;}
 .tounav a{ display:block; float:left; padding:12px 14px 0px 14px; font-size:15px; position:relative;}
-.tounav a i{ position:absolute; top:10px; right:0; width:8px; height:8px; background:url(http://www.jobsminer.cc/Public/Home/images/myresume/reddot.png) center no-repeat;}
+.tounav a i{ position:absolute; top:10px; right:0; width:8px; height:8px; background:url(http://www.icebear.me/Public/Home/images/myresume/reddot.png) center no-repeat;}
 .tounav .cur{ color:#ac6198;}
 .tounav em{display:block; float:left; padding:12px 8px 0px 8px; color:#aaa;}
-.tounav .shuaxin{ display:block; float:right; padding:0; margin-right:40px; margin-top:12px; width:20px; height:20px; background:url(http://www.jobsminer.cc/Public/Home/images/myresume/shuaxin.png) center;}
+.tounav .shuaxin{ display:block; float:right; padding:0; margin-right:40px; margin-top:12px; width:20px; height:20px; background:url(http://www.icebear.me/Public/Home/images/myresume/shuaxin.png) center;}
 .toucet{ padding:30px;}
 
 .toucet .list{ min-height:90px;  background:#fff;}
@@ -149,11 +149,11 @@ span.error{display:block; margin:5px 0 10px 0; font-size:14px; color:#ff6a6a;tex
 .my_delivery h2 span.expireDay{color:#555;}
 
 .progress_status{border-top:1px dashed #cccccc;border-bottom:2px solid #D3B8CC;padding:25px 10px;position:relative;zoom:1;overflow:hidden;}
-.progress_status .offer{position:absolute;left:335px;top:120px;width:160px;height:73px;background:url(http://www.jobsminer.cc/Public/Home/images/myresume/offer_status.png) -26px 0 no-repeat;}
-.progress_status .refused{position:absolute;left:335px;top:120px;width:186px;height:76px;background:url(http://www.jobsminer.cc/Public/Home/images/myresume/offer_status.png) 0 -74px no-repeat;}
+.progress_status .offer{position:absolute;left:335px;top:120px;width:160px;height:73px;background:url(http://www.icebear.me/Public/Home/images/myresume/offer_status.png) -26px 0 no-repeat;}
+.progress_status .refused{position:absolute;left:335px;top:120px;width:186px;height:76px;background:url(http://www.icebear.me/Public/Home/images/myresume/offer_status.png) 0 -74px no-repeat;}
 .progress_status ul{margin: 0;padding: 0;list-style:none;}
 
-.btn_closeprogress{position:absolute;right:35px;bottom:30px;width:44px;height:44px;background:url(http://www.jobsminer.cc/Public/Home/images/myresume/progress_close.png) no-repeat;}
+.btn_closeprogress{position:absolute;right:35px;bottom:30px;width:44px;height:44px;background:url(http://www.icebear.me/Public/Home/images/myresume/progress_close.png) no-repeat;}
 .status_steps li{float:left;color:#fff; text-align:center;line-height:18px; font-size:12px; position:relative;}
 .status_steps li em{ position:absolute; width:80px; text-align:center; color:#333; left:50%; margin-left:-40px; top:30px;}
 
@@ -178,7 +178,7 @@ span.error{display:block; margin:5px 0 10px 0; font-size:14px; color:#ff6a6a;tex
 .status_list li{margin:0;}
 .status_list font{ color:#aaa;}
 .status_list .list_time{font-size:12.5px;color:#999;padding-left:20px;position:relative;}
-.status_list .list_time em{position:absolute;left:0;top:5px;width:10px;height:11px;background:url(http://www.jobsminer.cc/Public/Home/images/myresume/status_dot.png) left bottom no-repeat;}
+.status_list .list_time em{position:absolute;left:0;top:5px;width:10px;height:11px;background:url(http://www.icebear.me/Public/Home/images/myresume/status_dot.png) left bottom no-repeat;}
 .status_list .top .list_time em{background-position:left top;}
 .status_list .top1 .list_time em{background-position:left top;}
 .status_list .top1 h3{ color:#ac6198}
@@ -196,12 +196,12 @@ span.error{display:block; margin:5px 0 10px 0; font-size:14px; color:#ff6a6a;tex
 .fjlist{}
 .fjlist ul{ overflow:hidden;}
 .fjlist li{ border-top:1px solid #ddd; padding:0px 0px 20px 0px; margin-top:-2px;}
-.fjinfo .docx{ display:blockl; float:left; width:60px; height:56px;  background:url(http://www.jobsminer.cc/Public/Home/images/myresume/doc.png) left no-repeat;}
-.fjinfo .pdf{ display:blockl; float:left; width:60px; height:56px;  background:url(http://www.jobsminer.cc/Public/Home/images/myresume/pdf.png) left no-repeat;}
+.fjinfo .docx{ display:blockl; float:left; width:60px; height:56px;  background:url(http://www.icebear.me/Public/Home/images/myresume/doc.png) left no-repeat;}
+.fjinfo .pdf{ display:blockl; float:left; width:60px; height:56px;  background:url(http://www.icebear.me/Public/Home/images/myresume/pdf.png) left no-repeat;}
 .fjinfo span{ display:block; float:left; padding-top:8px; line-height:22px; font-size:15px;}
 .fjlist .down{ padding-top:28px;}
-.fjlist .xiazai{ display:block; float:left; padding-left:24px;  background:url(http://www.jobsminer.cc/Public/Home/images/myresume/down.png) 0px 0px no-repeat; margin-right:30px;}
-.fjlist .shanchu{ display:block; float:left; padding-left:20px;  background:url(http://www.jobsminer.cc/Public/Home/images/myresume/down.png) 0px -42px no-repeat;}
+.fjlist .xiazai{ display:block; float:left; padding-left:24px;  background:url(http://www.icebear.me/Public/Home/images/myresume/down.png) 0px 0px no-repeat; margin-right:30px;}
+.fjlist .shanchu{ display:block; float:left; padding-left:20px;  background:url(http://www.icebear.me/Public/Home/images/myresume/down.png) 0px -42px no-repeat;}
 .delfujie{ width:320px !important;}
 .delfujie span{ display:block; text-align:center; padding-bottom:20px;}
 .delfujie .mybtn2{ border-radius:2px;}
@@ -232,11 +232,11 @@ span.error{display:block; margin:5px 0 10px 0; font-size:14px; color:#ff6a6a;tex
 .mr_top_bg .shadow{width:120px;height:120px;top:42px;left:50%;margin-left:-60px;display:none;}
 .mr_baseinfo{position:relative; padding:30px 0 10px 0; }
 .mr_created .mr_baseinfo{border-bottom:none;border-bottom-right-radius:0px;border-bottom-left-radius:0px;}
-.mr_left_bg,.mr_right_bg{position:absolute;background: url(http://www.jobsminer.cc/Public/Home/images/myresume/top_bg.png) no-repeat;width:12px;height:34px;top:50px;}
+.mr_left_bg,.mr_right_bg{position:absolute;background: url(http://www.icebear.me/Public/Home/images/myresume/top_bg.png) no-repeat;width:12px;height:34px;top:50px;}
 .mr_left_bg{left:-1px;background-position:0 0;}
 .mr_right_bg{right:-2px;background-position:-40px 0;}
-.mr_my_qr{position:absolute;cursor:pointer;z-index:10;right:52px;top:0;width:48px;height:50px;background:#f2f2f2 url(http://www.jobsminer.cc/Public/Home/images/myresume/qr_bg.png) 10px 10px no-repeat;}
-.mr_my_qr .dropdown_menu {width:299px;height:152px;background:url(http://www.jobsminer.cc/Public/Home/images/qr/myresume_qr.png) no-repeat;color: #fff;display:block;padding:12px 8px 8px 5px;margin:50px 0 0 -225px;opacity: 0;visibility: hidden;-webkit-transition:.25s;transition:.25s;}
+.mr_my_qr{position:absolute;cursor:pointer;z-index:10;right:52px;top:0;width:48px;height:50px;background:#f2f2f2 url(http://www.icebear.me/Public/Home/images/myresume/qr_bg.png) 10px 10px no-repeat;}
+.mr_my_qr .dropdown_menu {width:299px;height:152px;background:url(http://www.icebear.me/Public/Home/images/qr/myresume_qr.png) no-repeat;color: #fff;display:block;padding:12px 8px 8px 5px;margin:50px 0 0 -225px;opacity: 0;visibility: hidden;-webkit-transition:.25s;transition:.25s;}
 .open>.dropdown_menu{margin-top:58px !important;*margin:70px 0 0 -220px !important;opacity:1;visibility:visible}
 .mr_w604{width:604px;margin:0 auto;}
 .mr_p_myname{height:40px;line-height:38px;margin-bottom:8px;}
@@ -247,7 +247,7 @@ span.error{display:block; margin:5px 0 10px 0; font-size:14px; color:#ff6a6a;tex
 .mr_p_introduce .mr_edit{height:34px;}
 .mr_edit{float:right;margin-right:12px;cursor:pointer;}
 .mr_edit em{font-size:16px;color:#ac6198;}
-.mr_edit i{display:inline-block;width:12px;height:14px;background:url(http://www.jobsminer.cc/Public/Home/images/myresume/icons_mr.png) -53px -6px no-repeat;margin-right:7px;}
+.mr_edit i{display:inline-block;width:12px;height:14px;background:url(http://www.icebear.me/Public/Home/images/myresume/icons_mr.png) -53px -6px no-repeat;margin-right:7px;}
 .mr_edit *{vertical-align: middle;}
 .mr_active{background-color: #fefef2;}
 
@@ -262,13 +262,13 @@ span.error{display:block; margin:5px 0 10px 0; font-size:14px; color:#ff6a6a;tex
 .mr_year_se span i,.mr_year_se span em{vertical-align:middle;}
 span.mr_man,span.mr_women{width:56px;padding-left:22px;color:#b5b5b5;;height:40px;line-height:40px;border:1px solid #f1f3e9;background-color:#fff;-moz-border-radius:3px;-webkit-border-radius:3px;border-radius:3px;cursor:pointer;}
 span.active{color:#ac6198;}
-span.mr_man i,span.mr_women i{display:inline-block;width:16px;height:16px;background:url(http://www.jobsminer.cc/Public/Home/images/myresume/icons_mr.png) no-repeat;}
+span.mr_man i,span.mr_women i{display:inline-block;width:16px;height:16px;background:url(http://www.icebear.me/Public/Home/images/myresume/icons_mr.png) no-repeat;}
 span.mr_man i{background-position:-4px -25px;}
 span.mr_man i.active{background-position:-4px -5px;}
 span.mr_women i{background-position:-27px -25px;}
 span.mr_women i.active{background-position:-27px -5px;}
 .mr_year_se i{margin-right:11px;}
-.sns_empty{width:227px;height:73px;margin-bottom:20px;padding:32px 0 0 310px;background:url(http://www.jobsminer.cc/Public/Home/images/myresume/sns_add_bg.png) no-repeat;}
+.sns_empty{width:227px;height:73px;margin-bottom:20px;padding:32px 0 0 310px;background:url(http://www.icebear.me/Public/Home/images/myresume/sns_add_bg.png) no-repeat;}
 .sns_empty .sns_add_empty{position:relative;width:173px;height:37px;cursor:pointer;}
 .mr_add_m {cursor:default;}
 .sns_add_empty .mr_add_m{left:-124px;top:54px;}
@@ -302,15 +302,15 @@ span.mr_women i.active{background-position:-27px -5px;}
 
 .sns_add_empty .mr_add_m i,.sns_add_empty .mr_add_m em{right:17px;}
 .sns_area .mr_sns_m{position:relative;width:534px;margin-bottom:16px;}
-.mr_sns_m i{position:absolute;left:-43px;top:7px;width:30px;height:30px;background:url(http://www.jobsminer.cc/Public/Home/images/myresume/sns_bg.png) no-repeat;}
+.mr_sns_m i{position:absolute;left:-43px;top:7px;width:30px;height:30px;background:url(http://www.icebear.me/Public/Home/images/myresume/sns_bg.png) no-repeat;}
 .mr_sns_m .mr_button{width:467px;padding:0 0 0 17px;border:none;*height:44px;line-height:40px;}
 .mr_sns_m em{position:absolute;width:20px;height:20px;right:10px;top:13px;}
-.mr_sns_m .mr_ok{background:url(http://www.jobsminer.cc/Public/Home/images/myresume/icons_mr.png) -4px -46px no-repeat;}
-.mr_sns_m .mr_no{background:url(http://www.jobsminer.cc/Public/Home/images/myresume/icons_mr.png) -28px -46px no-repeat;}
-.mr_sns_m .sns_del{position:absolute;width:16px;height:16px;right:-30px;top:15px;background:url(http://www.jobsminer.cc/Public/Home/images/myresume/icons_mr.png) -57px -49px no-repeat;}
+.mr_sns_m .mr_ok{background:url(http://www.icebear.me/Public/Home/images/myresume/icons_mr.png) -4px -46px no-repeat;}
+.mr_sns_m .mr_no{background:url(http://www.icebear.me/Public/Home/images/myresume/icons_mr.png) -28px -46px no-repeat;}
+.mr_sns_m .sns_del{position:absolute;width:16px;height:16px;right:-30px;top:15px;background:url(http://www.icebear.me/Public/Home/images/myresume/icons_mr.png) -57px -49px no-repeat;}
 .mr_add_sns{position:relative;}
 .mr_add_sns i,.mr_add_sns em{vertical-align:middle;}
-.mr_add_sns i{display:inline-block;margin-right:10px;width:15px;height:15px;background:url(http://www.jobsminer.cc/Public/Home/images/myresume/icons_mr.png) -5px -69px no-repeat;}
+.mr_add_sns i{display:inline-block;margin-right:10px;width:15px;height:15px;background:url(http://www.icebear.me/Public/Home/images/myresume/icons_mr.png) -5px -69px no-repeat;}
 .mr_add_sns em{color:#afafa9;}
 .mr_add_m{position:absolute;top:44px;left:0;padding:12px 0 0 20px;background-color:#fff;z-index:2;border:1px solid #e7e7e7;box-shadow:2px 2px 4px #efefe4;-moz-border-radius:3px;-webkit-border-radius:3px;border-radius:3px;}
 .mr_add_m i,.mr_add_m em{position:absolute;background:none;top:-16px;border: 8px solid #e7e7e7;border-color: transparent transparent #e7e7e7;display: block;font-size: 0px;height: 0;width: 0;}
@@ -338,7 +338,7 @@ span.mr_women i.active{background-position:-27px -5px;}
 .mr_module li a{display:block;height:100%;}
 .mr_module li a{color:#333;}
 .mr_module li a *{vertical-align:middle;}
-.mr_module li i{display:inline-block;width:19px;height:18px;background:url(http://www.jobsminer.cc/Public/Home/images/myresume/icons_mr.png) no-repeat;margin:0 24px 0 39px;}
+.mr_module li i{display:inline-block;width:19px;height:18px;background:url(http://www.icebear.me/Public/Home/images/myresume/icons_mr.png) no-repeat;margin:0 24px 0 39px;}
 .mr_module li.active i{margin-left:38px;}
 .mr_module li .mr_base_i{background-position:-24px -117px;}
 .mr_module li .mr_works_i{background-position:-24px -137px;}
@@ -366,7 +366,7 @@ span.mr_women i.active{background-position:-27px -5px;}
 .mr_module li.hide_md .mr_hopework_i{background-position:-40px -239px;}
 .mr_module li.hide_md .mr_skill_i{background-position:-41px -262px;}
 .mr_module li.hide_md .mr_moudle_i{background-position:-40px -283px;}
-.mr_module li.hide_md a .mr_hide_addic{float:right;display:none;width:15px;height:15px;background:url(http://www.jobsminer.cc/Public/Home/images/myresume/icons_mr.png) -5px -69px no-repeat;margin:17px 20px 0 0;}
+.mr_module li.hide_md a .mr_hide_addic{float:right;display:none;width:15px;height:15px;background:url(http://www.icebear.me/Public/Home/images/myresume/icons_mr.png) -5px -69px no-repeat;margin:17px 20px 0 0;}
 .mr_module li.hide_md a:hover .mr_hide_addic{display:inline-block;}
 
 
@@ -384,8 +384,8 @@ span.mr_women i.active{background-position:-27px -5px;}
 .mr_module li.active .mr_skill_i{background-position:-5px -262px;}
 .mr_module li.active .mr_moudle_i{background-position:-6px -285px;}
 .mr_hide{display:none;}
-.mr_hide_del{opacity:0;filter:alpha(opacity:0);float:right;width:17px;height:17px;background:url(http://www.jobsminer.cc/Public/Home/images/myresume/my_resume_del.png) no-repeat;margin:18px 16px 0 0;}
-.mr_hide_del:hover{background:url(http://www.jobsminer.cc/Public/Home/images/myresume/my_resume_del.png) -19px 0 no-repeat;}
+.mr_hide_del{opacity:0;filter:alpha(opacity:0);float:right;width:17px;height:17px;background:url(http://www.icebear.me/Public/Home/images/myresume/my_resume_del.png) no-repeat;margin:18px 16px 0 0;}
+.mr_hide_del:hover{background:url(http://www.icebear.me/Public/Home/images/myresume/my_resume_del.png) -19px 0 no-repeat;}
 .mr_module li.m_hide.md_flag a:hover .mr_hide_del{opacity:1;filter:alpha(opacity:100);}
 /*在线简历页面主内容区域*/
 .mr_myresume_l .mr_content{padding-top:26px;background-color: #fafafa;border: 1px solid #f2f2f2;border-bottom:2px solid #f2f2f2;border-top:none;border-bottom-right-radius: 3px;border-bottom-left-radius: 3px;}
@@ -400,7 +400,7 @@ span.mr_women i.active{background-position:-27px -5px;}
 .mr_preview .mr_title .mr_title_r{width:228px;}
 .mr_moudle_head .mr_head_r *{vertical-align:middle;}
 .mr_moudle_head .mr_head_r em{font-size:16px;color:#ac6198;}
-.mr_moudle_head .mr_head_r i{display: inline-block;width: 15px;height: 15px;background: url(http://www.jobsminer.cc/Public/Home/images/myresume/icons_mr.png) -5px -69px no-repeat;margin-right:6px;}
+.mr_moudle_head .mr_head_r i{display: inline-block;width: 15px;height: 15px;background: url(http://www.icebear.me/Public/Home/images/myresume/icons_mr.png) -5px -69px no-repeat;margin-right:6px;}
 .mr_moudle_content{padding-bottom:21px;color:#555;font-size:14px;} /* 块  margin-bottom 48*/
 .mr_moudle_content .mr_content_l{float:left;max-width:445px;}
 .mr_moudle_content .mr_content_r{float:right;text-align:right;}
@@ -408,12 +408,12 @@ span.mr_women i.active{background-position:-27px -5px;}
 .mr_content_l .l2{position:relative;float:left;padding-top:10px;max-width:380px;}
 
 #workExperience .mr_content_l .l2,#educationalBackground .mr_content_l .l2{padding-top:4px;}
-/* .mr_content_l .l2 a{position:absolute;top:16px;right:-18px;width:12px;height:12px;background:url(http://www.jobsminer.cc/Public/Home/images/myresume/icons_mr.png) -95px -197px no-repeat;} */
+/* .mr_content_l .l2 a{position:absolute;top:16px;right:-18px;width:12px;height:12px;background:url(http://www.icebear.me/Public/Home/images/myresume/icons_mr.png) -95px -197px no-repeat;} */
 .mr_content_l .l2 a.projectTitle{/* position:relative; */font-size:16px;}
 .mr_content_l .l2 a.nourl{cursor:default;}
 .mr_content_l .l2 a.nourl:hover{color:#555;}
 .mr_content_l .l2 p{color:#999;}
-.mr_content_l .l2 a.projectTitle span{position:absolute;top:14px;right:-18px;width:12px;height:12px;background:url(http://www.jobsminer.cc/Public/Home/images/myresume/icons_mr.png) -95px -197px no-repeat;}
+.mr_content_l .l2 a.projectTitle span{position:absolute;top:14px;right:-18px;width:12px;height:12px;background:url(http://www.icebear.me/Public/Home/images/myresume/icons_mr.png) -95px -197px no-repeat;}
 .mr_content_l .l1 img{width:46px;height:46px;border:2px solid #eee;}
 .mr_content_l .l2 h4{font-size:16px;}
 .mr_jobe_list{padding-bottom:44px;}
@@ -446,7 +446,7 @@ span.mr_women i.active{background-position:-27px -5px;}
 .mr_wo_show p{line-height:26px;color:#ac1698;}
 .mr_self_site{color:#fff;margin-bottom:8px;font-size:24px;}
 .mr_wo_show .mr_c_r_t em{color:#ac1698;}
-.mr_wo_show .mr_c_r_t i{background:url(http://www.jobsminer.cc/Public/Home/images/myresume/icons_mr.png) -53px -6px no-repeat;}
+.mr_wo_show .mr_c_r_t i{background:url(http://www.icebear.me/Public/Home/images/myresume/icons_mr.png) -53px -6px no-repeat;}
 .wh43{width:100%;}
 .mr_work_upload .l2 span{display:inline-block;}
 .mr_wu_con .mr_work_title{/* max-width: 540px; */word-break: break-all;}
@@ -461,16 +461,16 @@ span.mr_women i.active{background-position:-27px -5px;}
 /*#worksShow{padding-bottom:56px;}*/
 .mr_self_l{position:relative;height:81px;}
 /*#selfDescription {padding-bottom: 56px;}*/
-#selfDescription .mr_head_r i,#expectJob .mr_head_r i,#skillsAssess .mr_head_r i,#customBlock .mr_head_r i{display: inline-block;width: 15px;height: 15px;background: url(http://www.jobsminer.cc/Public/Home/images/myresume/icons_mr.png) -53px -6px no-repeat;margin-right: 7px;}
+#selfDescription .mr_head_r i,#expectJob .mr_head_r i,#skillsAssess .mr_head_r i,#customBlock .mr_head_r i{display: inline-block;width: 15px;height: 15px;background: url(http://www.icebear.me/Public/Home/images/myresume/icons_mr.png) -53px -6px no-repeat;margin-right: 7px;}
 /* .mr_self_l img{width:73px;height:73px;border-radius:50%;border:4px solid #f7f7f7;box-shadow:0px 2px 3px #dfdfdf;} */
 .mr_self_l img{position:absolute;top:8px;left:4px;width:73px;height:73px;}
-.mr_self_l i{position:absolute;z-index:2;width:81px;height:81px;background:url(http://www.jobsminer.cc/Public/Home/images/myresume/mr_txs.png) no-repeat;} 
+.mr_self_l i{position:absolute;z-index:2;width:81px;height:81px;background:url(http://www.icebear.me/Public/Home/images/myresume/mr_txs.png) no-repeat;} 
 .mr_moudle_content .mr_self_l{float:left;width:100px;padding-top:5px;}
 .mr_moudle_content .mr_self_r{float:left; color:#555;line-height:26px;}
 /*#expectJob{padding-bottom:70px;}*/
 #expectJob .expectjob_list{position:relative;}
 .expectjob_list .clearfixs li{font-size:16px;}
-#expectJob .mr_job_des i{position:absolute;width:32px;height:31px;background: url(http://www.jobsminer.cc/Public/Home/images/myresume/icons_mr.png) no-repeat;}
+#expectJob .mr_job_des i{position:absolute;width:32px;height:31px;background: url(http://www.icebear.me/Public/Home/images/myresume/icons_mr.png) no-repeat;}
 #expectJob .mr_moudle_content .mr_job_t{left:0;top:1px;background-position:-160px -110px;}
 #expectJob .mr_moudle_content .mr_job_b{right:0;bottom:5px;background-position:-160px -153px;}
 .mr_moudle_content .mr_job_info{text-align:center;padding-left:28px;}
@@ -479,7 +479,7 @@ span.mr_women i.active{background-position:-27px -5px;}
 .mr_jobtype_li{width:128px;}
 .mr_city_li{width:124px;}
 .mr_jobrange_li{width:94px;}
-.mr_job_info i{display:inline-block;margin-right:10px;background:url(http://www.jobsminer.cc/Public/Home/images/myresume/icons_mr.png) no-repeat;}
+.mr_job_info i{display:inline-block;margin-right:10px;background:url(http://www.icebear.me/Public/Home/images/myresume/icons_mr.png) no-repeat;}
 .mr_name_li i{width:9px;height:19px;background-position:-97px -220px;}
 .mr_jobtype_li i{width:17px;height:17px;background-position:-93px -247px;}
 .mr_city_li i{width:14px;height:17px;background-position:-93px -273px;}
@@ -512,21 +512,21 @@ content:"...";
  * @author pooky
  * display:none -> display:inline-block;
  */
-.mr_skill_con .mr_skill_delete{display:none; width:13px;height:13px;background:url(http://www.jobsminer.cc/Public/Home/images/myresume/skill_delete.png) center top no-repeat;cursor:pointer;}
+.mr_skill_con .mr_skill_delete{display:none; width:13px;height:13px;background:url(http://www.icebear.me/Public/Home/images/myresume/skill_delete.png) center top no-repeat;cursor:pointer;}
 /**
  * author pooky
  * display:none -> display:block;
  */
 .mr_moudle_content .mr_skill_add{display:none; padding-left:125px;*padding-left:104px;color:#999999;font-size:16px;}
-.mr_skill_add_button span{display:inline-block;width:88px;text-indent:22px;background:url(http://www.jobsminer.cc/Public/Home/images/myresume/skill_add.png) left 3px no-repeat;cursor:pointer;}
+.mr_skill_add_button span{display:inline-block;width:88px;text-indent:22px;background:url(http://www.icebear.me/Public/Home/images/myresume/skill_add.png) left 3px no-repeat;cursor:pointer;}
 #customBlock{padding-bottom:30px;}
 .mr_skill_add span.error{margin-top:0;}
 /**
  * @author pooky
  * display:none -> display:inline-block;
  */
-.mr_skill_con .mr_skill_circle{display:none;cursor:pointer;width:20px;height:19px;position:absolute;left:122px;top:3px;background:url(http://www.jobsminer.cc/Public/Home/images/myresume/skill_circle.png) no-repeat center top;}
-.mr_skill_circle em{display:inline-block; cursor:pointer;width:29px;height:23px;line-height:17px;position:absolute;right: -4px;top: -22px;text-align: center;padding: 0px;color: #ffffff;background:url(http://www.jobsminer.cc/Public/Home/images/myresume/skill_img.png) center top no-repeat;font-size:11px;}
+.mr_skill_con .mr_skill_circle{display:none;cursor:pointer;width:20px;height:19px;position:absolute;left:122px;top:3px;background:url(http://www.icebear.me/Public/Home/images/myresume/skill_circle.png) no-repeat center top;}
+.mr_skill_circle em{display:inline-block; cursor:pointer;width:29px;height:23px;line-height:17px;position:absolute;right: -4px;top: -22px;text-align: center;padding: 0px;color: #ffffff;background:url(http://www.icebear.me/Public/Home/images/myresume/skill_img.png) center top no-repeat;font-size:11px;}
 
 
 #customBlock{padding-bottom:30px;}
@@ -555,7 +555,7 @@ content:"...";
 .mr_upload_logo img{position:absolute;z-index:1;width:0px;height:0px;}
 .mr_upload_logo div{position:absolute;text-align:center;z-index:2;width:120px;height:52px;padding-top:68px;}
 .mr_upload_logo div span{color:#999;}
-.mr_upload_logo div i{position:absolute;left:50px;top:37px;width:21px;height:18px;background:url(http://www.jobsminer.cc/Public/Home/images/myresume/upload_logo_shadow.png) -1px 0 no-repeat;}
+.mr_upload_logo div i{position:absolute;left:50px;top:37px;width:21px;height:18px;background:url(http://www.icebear.me/Public/Home/images/myresume/upload_logo_shadow.png) -1px 0 no-repeat;}
 .mr_upload_logo div.active i{background-position:-24px 0;}
 .mr_upload_logo div.up i{background-position:-47px 0;}
 .mr_upload_logo div.active span{color:#ac6198;}
@@ -598,22 +598,22 @@ content:"...";
 .mr_month .mb0{margin-bottom:0;}
 
 .mr_empty_add,.mt-edit-add.mr_empty_add{  display: block; cursor: pointer; margin: 20px; text-align: center; width: 284px; height: 100px; line-height: 98px; border: 1px dashed #d7d7d7; background-color: #fcfcfc;  position: relative;  padding: 0;  color: #aaa;  text-indent: 0;}
-.mr_empty_add i,.mt-edit-add.mr_empty_add i{ position: absolute; top: 42px; left: 80px; width: 15px; height: 15px; background: url(http://www.jobsminer.cc/Public/Home/images/myresume/icons_mr.png) -5px -69px no-repeat; margin-right: 6px; /* vertical-align: middle; */ float: left;}
+.mr_empty_add i,.mt-edit-add.mr_empty_add i{ position: absolute; top: 42px; left: 80px; width: 15px; height: 15px; background: url(http://www.icebear.me/Public/Home/images/myresume/icons_mr.png) -5px -69px no-repeat; margin-right: 6px; /* vertical-align: middle; */ float: left;}
 
 
 .quick-write{width: 126px;height: 31.6px;background-color: #ac6198;position: relative;margin: 0 auto;margin-top: 10px;line-height: 31.6px;font-size: 16px;color: #fff;font-weight: bold;cursor: pointer;text-indent: 42px;}
-.quick-write i{  width: 17px; height: 22px; background: url(http://www.jobsminer.cc/Public/static/client.jobsminer.cc/godimage/popup/quick-write.png) no-repeat center; position: absolute;   top: 5px;  left: 15px;}
+.quick-write i{  width: 17px; height: 22px; background: url(http://www.icebear.me/Public/static/client.jobsminer.cc/godimage/popup/quick-write.png) no-repeat center; position: absolute;   top: 5px;  left: 15px;}
 
 
 /* 反馈 */
 #product-fk{width:50px;height:50px;position:fixed;bottom:80px;margin-left:1000px;cursor:pointer;z-index:21}
 #feedback-icon{position:relative}
 #feedback-icon span{font-size:12px;color:#555}
-#feedback-icon .fb-icon{width:30px;height:30px;margin:0 auto;background:url(http://www.jobsminer.cc/Public/Home/images/feedback.png) no-repeat}
+#feedback-icon .fb-icon{width:30px;height:30px;margin:0 auto;background:url(http://www.icebear.me/Public/Home/images/feedback.png) no-repeat}
 #feedback-icon .fb-icon:hover{background-position:0 -31px}
 #feedback-con{width: 322px;/* position:fixed; */bottom:80px;/* background-color:#53535A; *//* border:1px solid #333; */border-radius:3px;-webkit-border-radius:3px;-moz-border-radius:3px;-o-border-radius:3px;-ms-border-radius:3px;/* box-shadow:2px 4px 7px #ecebeb; *//* -webkit-box-shadow:2px 4px 7px #ecebeb; */-moz-box-shadow:2px 4px 7px #ecebeb;-o-box-shadow:2px 4px 7px #ecebeb;-ms-box-shadow:2px 4px 7px #ecebeb;/* margin-left:680px; *//* display:none; */z-index:21}
-#feedback-con .pfb-pho{position:absolute;width:83px;height:82px;top:-44px;left:50%;margin-left:-40px;background:url(http://www.jobsminer.cc/Public/Home/images/feedback.png) 0 -62px no-repeat}
-#feedback-con .pfb-close{width:14px;height:14px;position:absolute;right:12px;top:10px;cursor:pointer;background:url(http://www.jobsminer.cc/Public/Home/images/close_notice.gif) no-repeat}
+#feedback-con .pfb-pho{position:absolute;width:83px;height:82px;top:-44px;left:50%;margin-left:-40px;background:url(http://www.icebear.me/Public/Home/images/feedback.png) 0 -62px no-repeat}
+#feedback-con .pfb-close{width:14px;height:14px;position:absolute;right:12px;top:10px;cursor:pointer;background:url(http://www.icebear.me/Public/Home/images/close_notice.gif) no-repeat}
 #feedback-con .error{width: 190px;height:30px;text-align:center;line-height:30px;position:absolute;top:135px;left:150px;background-color:#555;color:#fafafa;font-style: normal;font-size: 14px;border: none;}
 #feedback-con .error i{width:0;height:0;overflow:hidden;border:5px solid #555;border-color:#555 #555 transparent transparent;position:absolute;top:30px;left:120px}
 #feedback-con .error i.txt{border:5px solid #555;border-color:transparent transparent #555 #555;position:absolute;top:-10px;left:20px}
@@ -629,7 +629,7 @@ content:"...";
 #product-fb .ensure:hover{background:#F9D239}
 .pro-opa{opacity:0}
 
-#backtop{display:none;background:url(http://www.jobsminer.cc/Public/Home/images/backtop.png) left top no-repeat;width:28px;height:64px;position:fixed;bottom:140px;margin-left:1010px; cursor:pointer;}
+#backtop{display:none;background:url(http://www.icebear.me/Public/Home/images/backtop.png) left top no-repeat;width:28px;height:64px;position:fixed;bottom:140px;margin-left:1010px; cursor:pointer;}
 #backtop:hover{background-position:right top !important;}
 .dn {display: none; }
 .setting-quick-write{  font-size: 16px; color: #ac6198; margin: 20px; text-align: center;}
@@ -651,13 +651,13 @@ content:"...";
     width: 210px;
     height: 40px;
     display: block;
-    background: url(http://www.jobsminer.cc/Public/static/client.jobsminer.cc/godimage/popup/supportweb.png);
+    background: url(http://www.icebear.me/Public/static/client.jobsminer.cc/godimage/popup/supportweb.png);
 }
 .plugin-call {
     width: 210px;
     height: 39px;
     display: block;
-    background: url(http://www.jobsminer.cc/Public/static/client.jobsminer.cc/godimage/popup/plugincallout.png);
+    background: url(http://www.icebear.me/Public/static/client.jobsminer.cc/godimage/popup/plugincallout.png);
 }
 .plugin-btn-container {
     padding: 20px 65px;
@@ -815,16 +815,16 @@ content:"...";
   display: inline-block;
 }
 #jm_tab_intro .jm_pluginicon {
-background: url(http://www.jobsminer.cc/Public/static/client.jobsminer.cc/godimage/ot/list-small.png) no-repeat center;
+background: url(http://www.icebear.me/Public/static/client.jobsminer.cc/godimage/ot/list-small.png) no-repeat center;
 }
 #jm_tab_intro .jm_baikeicon {
- background: url(http://www.jobsminer.cc/Public/static/client.jobsminer.cc/godimage/ot/baike-small.png) no-repeat center;
+ background: url(http://www.icebear.me/Public/static/client.jobsminer.cc/godimage/ot/baike-small.png) no-repeat center;
 }
 #jm_tab_intro .jm_collecticon {
- background: url(http://www.jobsminer.cc/Public/static/client.jobsminer.cc/godimage/ot/collect-small.png) no-repeat center;
+ background: url(http://www.icebear.me/Public/static/client.jobsminer.cc/godimage/ot/collect-small.png) no-repeat center;
 }
 #jm_tab_intro .jm_resumeicon{
- background: url(http://www.jobsminer.cc/Public/static/client.jobsminer.cc/godimage/ot/resume-small.png) no-repeat center;
+ background: url(http://www.icebear.me/Public/static/client.jobsminer.cc/godimage/ot/resume-small.png) no-repeat center;
 }
 #jm_tab_intro .intro_line{
   height: 1px;

@@ -92,10 +92,10 @@ function _backgrountInit() {
     if(!localStorage["newVersionTips" + jm_VERSION]){
             setTimeout(function(){
                 jm_tools.setPopupBadgeText(1);
-                notification.create("notify_proxy_status", "Jobsminer网申助手1.0.0 版本上线啦! ", "支持最新最热的企业网申, 为你带来前所未有的方便体验.求职路上, 有我陪伴. 详情请猛击…",
+                notification.create("notify_proxy_status", "Icebear网申助手1.0.0 版本上线啦! ", "支持最新最热的企业网申, 为你带来前所未有的方便体验.求职路上, 有我陪伴. 详情请猛击…",
                 function() {
                 chrome.tabs.create({
-                    url: "http://www.jobsminer.cc/Plugin/plugin.html"
+                    url: "http://www.icebear.me/Plugin/plugin.html"
                     });
                 });
                 },
@@ -165,7 +165,7 @@ jm_tools = {
 
     postRemoteData:  function(a, b, c, d, e) {
         chrome.cookies.getAll({
-           domain: ".jobsminer.cc"
+           domain: ".icebear.me"
         },
         function(f) {
             var h = [];
@@ -228,7 +228,7 @@ jm_tools = {
                 _delaybackgroundInit();
             }
         }
-        isLoadRemoteRes ? KISSY.io.get("http://www.jobsminer.cc/Public/static/client.jobsminer.cc/v15/chrome/extra/config.json?ver=" + new Date().getTime(), 
+        isLoadRemoteRes ? KISSY.io.get("http://www.icebear.me/Public/static/client.jobsminer.cc/v15/chrome/extra/config.json?ver=" + new Date().getTime(), 
         function(b, c) {
             a(b, c)
         }) : KISSY.io.get(chrome.extension.getURL("/extra/config.json"), 
@@ -272,7 +272,7 @@ jm_tools = {
     showGuide: function() {
         //return;
         localStorage.getItem("alijmLoaded") || (localStorage.setItem("alijmLoaded", "true"), chrome.tabs.create({
-            url: "http://www.jobsminer.cc/Plugin/plugin.html?utm_source=plugin_install&utm_medium=plugin&utm_campaign=install_redirect"
+            url: "http://www.icebear.me/Plugin/plugin.html?utm_source=plugin_install&utm_medium=plugin&utm_campaign=install_redirect"
         }))
     },
     statistics: function() {
@@ -325,7 +325,7 @@ jm_tools = {
         
         localStorage.jm_login ? b = JSON.parse(localStorage.jm_login) : localStorage.jm_login = JSON.stringify(b),
         chrome.cookies.getAll({
-           domain: ".jobsminer.cc"
+           domain: ".icebear.me"
         },
         function(c) {
            // console.log(c);
@@ -348,19 +348,19 @@ jm_tools = {
             console.log(b);
 
             chrome.cookies.get({
-                url:"http://.jobsminer.cc",
+                url:"http://.icebear.me",
                 name:"ot_home_login"
             },
             function(c){
                 if( !c && JSON.parse(localStorage.jm_login).ot_home_login ){
                     //保持登录态
                     chrome.cookies.set({
-                        url: "http://.jobsminer.cc",
+                        url: "http://.icebear.me",
                         name: 'ot_home_login',
                         value: b.ot_home_login
                     });
                     chrome.cookies.set({
-                        url: "http://.jobsminer.cc",
+                        url: "http://.icebear.me",
                         name: 'ot_home_uid',
                         value: b.ot_home_uid
                     });

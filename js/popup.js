@@ -142,7 +142,7 @@ function popup_init() {
         }
     });
 
-    chrome.cookies.get({url:"http://www.jobsminer.cc",name:"ot_home_gotourl"},function(cookie){
+    chrome.cookies.get({url:"http://www.icebear.me",name:"ot_home_gotourl"},function(cookie){
         var gotourl = cookie ? cookie.value : '';
         setBackgroundLocalStore({
             gotourl: gotourl
@@ -1193,7 +1193,7 @@ KISSY.add('jmPopBase', function(S, Node, Base, IO) {
 
     var getCode = function(_config) {
         var type = _config.type,
-            url = 'http://www.jobsminer.cc/User/getBaseinfo';
+            url = 'http://www.icebear.me/User/getBaseinfo';
 
         new IO({
             url: url,
@@ -1367,7 +1367,7 @@ KISSY.add('jmPopBase', function(S, Node, Base, IO) {
             }
 
             new IO({
-                url: "http://www.jobsminer.cc/Resume/basicPost?access=1",
+                url: "http://www.icebear.me/Resume/basicPost?access=1",
                 type: 'GET',
                 data: ss,
                 dataType: 'json',
@@ -1386,7 +1386,7 @@ KISSY.add('jmPopBase', function(S, Node, Base, IO) {
                     $('<span for="mr_name" generated="true" class="error">修改失败，请稍后重试</span>').insertBefore($("#base-list .mr_save"));
                 }
             });
-            /*KISSY.io.post("http://www.jobsminer.cc/Resume/basicPost", JSON.stringify(ss), function(e) {
+            /*KISSY.io.post("http://www.icebear.me/Resume/basicPost", JSON.stringify(ss), function(e) {
                 console.log('updateuser e:' + e);
             });*/
             e.stopPropagation();
@@ -1429,7 +1429,7 @@ KISSY.add('jmPopEdu', function(S, Node, Base, IO) {
 
     var getCode = function(_config) {
         var type = _config.type,
-            url = 'http://www.jobsminer.cc/User/getOtherinfo';
+            url = 'http://www.icebear.me/User/getOtherinfo';
 
         new IO({
             url: url,
@@ -1510,7 +1510,7 @@ KISSY.add('jmPopEdu', function(S, Node, Base, IO) {
                 };
 
             new IO({
-                url: "http://www.jobsminer.cc/Resume/delEdu?access=1",
+                url: "http://www.icebear.me/Resume/delEdu?access=1",
                 type: 'GET',
                 data: ss,
                 dataType: 'json',
@@ -1528,7 +1528,7 @@ KISSY.add('jmPopEdu', function(S, Node, Base, IO) {
                     $('<span for="mr_name" generated="true" class="error">修改失败，请稍后重试</span>').insertBefore($("#edu-list .mr_save"));
                 }
             });
-            /*KISSY.io.post("http://www.jobsminer.cc/Resume/basicPost", JSON.stringify(ss), function(e) {
+            /*KISSY.io.post("http://www.icebear.me/Resume/basicPost", JSON.stringify(ss), function(e) {
                 console.log('updateuser e:' + e);
             });*/
             e.stopPropagation();
@@ -1605,7 +1605,7 @@ KISSY.add('jmPopEdu', function(S, Node, Base, IO) {
                 };
 
             new IO({
-                url: "http://www.jobsminer.cc/Resume/educationExperience?access=1",
+                url: "http://www.icebear.me/Resume/educationExperience?access=1",
                 type: 'GET',
                 data: ss,
                 dataType: 'json',
@@ -1661,7 +1661,7 @@ KISSY.add('jmPopExp', function(S, Node, Base, IO) {
 
     var getCode = function(_config) {
         var type = _config.type,
-            url = 'http://www.jobsminer.cc/User/getOtherinfo';
+            url = 'http://www.icebear.me/User/getOtherinfo';
 
         new IO({
             url: url,
@@ -1774,7 +1774,7 @@ KISSY.add('jmPopExp', function(S, Node, Base, IO) {
                 };
 
             new IO({
-                url: "http://www.jobsminer.cc/Resume/delExp?access=1",
+                url: "http://www.icebear.me/Resume/delExp?access=1",
                 type: 'GET',
                 data: ss,
                 dataType: 'json',
@@ -1792,7 +1792,7 @@ KISSY.add('jmPopExp', function(S, Node, Base, IO) {
                     $('<span for="mr_name" generated="true" class="error">修改失败，请稍后重试</span>').insertBefore($("#exp-list .mr_save"));
                 }
             });
-            /*KISSY.io.post("http://www.jobsminer.cc/Resume/basicPost", JSON.stringify(ss), function(e) {
+            /*KISSY.io.post("http://www.icebear.me/Resume/basicPost", JSON.stringify(ss), function(e) {
                 console.log('updateuser e:' + e);
             });*/
             e.stopPropagation();
@@ -1907,7 +1907,7 @@ KISSY.add('jmPopExp', function(S, Node, Base, IO) {
             };
 
         new IO({
-            url: "http://www.jobsminer.cc/Resume/workExperience?access=1",
+            url: "http://www.icebear.me/Resume/workExperience?access=1",
             type: 'GET',
             data: ss,
             dataType: 'json',
@@ -1962,7 +1962,7 @@ KISSY.add('jmPopPro', function(S, Node, Base, IO) {
 
     var getCode = function(_config) {
         var type = _config.type,
-            url = 'http://www.jobsminer.cc/User/getOtherinfo';
+            url = 'http://www.icebear.me/User/getOtherinfo';
 
         new IO({
             url: url,
@@ -2073,7 +2073,7 @@ KISSY.add('jmPopPro', function(S, Node, Base, IO) {
                 };
 
             new IO({
-                url: "http://www.jobsminer.cc/Resume/delProject?access=1",
+                url: "http://www.icebear.me/Resume/delProject?access=1",
                 type: 'GET',
                 data: ss,
                 dataType: 'json',
@@ -2091,7 +2091,7 @@ KISSY.add('jmPopPro', function(S, Node, Base, IO) {
                     $('<span for="mr_name" generated="true" class="error">修改失败，请稍后重试</span>').insertBefore($("#pro-list .mr_save"));
                 }
             });
-            /*KISSY.io.post("http://www.jobsminer.cc/Resume/basicPost", JSON.stringify(ss), function(e) {
+            /*KISSY.io.post("http://www.icebear.me/Resume/basicPost", JSON.stringify(ss), function(e) {
                 console.log('updateuser e:' + e);
             });*/
             e.stopPropagation();
@@ -2207,7 +2207,7 @@ KISSY.add('jmPopPro', function(S, Node, Base, IO) {
             };
 
         new IO({
-            url: "http://www.jobsminer.cc/Resume/projectExperience?access=1",
+            url: "http://www.icebear.me/Resume/projectExperience?access=1",
             type: 'GET',
             data: ss,
             dataType: 'json',
@@ -2262,7 +2262,7 @@ KISSY.add('jmPopCor', function(S, Node, Base, IO) {
 
     var getCode = function(_config) {
         var type = _config.type,
-            url = 'http://www.jobsminer.cc/User/getOtherinfo';
+            url = 'http://www.icebear.me/User/getOtherinfo';
 
         new IO({
             url: url,
@@ -2339,7 +2339,7 @@ KISSY.add('jmPopCor', function(S, Node, Base, IO) {
                 };
 
             new IO({
-                url: "http://www.jobsminer.cc/Resume/userDefineDel?access=1",
+                url: "http://www.icebear.me/Resume/userDefineDel?access=1",
                 type: 'GET',
                 data: ss,
                 dataType: 'json',
@@ -2409,7 +2409,7 @@ KISSY.add('jmPopCor', function(S, Node, Base, IO) {
             };
 
         new IO({
-            url: "http://www.jobsminer.cc/Resume/userDefine?access=1",
+            url: "http://www.icebear.me/Resume/userDefine?access=1",
             type: 'GET',
             data: ss,
             dataType: 'json',

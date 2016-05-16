@@ -12,7 +12,7 @@
       "css":["extra/animated-notifications.css","extra/animate.css"],
       "matches": [ "http://*/*", "https://*/*" ]
    } ],
-   "content_security_policy": "script-src 'self' https://www.google-analytics.com; object-src 'self' 'unsafe-eval' https://www.jobsminer.cc/; object-src 'self' 'unsafe-eval' https://www.jobsminer.cc/",
+   "content_security_policy": "script-src 'self' https://www.google-analytics.com; object-src 'self' 'unsafe-eval' https://www.icebear.me/; object-src 'self' 'unsafe-eval' https://www.icebear.me/",
    "description": "Icebear白熊网申助手, 专为企业网申设计，省去繁杂填写，支持多种浏览器， 适配各类网申页面，让offer来得更轻松！",
    "icons": {
       "128": "images/icon128.png",
@@ -24,7 +24,7 @@
    "name": "Icebear白熊网申助手",
    // "update_url": "http://upext.chrome.360.cn/intf.php?method=ExtUpdate.query",
    "permissions": [ "management", "proxy", "idle", "tabs", "cookies", "notifications", "webRequest", "webRequestBlocking", "http://*/*", "https://*/*",   "unlimitedStorage" ],
-   "homepage_url":"http://www.jobsminer.cc",
+   "homepage_url":"http://www.icebear.me",
    "version": "1.0.0.0",
    "web_accessible_resources": [ "/extra/jobsminer.css", "/extra/popup.css", "popup.html" ]
 }

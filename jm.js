@@ -180,12 +180,12 @@ function isMatchedHomeWebSite() {
 
 function getMatchedWebSiteDomain() {
     for (var a = window.location.host, b = 0; b < allowWebSite.length; b++)
-    	if ( - 1 != a.indexOf("." + allowWebSite[b])) return allowWebSite[b].replace(".com", "").replace(".de","").replace("6pm", "sixpm").replace("us-dc2-order.store.yahoo.net", "albeebaby").replace("order.store.yahoo.net", "albeebaby").replace(".co.jp","").replace(".com.cn", "").replace(".cn:8088","").replace(".cn", "").replace(".cc", "").replace(".net", "").replace(".com.hk","").replace(".hk","");
+    	if ( - 1 != a.indexOf("." + allowWebSite[b])) return allowWebSite[b].replace(".com", "").replace(".de","").replace("6pm", "sixpm").replace("us-dc2-order.store.yahoo.net", "albeebaby").replace("order.store.yahoo.net", "albeebaby").replace(".co.jp","").replace(".com.cn", "").replace(".cn:8088","").replace(".cn", "").replace(".cc", "").replace(".me", "").replace(".net", "").replace(".com.hk","").replace(".hk","");
     return "null"
 }
 function getMatchedHomeWebSiteDomain() {
     for (var a = window.location.host, b = 0; b < homeSupportWebSite.length; b++)
-        if ( - 1 != a.indexOf("." + homeSupportWebSite[b])) return homeSupportWebSite[b].replace(".com", "").replace(".de","").replace("6pm", "sixpm").replace("us-dc2-order.store.yahoo.net", "albeebaby").replace("order.store.yahoo.net", "albeebaby").replace(".co.jp","").replace(".com.cn", "").replace(".cn:8088","").replace(".cn", "").replace(".cc", "").replace(".net", "").replace(".com.hk","").replace(".hk","");
+        if ( - 1 != a.indexOf("." + homeSupportWebSite[b])) return homeSupportWebSite[b].replace(".com", "").replace(".de","").replace("6pm", "sixpm").replace("us-dc2-order.store.yahoo.net", "albeebaby").replace("order.store.yahoo.net", "albeebaby").replace(".co.jp","").replace(".com.cn", "").replace(".cn:8088","").replace(".cn", "").replace(".cc", "").replace(".me", "").replace(".net", "").replace(".com.hk","").replace(".hk","");
     return "null"
 }
 function startRun() {
@@ -1733,6 +1733,45 @@ function(a,b,c,d) {
             });
         } 
     }
+    }
+    
+    function u() {}
+    return a.augment(u, {
+        init: function() {
+            e()
+        }
+    }),
+    u
+},
+{
+    requires: ["menubutton", "mu", "overlay", "switchable"]
+}),
+
+KISSY.add("icebearFunction", 
+function(a,b,c,d) {
+    function e(){
+        function getCookie(name){
+            return (document.cookie.match(new RegExp("(^"+name+"| "+name+")=([^;]*)"))==null)?"":RegExp.$2;
+        }
+        console.log(getCookie);
+        var isLogin = getCookie("ot_home_login");
+        var homeUid = getCookie("ot_home_uid");
+        var ezHomeUid = getCookie("ot_home_ez_uid");
+        var a = {"ot_home_ez_uid":homeUid,"ot_home_uid":homeUid,"ot_home_login":isLogin,"login":"true"};
+        if(isLogin == 1){
+            jm_tools.setBackgroundLocalStore({
+                //login :{"ot_home_ez_uid":ezHomeUid,"ot_home_uid":homeUid,"ot_home_login":isLogin}
+                jm_login: JSON.stringify(a)
+            });
+            jm_tools.getMessageFromBackground({
+                operate: "getLocalStorage",
+                data: {"key": 'jm_login'}
+            }, function(data) {
+                console.log('icebear------' + data);
+            
+            });
+        } 
+        
     }
     
     function u() {}
@@ -4759,7 +4798,7 @@ window.jm_tools = {
     }
 };
 
-var allowWebSite = ["qq.com","jd.com","douban.com","cmcm.com","pingan.com","oppo.com","163.com","zhiye.com","10086.cn","hotjob.cn","cmbc.com.cn","baidu.com","alibaba.com","sohu-inc.com","51job.com","chinahr.com","hirede.com","chuangxin.com","xunlei.com","huawei.com","wintalent.cn","brassring.com.cn","cmbchina.com","dearsamsung.com.cn","coolpad.com","peopleclick.com","apply2jobs.com","force.com","fang.com","4399.com","zhaopin.com","hundsun.com","arcsoft.com.cn","actions-semi.com","inspur.com","dajie.com","longfor.com","zte.com.cn","taleo.net","htsc.com.cn","hr.foxconn.com","skyallhere.com","kpmg.com.cn","gdtel.com.cn","tal.net","jobsminer.cc","boe.com.cn","hxb.com.cn","chinalife.com.cn","cvte.com","haier.net","cgnpc.com.cn","nhrdc.cn:8088","com.cn"];
+var allowWebSite = ["qq.com","jd.com","douban.com","cmcm.com","pingan.com","oppo.com","163.com","zhiye.com","10086.cn","hotjob.cn","cmbc.com.cn","baidu.com","alibaba.com","sohu-inc.com","51job.com","chinahr.com","hirede.com","chuangxin.com","xunlei.com","huawei.com","wintalent.cn","brassring.com.cn","cmbchina.com","dearsamsung.com.cn","coolpad.com","peopleclick.com","apply2jobs.com","force.com","fang.com","4399.com","zhaopin.com","hundsun.com","arcsoft.com.cn","actions-semi.com","inspur.com","dajie.com","longfor.com","zte.com.cn","taleo.net","htsc.com.cn","hr.foxconn.com","skyallhere.com","kpmg.com.cn","gdtel.com.cn","tal.net","jobsminer.cc","icebear.me","boe.com.cn","hxb.com.cn","chinalife.com.cn","cvte.com","haier.net","cgnpc.com.cn","nhrdc.cn:8088","com.cn"];
 var allowWebSiteFinder = null;
 var homeWebSite = ["lagou.com"];
 var homeWebSiteFinder = null;

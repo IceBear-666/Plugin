@@ -1,4 +1,4 @@
-var _urlOnline = "http://www.jobsminer.cc/";
+var _urlOnline = "http://www.icebear.me/";
 var _loginPopWidth = '334';
 var _loginPopHeight = '405';
 var _registerPopWidth = '334';
@@ -24,9 +24,9 @@ window.jmLogin = {
     // setCookie: function(name,value,sec){
     //     if(arguments.length>2){
     //         var expire=new Date(new Date().getTime()+sec*1000);
-    //         document.cookie = name + "=" + escape(value) + "; path=/; domain=.jobsminer.cc; expires=" + expire.toGMTString() ;
+    //         document.cookie = name + "=" + escape(value) + "; path=/; domain=.icebear.me; expires=" + expire.toGMTString() ;
     //     }else
-    //     document.cookie = name + "=" + escape(value) + "; path=/; domain=.jobsminer.cc";
+    //     document.cookie = name + "=" + escape(value) + "; path=/; domain=.icebear.me";
     // },
     // getCookie: function(name){
     //     return (document.cookie.match(new RegExp("(^"+name+"| "+name+")=([^;]*)"))==null)?"":RegExp.$2;
@@ -36,7 +36,7 @@ window.jmLogin = {
         //     var b = window.jmLogin.cookieNames[a];
         //     if(chrome.cookies){
         //         chrome.cookies.set({
-        //             url: "http://www.jobsminer.cc",
+        //             url: "http://www.icebear.me",
         //             name: b,
         //             value: ""
         //         })
@@ -51,9 +51,9 @@ window.jmLogin = {
         window.jmLogin.initLoginHtml();
         window.jmLogin.checkLogin();
         chrome.cookies.onChanged.addListener(function(a) {
-		    if( a.cookie.domain.indexOf(".jobsminer.cc") > -1 )console.log(a.cookie.domain+' '+a.cookie.name); 
-            if ( "ot_home_login" == a.cookie.name  && a.cookie.domain.indexOf(".jobsminer.cc") > -1 ) {
-                chrome.cookies.get({url:"http://www.jobsminer.cc",name:"ot_home_gotourl"},function(cookie){
+		    if( a.cookie.domain.indexOf(".icebear.me") > -1 )console.log(a.cookie.domain+' '+a.cookie.name); 
+            if ( "ot_home_login" == a.cookie.name  && a.cookie.domain.indexOf(".icebear.me") > -1 ) {
+                chrome.cookies.get({url:"http://www.icebear.me",name:"ot_home_gotourl"},function(cookie){
                     var gotourl = cookie ? cookie.value : '';
                     ///值就在cookie 里面了
                     if (console.log("changeInfo.cookie.name:", a.cookie.name), !gotourl && a.cookie.value != 'deleted' && a.cookie.value != ''){
@@ -192,7 +192,7 @@ window.jmLogin = {
         localStorage.jm_login ? b = JSON.parse(localStorage.jm_login) : localStorage.jm_login = JSON.stringify(b),
 		console.log("end:" + localStorage.jm_login),
         chrome.cookies.getAll({
-            domain: ".jobsminer.cc"
+            domain: ".icebear.me"
         },
         function(c) {
             console.log('c:'+ JSON.stringify(c));
@@ -236,14 +236,14 @@ window.jmLogin = {
         KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
         KISSY.all('.jm-support-qipao').hide();
         //KISSY.one('#jm_login').removeClass('jm_islogin')
-        //var a = '<iframe id="jm_logout_iframe" scrolling="no" frameborder="0" allowtransparency=true border="0" width="0" height="0" src="http://svr.jobsminer.cc/uc_home/user.php?TPL_type=logout" style="overflow: hidden;"></iframe>';
+        //var a = '<iframe id="jm_logout_iframe" scrolling="no" frameborder="0" allowtransparency=true border="0" width="0" height="0" src="http://svr.icebear.me/uc_home/user.php?TPL_type=logout" style="overflow: hidden;"></iframe>';
         //KISSY.one("body").append(a),
         //KISSY.one("body").fire("loginStatusUpdate");
-        KISSY.io.get('http://www.jobsminer.cc/User/logout_iframe/',function(data){console.log(data);
+        KISSY.io.get('http://www.icebear.me/User/logout_iframe/',function(data){console.log(data);
             window.jm_jminer.login = "";
             KISSY.one('#jm_pop_tab').removeClass('jm_pop_tab_min');
             KISSY.all('.jm-register,#jm-logo').show();
-            //KISSY.one('.jm-register iframe').attr("src","http://www.jobsminer.cc/User/checkLogin?callback=jmLogin.checkLoginCallback");
+            //KISSY.one('.jm-register iframe').attr("src","http://www.icebear.me/User/checkLogin?callback=jmLogin.checkLoginCallback");
             window.jmLogin.webCheckLoginStatus();
             KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
         });
