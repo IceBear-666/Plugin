@@ -731,11 +731,11 @@ content:"...";
   width: 38px;
   position: absolute;
   top: 50%;
-  margin-top: -157px;
+  margin-top: -185px;
   border-bottom: 1px solid #fceb9e;
 }
 .plugin_quickwrite ul li a{
-  height: 50px;
+  height: 59px;
   width: 38px;
   color: #482929;
   display: block;
@@ -747,15 +747,15 @@ content:"...";
 } 
 .plugin_quickwrite ul li a.qw-openqz {
   background:url(http://www.icebear.me/Public/static/client.jobsminer.cc/godimage/version2/qw-openqz.png) no-repeat;
-  background-position: 10px 15px;
+  background-position: 7px 10px;
 } 
 .plugin_quickwrite ul li a.qw-edit {
   background:url(http://www.icebear.me/Public/static/client.jobsminer.cc/godimage/version2/qw-edit.png) no-repeat;
-  background-position: 10px 15px;
+  background-position: 6px 10px;
 }
 .plugin_quickwrite ul li a.qw-refresh {
   background:url(http://www.icebear.me/Public/static/client.jobsminer.cc/godimage/version2/qw-refresh.png) no-repeat;
-  background-position: 10px 15px;
+  background-position: 6px 10px;
 } 
 .plugin_quickwrite .quick-write {
   background-color: #ffd733;
@@ -866,11 +866,11 @@ content:"...";
 }
 .plugin_quickwrite ul.bottom-btn li a.qw-feedback {
   background: url(http://www.icebear.me/Public/static/client.jobsminer.cc/godimage/ot/plugin-fb.png) no-repeat center;
-  background-position: 8px;
+  background-position: 6px 8px;
 }
 .plugin_quickwrite ul.bottom-btn li a.qw-share {
   background: url(http://www.icebear.me/Public/static/client.jobsminer.cc/godimage/ot/plugin-share.png) no-repeat center;
-  background-position: 10px;
+  background-position: 5px 10px;
 }
 .plugin_quickwrite ul.bottom-btn li .sharetowx{
   display: none;
