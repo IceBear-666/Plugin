@@ -22,9 +22,8 @@
    "manifest_version": 2,
    "options_page": "popup.html",
    "name": "Icebear白熊求职助手",
-   // "update_url": "http://upext.chrome.360.cn/intf.php?method=ExtUpdate.query",
    "permissions": [ "management", "proxy", "idle", "tabs", "cookies", "notifications", "webRequest", "webRequestBlocking", "http://*/*", "https://*/*",   "unlimitedStorage" ],
    "homepage_url":"http://www.icebear.me",
-   "version": "1.0.0.1",
+   "version": "1.0.0.2",
    "web_accessible_resources": [ "/extra/jobsminer.css", "/extra/popup.css", "popup.html" ]
 }
