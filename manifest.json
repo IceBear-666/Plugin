@@ -25,6 +25,6 @@
    // "update_url": "http://upext.chrome.360.cn/intf.php?method=ExtUpdate.query",
    "permissions": [ "management", "proxy", "idle", "tabs", "cookies", "notifications", "webRequest", "webRequestBlocking", "http://*/*", "https://*/*",   "unlimitedStorage" ],
    "homepage_url":"http://www.icebear.me",
-   "version": "1.0.0.0",
+   "version": "1.0.0.1",
    "web_accessible_resources": [ "/extra/jobsminer.css", "/extra/popup.css", "popup.html" ]
 }
