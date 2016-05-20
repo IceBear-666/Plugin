@@ -1,5 +1,4 @@
  function jm_init() {
-
     jm_tools.checkWebSite() && (jm_tools.loadExtraResource(), dealWebsite())
 }
  function jm_init_home() {
@@ -45,11 +44,11 @@ function dealWebsite() {
     function waitForCss(){
         window.jm_jminer.isLoadTips = "true";
         var a = window.jm_jminer.config;
+        var host = document.domain;
         if (a && a.website) {
             console.log(a.website);
-
-            //在进入icebear时 检测登录
-            var host = document.domain;
+             //在进入icebear时 检测登录
+            
             console.log(host);
             if (host == "icebear.me") {
                 //KISSY.use('icebearFunction', function (a,b,c,d) {});
@@ -71,7 +70,7 @@ function dealWebsite() {
                     window.jm_jminer.curWebSite = f,
                     f.init(),
                     //jm_tools.initTips(c.tips);
-                    var g = null;
+                    //var g = null;
                     KISSY.one("body").on("jmRepaint", 
                     function() {
                         //e()
@@ -82,7 +81,7 @@ function dealWebsite() {
             var b = getMatchedWebSiteDomain();
             if ("null" == b) return;
             var c = a.website[b];
-            console.log(c);
+
             var tips_timer = null;
             var last_update_tips_time = 0;
 
@@ -114,8 +113,7 @@ function dealWebsite() {
 
                 //支持多个网站
                 //采用kissy创建模块的方式，如amazonFunction模块，sixpmFunction模块等
-                
-                
+
                 var d = b + "Function";
                 KISSY.use(d, 
                 function(a, d) {
@@ -124,7 +122,6 @@ function dealWebsite() {
                             var a = window.jm_jminer.config;
                             if (a && a.website) {
                                 var c = a.website[b];
-                                console.log(c);
                                 c && c.tips && (jm_tools.initTips(c.tips), f.reposTips && (f.reposTips(), console.timeEnd("dealWebsite")))
                             }
                             g = null
@@ -1785,7 +1782,6 @@ function(a,b,c,d) {
 KISSY.add("icebearFunction", 
 function(a,b,c,d) {
     function e(){
-        console.log('12312');
         function getCookie(name){
             return (document.cookie.match(new RegExp("(^"+name+"| "+name+")=([^;]*)"))==null)?"":RegExp.$2;
         }

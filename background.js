@@ -228,7 +228,7 @@ jm_tools = {
                 _delaybackgroundInit();
             }
         }
-         isLoadRemoteRes ? KISSY.io.get("http://www.icebear.me/Public/static/client.jobsminer.cc/v15/chrome/extra/config.json?ver=" + new Date().getTime(), 
+        isLoadRemoteRes ? KISSY.io.get("http://www.icebear.me/Public/static/client.jobsminer.cc/v15/chrome/extra/config.json?ver=" + new Date().getTime(), 
         function(b, c) {
             a(b, c)
         }) : KISSY.io.get(chrome.extension.getURL("/extra/config.json"), 
