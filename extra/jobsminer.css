@@ -866,11 +866,11 @@ content:"...";
 }
 .plugin_quickwrite ul.bottom-btn li a.qw-feedback {
   background: url(http://www.icebear.me/Public/static/client.jobsminer.cc/godimage/ot/plugin-fb.png) no-repeat center;
-  background-position: 6px 8px;
+  background-position: 8px 8px;
 }
 .plugin_quickwrite ul.bottom-btn li a.qw-share {
   background: url(http://www.icebear.me/Public/static/client.jobsminer.cc/godimage/ot/plugin-share.png) no-repeat center;
-  background-position: 5px 10px;
+  background-position: 7px 10px;
 }
 .plugin_quickwrite ul.bottom-btn li .sharetowx{
   display: none;
