@@ -77,12 +77,12 @@ select {
 #jm_pop_tab .ks-active .li-text{background: #ffda44;box-shadow: -1px 3px 13px rgba(0,0,0,0.2);}
 #jm_pop_tab .ks-switchable-content{margin-left: 36px;border-left: 1px solid rgba(117, 117, 125, 0.59);height: 562px;overflow-y: auto;background: #fff;border-bottom: 1px solid rgba(117, 117, 125, 0.59);}
 #jm_pop_tab .ks-switchable-content::-webkit-scrollbar,#mt_projectremark::-webkit-scrollbar, #mt_workcontent::-webkit-scrollbar, #mt_titlecontent::-webkit-scrollbar {
-  width: 8px;
-}
+    width: 8px;
+  }
 #jm_pop_tab .ks-switchable-content::-webkit-scrollbar-thumb,#mt_projectremark::-webkit-scrollbar-thumb, #mt_workcontent::-webkit-scrollbar-thumb, #mt_titlecontent::-webkit-scrollbar-thumb {
-  background: #cccccc;
-  border-radius: 10px;
-}
+    background: #cccccc;
+    border-radius: 10px;
+  }
 
 #jm_pop_tab ul{list-style: none; padding: 0;}
 .clearfixs:before,.clearfixs:after{content:"";display:table;}
