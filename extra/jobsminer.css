@@ -35,8 +35,8 @@ select {
     margin-right: 10px;
     font-size: 14px;
 }
-.fl{float: left;margin-right: 5px;}
-.fr{float: right;margin-right: 10px;}
+#jm_pop_tab .fl{float: left;margin-right: 5px;}
+#jm_pop_tab .fr{float: right;margin-right: 10px;}
 
 #jm_pop_tab{/*width: 360px; */width: 300px; height: 100%;margin:  0 auto;overflow-y: hidden;position: fixed;right: 0;top: 0px;z-index: 11111;}
 #jm_pop_tab.jm_pop_tab_min{width: 38px;}
@@ -107,14 +107,14 @@ input[type="button"],input[type="submit"]{outline:none;cursor:pointer;border:non
 
 #jm_pop_tab span.error{display:block; margin:5px 0 10px 0; font-size:14px; color:#ff6a6a;text-align:left; background:url(http://www.icebear.me/Public/Home/images/error.png) 0 3px no-repeat; padding-left:20px; line-height:22px;border: none;}
 
-.mt-title{  display: inline-block; margin-top: 16px;}
-.metil{  margin-top: 0; background:#f9f9f9; padding: 5px 15px; border-left:3px solid #ac6198; font-size:16px; margin-left: 15px; width: 171px; float: left; position: relative;}
+#jm_pop_tab .mt-title{  display: inline-block; margin-top: 16px;}
+#jm_pop_tab .metil{  margin-top: 0; background:#f9f9f9; padding: 5px 15px; border-left:3px solid #ac6198; font-size:16px; margin-left: 15px; width: 171px; float: left; position: relative;}
 #base-list .metil{margin-top: 0px;border-color: #ac6198;}
-.mt-edit{width: 55px; float: left; background: #ac6198; margin-left: 12px; padding: 5px 7px; font-size: 14px;text-indent: 22px;position: relative;color: #fff;cursor: pointer;}
+#jm_pop_tab .mt-edit{width: 55px; float: left; background: #ac6198; margin-left: 12px; padding: 5px 7px; font-size: 14px;text-indent: 22px;position: relative;color: #fff;cursor: pointer;}
 #other-list{  /*height: 21px; padding: 4px;*/ /*line-height: 21px;*/} 
-.mt-edit i{width:15px; height:15px;background: url(http://www.icebear.me/Public/static/client.jobsminer.cc/godimage/popup/edit.png) no-repeat center; position: absolute;top: 8px;left: 5px;}
-.mt-edit-add{width: 55px; float: right; margin-right: 10px;background-color: #ac6198; margin-left: 12px; padding: 5px 7px; font-size: 14px;text-indent: 8px;position: relative;color: #fff;cursor: pointer;margin-bottom: 10px;}
-.mt-edit-add i{width:15px; height:15px;background: url(http://www.icebear.me/Public/static/client.jobsminer.cc/godimage/popup/plus.png) no-repeat center; position: absolute;top: 8px;right: 5px;}
+#jm_pop_tab .mt-edit i{width:15px; height:15px;background: url(http://www.icebear.me/Public/static/client.jobsminer.cc/godimage/popup/edit.png) no-repeat center; position: absolute;top: 8px;left: 5px;}
+#jm_pop_tab .mt-edit-add{width: 55px; float: right; margin-right: 10px;background-color: #ac6198; margin-left: 12px; padding: 5px 7px; font-size: 14px;text-indent: 8px;position: relative;color: #fff;cursor: pointer;margin-bottom: 10px;}
+#jm_pop_tab .mt-edit-add i{width:15px; height:15px;background: url(http://www.icebear.me/Public/static/client.jobsminer.cc/godimage/popup/plus.png) no-repeat center; position: absolute;top: 8px;right: 5px;}
 
 .edit-status .metil{width: 251px;}
 .edit-status .mt-edit{display: none;}
