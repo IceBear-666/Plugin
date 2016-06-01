@@ -92,7 +92,7 @@ function _backgrountInit() {
     if(!localStorage["newVersionTips" + jm_VERSION]){
             setTimeout(function(){
                 jm_tools.setPopupBadgeText(1);
-                notification.create("notify_proxy_status", "Icebear白熊求职助手1.0.0.5 版本上线啦! ", "支持最新最热的企业网申, 为你带来前所未有的方便体验.求职路上, 有我陪伴. 详情请猛击…",
+                notification.create("notify_proxy_status", "Icebear白熊求职助手1.0.0.7 版本上线啦! ", "支持最新最热的企业网申, 为你带来前所未有的方便体验.求职路上, 有我陪伴. 详情请猛击…",
                 function() {
                 chrome.tabs.create({
                     url: "http://icebear.me/"
@@ -805,5 +805,35 @@ function() {
         }));
     }catch(err){
         
+    }
+    //版本更新检测 Check Update Version
+    function onInstall() {
+        console.log("Extension Installed");
+    }
+
+    function onUpdate() {
+        console.log("Extension Updated");
+        chrome.tabs.create({
+            url: "http://icebear.me/install/release.html?utm_source=plugin_update&utm_medium=plugin&utm_campaign=update_redirect"
+        });
+    }
+
+    function getVersion() {
+        var details = chrome.app.getDetails();
+        return details.version;
+    }
+
+    // Check if the version has changed.
+    var currVersion = getVersion();
+    console.log(currVersion);
+    var prevVersion = localStorage['version']
+    if (currVersion != prevVersion) {
+    // Check if we just installed this extension.
+    if (typeof prevVersion == 'undefined') {
+        onInstall();
+    } else {
+        onUpdate();
+    }
+        localStorage['version'] = currVersion;
     }
 } ();
