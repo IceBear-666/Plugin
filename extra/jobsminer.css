@@ -763,6 +763,7 @@ content:"...";
   background-position: 8px 8px;
 }
 .plugin_quickwrite .quick-write p{
+    color: #482929;
     width: 25px;
     font-size: 18px;
     margin: 0;
