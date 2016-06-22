@@ -208,8 +208,8 @@ function(a, b, c, d, e, f) {
             obj = obj.value;
             obj = JSON.parse(obj);
             checkuserid = obj.ot_home_uid;
-            console.log(checkuserid);
-            console.log('user------' +  checkuserid);
+            //console.log(checkuserid);
+            //console.log('user------' +  checkuserid);
             var formlink =  window.location.href;
             formlink +='-display';
             if (checkuserid) {
@@ -688,7 +688,7 @@ KISSY.add('jmPopBase', function(S, Node, Base, IO) {
             dataType: 'json',
             success: function(data) {
                 console.log('request code base data is success!');
-                console.log(data);
+                //console.log(data);
                 processCodeBaseData(data);
             },
             error: function() {
@@ -1000,8 +1000,8 @@ KISSY.add('jmPopEdu', function(S, Node, Base, IO) {
             type: 'get',
             dataType: 'json',
             success: function(data) {
-                console.log('request code base data is success!');
-                console.log(data);
+                console.log('request code education data is success!');
+                //console.log(data);
                 //console.log(data[edu_list]);
                 processCodeBaseData(data);
             },
@@ -1246,7 +1246,7 @@ KISSY.add('jmPopExp', function(S, Node, Base, IO) {
             type: 'get',
             dataType: 'json',
             success: function(data) {
-                console.log('request code base data is success!');
+                console.log('request code job data is success!');
                 processCodeBaseData(data);
             },
             error: function() {
@@ -1562,7 +1562,7 @@ KISSY.add('jmPopPro', function(S, Node, Base, IO) {
             type: 'get',
             dataType: 'json',
             success: function(data) {
-                console.log('request code base data is success!');
+                console.log('request code project data is success!');
                 processCodeBaseData(data);
             },
             error: function() {
@@ -1872,8 +1872,8 @@ KISSY.add('jmPopSchPra', function(S, Node, Base, IO) {
             type: 'get',
             dataType: 'json',
             success: function(data) {
-                console.log('request code base data is success!');
-                console.log(data);
+                console.log('request code school practice data is success!');
+                //console.log(data);
                 //console.log(data[practice_list]);
                 processCodeBaseData(data);
             },
@@ -1895,15 +1895,15 @@ KISSY.add('jmPopSchPra', function(S, Node, Base, IO) {
             var eList = data.content.practice_list;
             var ordering = 0;
             for(var i = eList.length-1; i >= 0 ; i--){
-                html += '<div class="">  <div class="mt-title"><div class="metil mt10">在校实践' + (ordering+1) + '</div><div class="mt-edit"><i></i>编辑</div></div>  <div class="infopl" data-id="' + eList[i].id + '"> <table width="100%" border="0" cellspacing="0" cellpadding="0"> <tbody><tr> <td width="76" class="col999">实践单位</td> <td class="mt_base" id="mt_praCompanyName">' + eList[i].praCompanyName + '</td> </tr> <tr> <td width="76" class="col999">实践经历描述</td> <td class="mt_base" id="mt_practiceDes"> <pre rows="8" cols="40">' + eList[i].practiceDes + '</pre> </td> </tr> <tr> <td width="76" class="col999">实践职位</td> <td class="mt_base" id="mt_practicePosition">' + eList[i].practicePosition + '</td> </tr> <tr> <td width="76" class="col999">职责描述</td> <td class="mt_base" id="mt_practiceDuty"> <pre rows="8" cols="40">' + eList[i].practiceDuty + '</pre> </td> </tr> <tr> <td width="76" class="col999">项目起止时间</td> <td class="mt_base" id="mt_academy">' + eList[i].startDate +'-'+eList[i].endDate+ '</td> </tr> <tr> <td width="76" class="col999">实践径历</td> <td class="mt_base" id="mt_praCompanyList">'+'实践单位：' + eList[i].praCompanyName +'时间：'+ eList[i].startDate +'-'+eList[i].endDate+ '描述：'+ eList[i].practiceDes + '</td> </tr></tbody> </table> </div>';
+                html += '<div class="infoschpra">  <div class="mt-title"><div class="metil mt10">在校实践' + (ordering+1) + '</div><div class="mt-edit"><i></i>编辑</div></div>  <div class="infopl" data-id="' + eList[i].id + '"> <table width="100%" border="0" cellspacing="0" cellpadding="0"> <tbody><tr> <td width="76" class="col999">实践单位</td> <td class="mt_base" id="mt_praCompanyName">' + eList[i].praCompanyName + '</td> </tr> <tr> <td width="76" class="col999">实践经历描述</td> <td class="mt_base" id="mt_practiceDes"> <pre rows="8" cols="40">' + eList[i].practiceDes + '</pre> </td> </tr> <tr> <td width="76" class="col999">实践职位</td> <td class="mt_base" id="mt_practicePosition">' + eList[i].practicePosition + '</td> </tr> <tr> <td width="76" class="col999">职责描述</td> <td class="mt_base" id="mt_practiceDuty"> <pre rows="8" cols="40">' + eList[i].practiceDuty + '</pre> </td> </tr> <tr> <td width="76" class="col999">项目起止时间</td> <td class="mt_base" id="mt_academy">' + eList[i].startDate +'-'+eList[i].endDate+ '</td> </tr> <tr> <td width="76" class="col999">实践径历</td> <td class="mt_base" id="mt_praCompanyList">'+'实践单位：' + eList[i].praCompanyName +'时间：'+ eList[i].startDate +'-'+eList[i].endDate+ '描述：'+ eList[i].practiceDes + '</td> </tr></tbody> </table> </div>';
  
                 ordering++;
-                html += '<div class="infopl infopl-edit" data-id="' + eList[i].id + '">  <table width="100%" border="0" cellspacing="0" cellpadding="0"> <tbody>  <tr> <td width="76" class="col999">学历</td><td><select id="mt_education" name="mt_education" class="ed_name mt_education"><option value="大专" ' + ((eList[i].education) == "大专" ? "selected=\"selected\"" : "") + '>大专</option><option value="本科" ' + ((eList[i].education) == "本科" ? "selected=\"selected\"" : "") + '>本科</option><option value="硕士" ' + ((eList[i].education) == "硕士" ? "selected=\"selected\"" : "") + '>硕士</option><option value="博士" ' + ((eList[i].education) == "博士" ? "selected=\"selected\"" : "") + '>博士</option><option value="其他" ' + ((eList[i].education) == "其他" ? "selected=\"selected\"" : "") + '>其他</option></select></td>  </tr> <tr style="display: none; "><td><span for="mr_name" generated="true" class="error">必填</span></td></tr> <tr> <td width="76" class="col999">毕业学校</td> <td><input type="text" id="schoolName" name="schoolName" class="ed_name valid schoolName" autocomplete="off" value="' + eList[i].schoolName + '" placeholder="请输入毕业学校"> </tr> <tr style="display: none; "><td><span for="mr_name" generated="true" class="error">必填</span></td></tr> <tr> <td width="76" class="col999">毕业年份</td> <td><div class="mt_eduyear_div">';
-                html += '<select name="mt_endYear" id="mt_endYear" class="ed_name valid mt_endYear mt_eduyear" tip="tip3" validate="required"><option value="">请选择</option>';
-                for (var j = 2017; j >= 2000; j--) {
-                    html += '<option value="'+j+'" ' + (parseInt(eList[i].endDate) == j ? "selected=\"selected\"" : "") + '>&nbsp;'+j+'</option>';
-                };
-                html += '</select>年</div> </td> </tr> <tr style="display: none; "><td><span for="mr_name" generated="true" class="error">必填</span></td></tr> <tr> <td width="76" class="col999">所学专业</td> <td><input type="text" id="mt_professional" name="mt_professional" class="ed_name mt_professional" autocomplete="off" value="' + eList[i].professional + '" placeholder="请输入所学专业"></td> </tr> <tr style="display: none; "><td><span for="mr_name" generated="true" class="error">必填</span></td></tr> <tr> <td width="76" class="col999">奖惩情况</td> <td> <input type="text" id="mt_award" name="mt_award" class="ed_name mt_award" autocomplete="off" value="' + (eList[i].reward_punish ? eList[i].reward_punish : '') + '" placeholder="请输入奖励"></td> </tr> </tbody> </table> <div class="mr_ope"> <input type="submit" class="mr_save" value="保存"> <input type="submit" class="mr_del" value="删除"> <a href="javascript:;" class="mr_cancel">取消</a> </div> </div> </div>';
+                // html += '<div class="infopl infopl-edit" data-id="' + eList[i].id + '">  <table width="100%" border="0" cellspacing="0" cellpadding="0"> <tbody>  <tr> <td width="76" class="col999">学历</td><td><select id="mt_education" name="mt_education" class="ed_name mt_education"><option value="大专" ' + ((eList[i].education) == "大专" ? "selected=\"selected\"" : "") + '>大专</option><option value="本科" ' + ((eList[i].education) == "本科" ? "selected=\"selected\"" : "") + '>本科</option><option value="硕士" ' + ((eList[i].education) == "硕士" ? "selected=\"selected\"" : "") + '>硕士</option><option value="博士" ' + ((eList[i].education) == "博士" ? "selected=\"selected\"" : "") + '>博士</option><option value="其他" ' + ((eList[i].education) == "其他" ? "selected=\"selected\"" : "") + '>其他</option></select></td>  </tr> <tr style="display: none; "><td><span for="mr_name" generated="true" class="error">必填</span></td></tr> <tr> <td width="76" class="col999">毕业学校</td> <td><input type="text" id="schoolName" name="schoolName" class="ed_name valid schoolName" autocomplete="off" value="' + eList[i].schoolName + '" placeholder="请输入毕业学校"> </tr> <tr style="display: none; "><td><span for="mr_name" generated="true" class="error">必填</span></td></tr> <tr> <td width="76" class="col999">毕业年份</td> <td><div class="mt_eduyear_div">';
+                // html += '<select name="mt_endYear" id="mt_endYear" class="ed_name valid mt_endYear mt_eduyear" tip="tip3" validate="required"><option value="">请选择</option>';
+                // for (var j = 2017; j >= 2000; j--) {
+                //     html += '<option value="'+j+'" ' + (parseInt(eList[i].endDate) == j ? "selected=\"selected\"" : "") + '>&nbsp;'+j+'</option>';
+                // };
+                // html += '</select>年</div> </td> </tr> <tr style="display: none; "><td><span for="mr_name" generated="true" class="error">必填</span></td></tr> <tr> <td width="76" class="col999">所学专业</td> <td><input type="text" id="mt_professional" name="mt_professional" class="ed_name mt_professional" autocomplete="off" value="' + eList[i].professional + '" placeholder="请输入所学专业"></td> </tr> <tr style="display: none; "><td><span for="mr_name" generated="true" class="error">必填</span></td></tr> <tr> <td width="76" class="col999">奖惩情况</td> <td> <input type="text" id="mt_award" name="mt_award" class="ed_name mt_award" autocomplete="off" value="' + (eList[i].reward_punish ? eList[i].reward_punish : '') + '" placeholder="请输入奖励"></td> </tr> </tbody> </table> <div class="mr_ope"> <input type="submit" class="mr_save" value="保存"> <input type="submit" class="mr_del" value="删除"> <a href="javascript:;" class="mr_cancel">取消</a> </div> </div> </div>';
             }
             html += '<div class="mt-edit-add">添加<i></i></div>';
         }else{
@@ -1959,7 +1959,7 @@ KISSY.add('jmPopSchClub', function(S, Node, Base, IO) {
             type: 'get',
             dataType: 'json',
             success: function(data) {
-                console.log('request code base data is success!');
+                console.log('request code school club data is success!');
                 processCodeBaseData(data);
             },
             error: function() {
@@ -2129,7 +2129,7 @@ KISSY.add('jmPopSkill', function(S, Node, Base, IO) {
             type: 'get',
             dataType: 'json',
             success: function(data) {
-                console.log('request code base data is success!');
+                console.log('request code skill data is success!');
                 processCodeBaseData(data);
             },
             error: function() {
@@ -2232,7 +2232,7 @@ KISSY.add('jmPopCertificate', function(S, Node, Base, IO) {
             type: 'get',
             dataType: 'json',
             success: function(data) {
-                console.log('request code base data is success!');
+                console.log('request code certificate data is success!');
                 processCodeBaseData(data);
             },
             error: function() {
@@ -2317,7 +2317,7 @@ KISSY.add('jmPopTraining', function(S, Node, Base, IO) {
             type: 'get',
             dataType: 'json',
             success: function(data) {
-                console.log('request code base data is success!');
+                console.log('request code training data is success!');
                 processCodeBaseData(data);
             },
             error: function() {
@@ -2340,7 +2340,7 @@ KISSY.add('jmPopTraining', function(S, Node, Base, IO) {
             for(var i = eList.length-1; i >= 0 ; i--){
                 var mt_startDateDot =  eList[i].startDate ?　eList[i].startDate.split('-')[0]+'.'+eList[i].startDate.split('-')[1]:"";
                 var mt_endDateDot =  eList[i].endDate ?　eList[i].endDate.split('-')[0]+'.'+eList[i].endDate.split('-')[1]:"";
-                html += '<div class="">  <div class="mt-title"><div class="metil mt10">培训经历' + (ordering+1) + '</div><div class="mt-edit"><i></i>编辑</div></div>  <div class="infopl" data-id="' + eList[i].id + '"> <table width="100%" border="0" cellspacing="0" cellpadding="0"> <tbody><tr> <td width="76" class="col999">培训名称</td> <td class="mt_base" id="mt_trainingName">' + eList[i].trainingName + '</td> </tr> <tr> <td width="76" class="col999">培训内容</td> <td class="mt_base" id="mt_trainingDes">' + eList[i].trainingDes + '</td> </tr> <tr> <td width="76" class="col999">培训机构</td> <td class="mt_base" id="mt_trainingCompany">' + eList[i].trainingCompany + '</td> </tr> <tr> <td width="76" class="col999">培训地点</td> <td class="mt_base" id="mt_trainingPlace">' + eList[i].trainingPlace + '</td> </tr> <tr> <td width="76" class="col999">开始时间</td> <td class="mt_base" id="mt_startDate">' + eList[i].startDate + '</td> </tr> <tr> <td width="76" class="col999">结束时间</td> <td class="mt_base" id="mt_endDate">' + eList[i].endDate + '</td> </tr>  <tr> <td width="76" class="col999">开始时间</td> <td class="mt_base" id="mt_startDateDot">' + mt_startDateDot + '</td> </tr> <tr> <td width="76" class="col999">结束时间</td> <td class="mt_base" id="mt_endDateDot">' + mt_endDateDot + '</td> </tr> <tr> <td width="76" class="col999">获得证书</td> <td class="mt_base" id="mt_certificateName">' + eList[i].certificateName + '</td> </tr> </tbody> </table> </div>';
+                html += '<div class="infotraining">  <div class="mt-title"><div class="metil mt10">培训经历' + (ordering+1) + '</div><div class="mt-edit"><i></i>编辑</div></div>  <div class="infopl" data-id="' + eList[i].id + '"> <table width="100%" border="0" cellspacing="0" cellpadding="0"> <tbody><tr> <td width="76" class="col999">培训名称</td> <td class="mt_base" id="mt_trainingName">' + eList[i].trainingName + '</td> </tr> <tr> <td width="76" class="col999">培训内容</td> <td class="mt_base" id="mt_trainingDes">' + eList[i].trainingDes + '</td> </tr> <tr> <td width="76" class="col999">培训机构</td> <td class="mt_base" id="mt_trainingCompany">' + eList[i].trainingCompany + '</td> </tr> <tr> <td width="76" class="col999">培训地点</td> <td class="mt_base" id="mt_trainingPlace">' + eList[i].trainingPlace + '</td> </tr> <tr> <td width="76" class="col999">开始时间</td> <td class="mt_base" id="mt_startDate">' + eList[i].startDate + '</td> </tr> <tr> <td width="76" class="col999">结束时间</td> <td class="mt_base" id="mt_endDate">' + eList[i].endDate + '</td> </tr>  <tr> <td width="76" class="col999">开始时间</td> <td class="mt_base" id="mt_startDateDot">' + mt_startDateDot + '</td> </tr> <tr> <td width="76" class="col999">结束时间</td> <td class="mt_base" id="mt_endDateDot">' + mt_endDateDot + '</td> </tr> <tr> <td width="76" class="col999">获得证书</td> <td class="mt_base" id="mt_certificateName">' + eList[i].certificateName + '</td> </tr> </tbody> </table> </div>';
                             
                 ordering++;
                 // html += '<div class="infopl infopl-edit" data-id="' + eList[i].id + '">  <table width="100%" border="0" cellspacing="0" cellpadding="0"> <tbody>  <tr> <td width="76" class="col999">学历</td><td><select id="mt_education" name="mt_education" class="ed_name mt_education"><option value="大专" ' + ((eList[i].education) == "大专" ? "selected=\"selected\"" : "") + '>大专</option><option value="本科" ' + ((eList[i].education) == "本科" ? "selected=\"selected\"" : "") + '>本科</option><option value="硕士" ' + ((eList[i].education) == "硕士" ? "selected=\"selected\"" : "") + '>硕士</option><option value="博士" ' + ((eList[i].education) == "博士" ? "selected=\"selected\"" : "") + '>博士</option><option value="其他" ' + ((eList[i].education) == "其他" ? "selected=\"selected\"" : "") + '>其他</option></select></td>  </tr> <tr style="display: none; "><td><span for="mr_name" generated="true" class="error">必填</span></td></tr> <tr> <td width="76" class="col999">毕业学校</td> <td><input type="text" id="schoolName" name="schoolName" class="ed_name valid schoolName" autocomplete="off" value="' + eList[i].schoolName + '" placeholder="请输入毕业学校"> </tr> <tr style="display: none; "><td><span for="mr_name" generated="true" class="error">必填</span></td></tr> <tr> <td width="76" class="col999">毕业年份</td> <td><div class="mt_eduyear_div">';
@@ -2352,7 +2352,7 @@ KISSY.add('jmPopTraining', function(S, Node, Base, IO) {
             }
             //html += '<div class="mt-edit-add">添加<i></i></div>';
         }else{
-            html += '<div class=""><div class="mt-title"><div class="metil mt10">培训经历</div><div class="mt-edit"><i></i>编辑</div></div><div class="infopl"data-id="' + eList[i].id + '"><table width="100%"border="0"cellspacing="0"cellpadding="0"><tbody><tr><td width="76"class="col999">培训名称</td><td class="mt_base"id="mt_trainingName"></td></tr><tr><td width="76"class="col999">培训内容</td><td class="mt_base"id="mt_trainingDes"></td></tr><tr><td width="76"class="col999">培训机构</td><td class="mt_base"id="mt_trainingCompany"></td></tr><tr><td width="76"class="col999">培训地点</td><td class="mt_base"id="mt_trainingPlace"></td></tr><tr><td width="76"class="col999">开始时间</td><td class="mt_base"id="mt_startDate"></td></tr><tr><td width="76"class="col999">结束时间</td><td class="mt_base"id="mt_endDate"></td></tr><tr><td width="76"class="col999">开始时间</td><td class="mt_base"id="mt_startDateDot"></td></tr><tr><td width="76"class="col999">结束时间</td><td class="mt_base"id="mt_endDateDot"></td></tr><tr><td width="76"class="col999">获得证书</td><td class="mt_base"id="mt_certificateName"></td></tr></tbody></table></div>';
+            html += '<div class="infotraining"><div class="mt-title"><div class="metil mt10">培训经历</div><div class="mt-edit"><i></i>编辑</div></div><div class="infopl"data-id="' + eList[i].id + '"><table width="100%"border="0"cellspacing="0"cellpadding="0"><tbody><tr><td width="76"class="col999">培训名称</td><td class="mt_base"id="mt_trainingName"></td></tr><tr><td width="76"class="col999">培训内容</td><td class="mt_base"id="mt_trainingDes"></td></tr><tr><td width="76"class="col999">培训机构</td><td class="mt_base"id="mt_trainingCompany"></td></tr><tr><td width="76"class="col999">培训地点</td><td class="mt_base"id="mt_trainingPlace"></td></tr><tr><td width="76"class="col999">开始时间</td><td class="mt_base"id="mt_startDate"></td></tr><tr><td width="76"class="col999">结束时间</td><td class="mt_base"id="mt_endDate"></td></tr><tr><td width="76"class="col999">开始时间</td><td class="mt_base"id="mt_startDateDot"></td></tr><tr><td width="76"class="col999">结束时间</td><td class="mt_base"id="mt_endDateDot"></td></tr><tr><td width="76"class="col999">获得证书</td><td class="mt_base"id="mt_certificateName"></td></tr></tbody></table></div>';
         }
         $('#training-list').html(html);
         dragInit();
@@ -2403,7 +2403,7 @@ KISSY.add('jmPopOtherInfo', function(S, Node, Base, IO) {
             type: 'get',
             dataType: 'json',
             success: function(data) {
-                console.log('request code base data is success!');
+                console.log('request code otherinfo data is success!');
                 processCodeBaseData(data);
             },
             error: function() {
@@ -2424,7 +2424,7 @@ KISSY.add('jmPopOtherInfo', function(S, Node, Base, IO) {
             var eList = data.content.otherinfo_list;
             var ordering = 0;
             for(var i = eList.length-1; i >= 0 ; i--){
-                html += '<div class="">  <div class="mt-title"><div class="metil mt10">其他信息' + (ordering+1) + '</div><div class="mt-edit"><i></i>编辑</div></div>  <div class="infopl" data-id="' + eList[i].id + '"> <table width="100%" border="0" cellspacing="0" cellpadding="0"> <tbody><tr> <td width="76" class="col999">自我评价</td> <td class="mt_base" id="mt_selfIntro">' + eList[i].selfIntro + '</td> </tr> <tr> <td width="76" class="col999">爱好特长</td> <td class="mt_base" id="mt_skill">' + eList[i].skill + '</td> </tr> <tr> <td width="76" class="col999">其他技能</td> <td class="mt_base" id="mt_hobbies">' + eList[i].hobbies + '</td> </tr> <tr> <td width="76" class="col999">个人成就</td> <td class="mt_base" id="mt_trainingPlace">' + eList[i].trainingPlace + '</td> </tr> <tr> <td width="76" class="col999">个人简介</td> <td class="mt_base" id="mt_profile">' + eList[i].profile + '</td> </tr> </tbody> </table> </div>';
+                html += '<div class="infootherinfo">  <div class="mt-title"><div class="metil mt10">其他信息' + (ordering+1) + '</div><div class="mt-edit"><i></i>编辑</div></div>  <div class="infopl" data-id="' + eList[i].id + '"> <table width="100%" border="0" cellspacing="0" cellpadding="0"> <tbody><tr> <td width="76" class="col999">自我评价</td> <td class="mt_base" id="mt_selfIntro">' + eList[i].selfIntro + '</td> </tr> <tr> <td width="76" class="col999">爱好特长</td> <td class="mt_base" id="mt_skill">' + eList[i].skill + '</td> </tr> <tr> <td width="76" class="col999">其他技能</td> <td class="mt_base" id="mt_hobbies">' + eList[i].hobbies + '</td> </tr> <tr> <td width="76" class="col999">个人成就</td> <td class="mt_base" id="mt_trainingPlace">' + eList[i].trainingPlace + '</td> </tr> <tr> <td width="76" class="col999">个人简介</td> <td class="mt_base" id="mt_profile">' + eList[i].profile + '</td> </tr> </tbody> </table> </div>';
                 
                 ordering++;
                 // html += '<div class="infopl infopl-edit" data-id="' + eList[i].id + '">  <table width="100%" border="0" cellspacing="0" cellpadding="0"> <tbody>  <tr> <td width="76" class="col999">学历</td><td><select id="mt_education" name="mt_education" class="ed_name mt_education"><option value="大专" ' + ((eList[i].education) == "大专" ? "selected=\"selected\"" : "") + '>大专</option><option value="本科" ' + ((eList[i].education) == "本科" ? "selected=\"selected\"" : "") + '>本科</option><option value="硕士" ' + ((eList[i].education) == "硕士" ? "selected=\"selected\"" : "") + '>硕士</option><option value="博士" ' + ((eList[i].education) == "博士" ? "selected=\"selected\"" : "") + '>博士</option><option value="其他" ' + ((eList[i].education) == "其他" ? "selected=\"selected\"" : "") + '>其他</option></select></td>  </tr> <tr style="display: none; "><td><span for="mr_name" generated="true" class="error">必填</span></td></tr> <tr> <td width="76" class="col999">毕业学校</td> <td><input type="text" id="schoolName" name="schoolName" class="ed_name valid schoolName" autocomplete="off" value="' + eList[i].schoolName + '" placeholder="请输入毕业学校"> </tr> <tr style="display: none; "><td><span for="mr_name" generated="true" class="error">必填</span></td></tr> <tr> <td width="76" class="col999">毕业年份</td> <td><div class="mt_eduyear_div">';
@@ -2436,7 +2436,7 @@ KISSY.add('jmPopOtherInfo', function(S, Node, Base, IO) {
             }
             //html += '<div class="mt-edit-add">添加<i></i></div>';
         }else{
-            html += '<div class=""><div class="mt-title"><div class="metil mt10">其他信息</div><div class="mt-edit"><i></i>编辑</div></div><div class="infopl"data-id=""><table width="100%"border="0"cellspacing="0"cellpadding="0"><tbody><tr><td width="76"class="col999">自我评价</td><td class="mt_base"id="mt_selfIntro"></td></tr><tr><td width="76"class="col999">爱好特长</td><td class="mt_base"id="mt_skill"></td></tr><tr><td width="76"class="col999">其他技能</td><td class="mt_base"id="mt_hobbies"></td></tr><tr><td width="76"class="col999">个人成就</td><td class="mt_base"id="mt_trainingPlace"></td></tr><tr><td width="76"class="col999">个人简介</td><td class="mt_base"id="mt_profile"></td></tr></tbody></table></div>';
+            html += '<div class="infootherinfo"><div class="mt-title"><div class="metil mt10">其他信息</div><div class="mt-edit"><i></i>编辑</div></div><div class="infopl"data-id=""><table width="100%"border="0"cellspacing="0"cellpadding="0"><tbody><tr><td width="76"class="col999">自我评价</td><td class="mt_base"id="mt_selfIntro"></td></tr><tr><td width="76"class="col999">爱好特长</td><td class="mt_base"id="mt_skill"></td></tr><tr><td width="76"class="col999">其他技能</td><td class="mt_base"id="mt_hobbies"></td></tr><tr><td width="76"class="col999">个人成就</td><td class="mt_base"id="mt_trainingPlace"></td></tr><tr><td width="76"class="col999">个人简介</td><td class="mt_base"id="mt_profile"></td></tr></tbody></table></div>';
         }
         $('#otherinfo-list').html(html);
         dragInit();
@@ -2489,7 +2489,7 @@ KISSY.add('jmPopCor', function(S, Node, Base, IO) {
             type: 'get',
             dataType: 'json',
             success: function(data) {
-                console.log('request code base data is success!');
+                console.log('request code cor data is success!');
                 processCodeBaseData(data);
             },
             error: function() {
@@ -2794,7 +2794,7 @@ KISSY.add('jmPopOpenQuestion', function(S, Node, Base, IO) {
             type: 'get',
             dataType: 'json',
             success: function(data) {
-                console.log('request code base data is success!');
+                console.log('request code open question data is success!');
                 console.log(data);
                 processCodeBaseData(data);
                 
@@ -2884,7 +2884,7 @@ KISSY.add('jmPopOpenQuestion', function(S, Node, Base, IO) {
     var processCodeBaseData = function(data) {
         var resume_count = '网申简历 '+data.content.counter[1]+'/'+data.content.counter[0];
         var userstatu = data.content.userstatu;
-        console.log("userstatu"+userstatu);
+      //  console.log("userstatu"+userstatu);
         if (userstatu == "0") {
             $('.qw-nav .quick-write').css({ opacity:0.4});
             KISSY.all("#jm_pop_tab .plugin_quickwrite .qw-openqz").on("click", 

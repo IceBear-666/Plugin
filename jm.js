@@ -46,10 +46,10 @@ function dealWebsite() {
         var a = window.jm_jminer.config;
         var host = document.domain;
         if (a && a.website) {
-            console.log(a.website);
+            //console.log(a.website);
              //在进入icebear时 检测登录
             
-            console.log(host);
+           // console.log(host);
             if (host == "icebear.me") {
                 //KISSY.use('icebearFunction', function (a,b,c,d) {});
                  KISSY.use('icebearFunction', 
@@ -629,7 +629,7 @@ function(a,b,c,d) {
                 itemnode && itemnode.append(h);  
 
                 // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-                console.log(new Date().getTime() + '----' + isLogin + '----jd');
+               // console.log(new Date().getTime() + '----' + isLogin + '----jd');
                  jm_tools.getMessageFromBackground({
                     operate: "getLocalStorage",
                     data: {"key": 'gotourl'}

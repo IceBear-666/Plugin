@@ -1,4 +1,4 @@
-#qw-notifications {
+#jm_pop_tab #qw-notifications {
 	/*float: left;
 	width: 100%;
 	overflow: hidden;
@@ -13,7 +13,7 @@
     z-index: 100;
 }
 
-#qw-notifications-bottom-right {
+#jm_pop_tab #qw-notifications-bottom-right {
 	position: absolute;
 	width: 200px;
 	right: 20px;
@@ -21,7 +21,7 @@
 	top:50%;
 	margin-top: -55px;
 }
-#qw-notifications-bottom-right-tab{
+#jm_pop_tab #qw-notifications-bottom-right-tab{
 	background-color: #ffd733;
 	float: left;
 	height: 110px;
@@ -30,11 +30,11 @@
 	font-size: 14px;
 	line-height: 26px;
 }
-#qw-notifications-bottom-right-tab-close{
+#jm_pop_tab #qw-notifications-bottom-right-tab-close{
 	height: 20px;
 	width: 20px;
 	position: absolute;
-	 background:url(http://www.jobsminer.cc/Public/static/client.jobsminer.cc/godimage/version2/qw-close-12.png) no-repeat center;
+	 background:url(http://www.icebear.me/Public/static/client.jobsminer.cc/godimage/version2/qw-close-12.png) no-repeat center;
 	top: 10px;
 	right: 20px;
 	color: #cccccc;
@@ -46,24 +46,24 @@
 	-o-transition: all 0.5s;
 	transition: all 0.5s;
 }
-#qw-notifications-bottom-right-tab-close:hover {
+#jm_pop_tab #qw-notifications-bottom-right-tab-close:hover {
 	color: rgba(102,102,102,1);
 	cursor: pointer;
 }
 
-#qw-notifications-bottom-right-tab-right{
+#jm_pop_tab #qw-notifications-bottom-right-tab-right{
 	float: left;
 	width: 160px;
 	height: 80px;
 	margin-left: 20px;
 	margin-top: 29px;
 }
-#qw-notifications-bottom-right-tab-right-title{
+#jm_pop_tab #qw-notifications-bottom-right-tab-right-title{
 	float: left;
 	width: 100%;
 	color: #252525;
 	font-weight: 600;
 }
-#qw-notifications-bottom-right-tab-right-title span{
+#jm_pop_tab #qw-notifications-bottom-right-tab-right-title span{
 	color: #e91e63;
 }
