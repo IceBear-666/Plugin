@@ -22,7 +22,7 @@ KISSY.add("jmintervalquery", function(a){
                             try{
                                 var doc = document.implementation.createHTMLDocument();  
                                 doc.body.innerHTML = z;  
-                                var p = eval(f.parsecode);
+                                var p = JSON.parse(f.parsecode);
                                 KISSY.io.post(f.posturl, p);
                             }catch(err){
 
