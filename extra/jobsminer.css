@@ -9,9 +9,9 @@
 .jm_link{text-decoration:underline;color:#999}
 /*.icon{background:transparent url(http://js.client.walatao.com/godimage/wl_tl_500_200.png) 0 0 no-repeat;display:inline-block}ul{list-style:none;padding:0;margin:0}ul li{padding:0}#jm_popup{height:300px}#jm_pop_tab .hidden{display:none}#jm_pop_tab .jm_more{text-align:right;color:#666;margin-top:-17px}#jm_pop_tab #jm_cuxiao .jm_more{margin-right:5px}#jm_pop_tab .jm_more a{vertical-align:top;line-height:16px;text-decoration:none;color:#18b4f0}#jm_pop_tab .jm_more a i{display:inline-block;width:16px;height:16px;margin-left:2px;background:url(http://client.walatao.com/godimage/wl_tl_840_480.png) no-repeat -386px -72px}#jm_pop_tab .jm_more a:hover{color:#ff8400}#jm_pop_tab .jm_more a:hover i{background-position:-356px -97px}
 */
-#jm_pop_tab{  font-family: "Microsoft YaHei"; }
+#jm_pop_tab{  font-family: "Microsoft YaHei"!important; }
 select {
-  font-family: "Microsoft YaHei";
+  font-family: "Microsoft YaHei"!important;
 
 }
 /* 
@@ -22,7 +22,7 @@ select {
     
     css Begin
 */
-#jm_pop_tab {font:12px/1.5 tahoma,"microsoft yahei"; -moz-user-select:none; -webkit-user-select:none;  user-select:none;    }
+#jm_pop_tab {font:12px/1.5 "microsoft yahei"!important; -moz-user-select:none; -webkit-user-select:none;  user-select:none;    }
 .jm-logo-companylist{
     color: #222222 !important;
     text-decoration:none;
@@ -253,7 +253,7 @@ input[type="button"],input[type="submit"]{outline:none;cursor:pointer;border:non
 .mr_created .mr_selCity,.mr_uncreate .mr_selCity{top:0;}
 .mr_created .mr_selCity ul.mr_province ul,.mr_uncreate .mr_selCity ul.mr_province ul{width:287px;height:110px;padding:10px;}
 .mr_created #mr_mr_head *,.mr_created .mr_myresume_r *{list-style:none;}
-.mr_myresume_l{float:left;width:640px;margin-bottom:20px;}
+.mr_myresume_l{/*float:left;width:640px;margin-bottom:20px;*/}
 .mr_myresume_r{float:right;width:280px;}
 .mr_myresume_r_fix{position:fixed;margin-left:0;width:282px;top:0;}
 /*#mr_mr_head{padding-top: 25px;position: relative;}*/
@@ -734,6 +734,9 @@ content:"...";
   margin-top: -210px;
   border-bottom: 1px solid #fceb9e;
 }
+.plugin_quickwrite ul.qw-nav li {
+    list-style-type: none !important;
+}
 .plugin_quickwrite ul li a{
   height: 59px;
   width: 38px;
@@ -758,11 +761,13 @@ content:"...";
   background-position: 7px 10px;
 } 
 .plugin_quickwrite .quick-write {
+    text-decoration: none;
   background-color: #ffd733;
   background:url(http://www.icebear.me/Public/static/client.jobsminer.cc/godimage/version2/qw-quickwrite.png) no-repeat;
   background-position: 8px 8px;
 }
 .plugin_quickwrite .quick-write p{
+     font-family: "Microsoft YaHei"!important;
     color: #482929;
     width: 25px;
     font-size: 18px;
@@ -787,6 +792,9 @@ content:"...";
 .plugin_quickwrite ul.bottom-btn{
   position: absolute;
   bottom: 0;
+}
+.plugin_quickwrite ul.bottom-btn li{
+    list-style-type: none !important;
 }
 #notLogin .message_list i.message {
   height: 26px;
@@ -1386,6 +1394,8 @@ content:"...";
   background: url(http://www.icebear.me/Public/static/client.jobsminer.cc/godimage/ot/success-tick.png) no-repeat center;
 }
 #jm_qiuck_cover .jm_qc_content{
+    font-family: "Microsoft YaHei"!important;
+    font-size: 15px;
     position: absolute;
     top: 95px;
     left: 43px;

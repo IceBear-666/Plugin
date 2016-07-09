@@ -541,19 +541,35 @@ function(a,b,c,d) {
         // if (isLogin.toString() == "true") {
             var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
             var host = jm_get_remote_js("matchHost");
+            var pathname = jm_get_remote_js("matchPathname");
+            var pathnamearray = pathname.split(',');
+            var hash = jm_get_remote_js("matchHash");
+            var hasharray = hash.split(',');
+            var checkdomin = 0;
+            for (var i = 0; i< pathnamearray.length; i++) {
+                if (window.location.pathname == pathnamearray[i] || pathnamearray == "" ) {
+                    for (var k = 0; k < hasharray.length; k++) {
+                        if (window.location.hash == hasharray[k] || hasharray == "") {
+                            checkdomin = 1;
+                            break;
+                        } 
+                    }
+                }   
+            }
             if(jm_get_remote_js("jobwebshowpos") && window.location.host == host){
-                var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+                 if (checkdomin == 1) {
+            var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
                 itemnode && itemnode.append(h);  
 
-                console.log(new Date().getTime() + '----' + isLogin);
-                jm_tools.getMessageFromBackground({
+                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+               // console.log(new Date().getTime() + '----' + isLogin + '----jd');
+                 jm_tools.getMessageFromBackground({
                     operate: "getLocalStorage",
                     data: {"key": 'gotourl'}
                 }, function(data) {
                     var gotourl = data ? data.value : '';
                     window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
                     if(isLogin.toString() == "true" && !gotourl){
-
                         //已登录
                         // alert("denglu");
                         KISSY.use("jmPopup", 
@@ -564,7 +580,6 @@ function(a,b,c,d) {
                         //未登录
                         KISSY.one("#jm_pop_tab").attr("width",'50px');
                         KISSY.all("#notifications").css("width",'300px');
-                        KISSY.all('#jm_homebar').hide();
                         
                         $("#qw-notifications-bottom-right-tab").addClass('animated ' + 'fadeInRight');
                         KISSY.all("#qw-notifications").show();
@@ -572,11 +587,19 @@ function(a,b,c,d) {
                             $(this).parent().fadeOut(200);
                             KISSY.all("#qw-notifications").hide();
                         });
-                       KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
-                       //window.jmLogin.logout();
+                        KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
+                            $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                        });
+              
+                 
+                        KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
+                       // window.jmLogin.logout();
                     }else{
                         if(gotourl.indexOf('wapbasic_iframe') > -1){
-                            KISSY.one(".jm-register iframe").attr("height",'480px');
+                            // KISSY.one(".jm-register iframe").attr("height",'480px');
                         }
                         KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
                         KISSY.all('.jm-register,#jm-logo').show();
@@ -589,6 +612,7 @@ function(a,b,c,d) {
                         KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
                     }
                 });
+             }
                 
                 
             } 
@@ -630,9 +654,9 @@ function(a,b,c,d) {
         var hasharray = hash.split(',');
         var checkdomin = 0;
         for (var i = 0; i< pathnamearray.length; i++) {
-            if (window.location.pathname == pathnamearray[i] ) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "" ) {
                 for (var k = 0; k < hasharray.length; k++) {
-                    if (window.location.hash == hasharray[k]) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
                         checkdomin = 1;
                         break;
                     } 
@@ -719,47 +743,92 @@ function(a,b,c,d) {
         var g = {};
         
         var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-        if (isLogin.toString() == "true") {
+        
         var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
         var host = jm_get_remote_js("matchHost");
-        if(jm_get_remote_js("jobwebshowpos") && window.location.host == host){
-            var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
-            itemnode && itemnode.append(h);  
 
-            // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-            console.log(new Date().getTime() + '----' + isLogin + '----douban');
-            jm_tools.getMessageFromBackground({
-                operate: "getLocalStorage",
-                data: {"key": 'gotourl'}
-            }, function(data) {
-                var gotourl = data ? data.value : '';
-                window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
-                if(isLogin.toString() == "true" && !gotourl){
-                    //已登录
-                    KISSY.use("jmPopup", 
-                    function(a, b) {
-                        jm_global_popup_obj = new b;
-                    });
-                }else if(!gotourl){
-                    //未登录
-                    window.jmLogin.logout();
-                }else{
-                    if(gotourl.indexOf('wapbasic_iframe') > -1){
-                        KISSY.one(".jm-register iframe").attr("height",'480px');
-                    }
-                    KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
-                    KISSY.all('.jm-register,#jm-logo').show();
-                    // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
-                    //     isLock: "true"
-                    // });
-                    window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
-                        isLock: "false"
-                    });
-                    KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+        var hostarray = host.split(",");
+        var nums = [];
+        var pathname = jm_get_remote_js("matchPathname");
+        var pathnamearray = pathname.split(',');
+        var hash = jm_get_remote_js("matchHash");
+        var hasharray = hash.split(',');
+        var checkdomin = 0;
+        for (var i = 0; i< pathnamearray.length; i++) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "" ) {
+                for (var k = 0; k < hasharray.length; k++) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
+                        checkdomin = 1;
+                        break;
+                    } 
                 }
-            });
+            }   
         }
-        } 
+        for (var i = 0 ; i<hostarray.length ; i++) {
+            
+            nums.push(parseInt(hostarray[i]));
+        
+            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
+                if (checkdomin == 1) {
+                 var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+                itemnode && itemnode.append(h);  
+
+                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+                console.log(new Date().getTime() + '----' + isLogin + '----51job');
+                 jm_tools.getMessageFromBackground({
+                    operate: "getLocalStorage",
+                    data: {"key": 'gotourl'}
+                }, function(data) {
+                    var gotourl = data ? data.value : '';
+                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
+                    if(isLogin.toString() == "true" && !gotourl){
+                        //已登录
+                        // alert("denglu");
+                        KISSY.use("jmPopup", 
+                        function(a, b) {
+                            jm_global_popup_obj = new b;
+                        });
+                    }else if(!gotourl){
+                        //未登录
+                        KISSY.one("#jm_pop_tab").attr("width",'50px');
+                        KISSY.all("#notifications").css("width",'300px');
+                        
+                        $("#qw-notifications-bottom-right-tab").addClass('animated ' + 'fadeInRight');
+                        KISSY.all("#qw-notifications").show();
+                        $('#qw-notifications .close').click(function(){
+                            $(this).parent().fadeOut(200);
+                            KISSY.all("#qw-notifications").hide();
+                        });
+                        KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
+                            $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                        });
+              
+                 
+                        KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
+                       // window.jmLogin.logout();
+                    }else{
+                        if(gotourl.indexOf('wapbasic_iframe') > -1){
+                            // KISSY.one(".jm-register iframe").attr("height",'480px');
+                        }
+                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+                        KISSY.all('.jm-register,#jm-logo').show();
+                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
+                        //     isLock: "true"
+                        // });
+                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
+                            isLock: "false"
+                        });
+                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+                    }
+                });
+                } 
+            }
+        }
+            
+        
     }
     
     function u() {}
@@ -781,47 +850,90 @@ function(a,b,c,d) {
         var g = {};
        
        var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-        if (isLogin.toString() == "true") {
+
         var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
         var host = jm_get_remote_js("matchHost");
-        if(jm_get_remote_js("jobwebshowpos") && window.location.host == host){
-            var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
-            itemnode && itemnode.append(h);  
-
-            // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-            console.log(new Date().getTime() + '----' + isLogin);
-            jm_tools.getMessageFromBackground({
-                operate: "getLocalStorage",
-                data: {"key": 'gotourl'}
-            }, function(data) {
-                var gotourl = data ? data.value : '';
-                window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
-                if(isLogin.toString() == "true" && !gotourl){
-                    //已登录
-                    KISSY.use("jmPopup", 
-                    function(a, b) {
-                        jm_global_popup_obj = new b;
-                    });
-                }else if(!gotourl){
-                    //未登录
-                    window.jmLogin.logout();
-                }else{
-                    if(gotourl.indexOf('wapbasic_iframe') > -1){
-                        KISSY.one(".jm-register iframe").attr("height",'480px');
-                    }
-                    KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
-                    KISSY.all('.jm-register,#jm-logo').show();
-                    window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
-                        isLock: "false"
-                    });
-                    // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
-                    //     isLock: "true"
-                    // });
-                    KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+        var hostarray = host.split(",");
+        var nums = [];
+        var pathname = jm_get_remote_js("matchPathname");
+        var pathnamearray = pathname.split(',');
+        var hash = jm_get_remote_js("matchHash");
+        var hasharray = hash.split(',');
+        var checkdomin = 0;
+        for (var i = 0; i< pathnamearray.length; i++) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "" ) {
+                for (var k = 0; k < hasharray.length; k++) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
+                        checkdomin = 1;
+                        break;
+                    } 
                 }
-            });
-        } 
-    }
+            }   
+        }
+        for (var i = 0 ; i<hostarray.length ; i++) {
+            
+            nums.push(parseInt(hostarray[i]));
+        
+            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
+                if (checkdomin == 1) {
+                 var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+                itemnode && itemnode.append(h);  
+
+                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+                console.log(new Date().getTime() + '----' + isLogin + '----51job');
+                 jm_tools.getMessageFromBackground({
+                    operate: "getLocalStorage",
+                    data: {"key": 'gotourl'}
+                }, function(data) {
+                    var gotourl = data ? data.value : '';
+                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
+                    if(isLogin.toString() == "true" && !gotourl){
+                        //已登录
+                        // alert("denglu");
+                        KISSY.use("jmPopup", 
+                        function(a, b) {
+                            jm_global_popup_obj = new b;
+                        });
+                    }else if(!gotourl){
+                        //未登录
+                        KISSY.one("#jm_pop_tab").attr("width",'50px');
+                        KISSY.all("#notifications").css("width",'300px');
+                        
+                        $("#qw-notifications-bottom-right-tab").addClass('animated ' + 'fadeInRight');
+                        KISSY.all("#qw-notifications").show();
+                        $('#qw-notifications .close').click(function(){
+                            $(this).parent().fadeOut(200);
+                            KISSY.all("#qw-notifications").hide();
+                        });
+                        KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
+                            $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                        });
+              
+                 
+                        KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
+                       // window.jmLogin.logout();
+                    }else{
+                        if(gotourl.indexOf('wapbasic_iframe') > -1){
+                            // KISSY.one(".jm-register iframe").attr("height",'480px');
+                        }
+                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+                        KISSY.all('.jm-register,#jm-logo').show();
+                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
+                        //     isLock: "true"
+                        // });
+                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
+                            isLock: "false"
+                        });
+                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+                    }
+                });
+                } 
+            }
+        }
+    
     }
     
     function u() {}
@@ -843,47 +955,90 @@ function(a,b,c,d) {
         var g = {};
         
         var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-        if (isLogin.toString() == "true") {
+   
         var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
         var host = jm_get_remote_js("matchHost");
-        if(jm_get_remote_js("jobwebshowpos") && window.location.host == host){
-            var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
-            itemnode && itemnode.append(h);  
-
-            // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-            console.log(new Date().getTime() + '----' + isLogin);
-            jm_tools.getMessageFromBackground({
-                operate: "getLocalStorage",
-                data: {"key": 'gotourl'}
-            }, function(data) {
-                var gotourl = data ? data.value : '';
-                window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
-                if(isLogin.toString() == "true" && !gotourl){
-                    //已登录
-                    KISSY.use("jmPopup", 
-                    function(a, b) {
-                        jm_global_popup_obj = new b;
-                    });
-                }else if(!gotourl){
-                    //未登录
-                    window.jmLogin.logout();
-                }else{
-                    if(gotourl.indexOf('wapbasic_iframe') > -1){
-                        KISSY.one(".jm-register iframe").attr("height",'480px');
-                    }
-                    KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
-                    KISSY.all('.jm-register,#jm-logo').show();
-                    // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
-                    //     isLock: "true"
-                    // });
-                    window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
-                        isLock: "false"
-                    });
-                    KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+        var hostarray = host.split(",");
+        var nums = [];
+        var pathname = jm_get_remote_js("matchPathname");
+        var pathnamearray = pathname.split(',');
+        var hash = jm_get_remote_js("matchHash");
+        var hasharray = hash.split(',');
+        var checkdomin = 0;
+        for (var i = 0; i< pathnamearray.length; i++) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "" ) {
+                for (var k = 0; k < hasharray.length; k++) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
+                        checkdomin = 1;
+                        break;
+                    } 
                 }
-            });
+            }   
         }
-        } 
+        for (var i = 0 ; i<hostarray.length ; i++) {
+            
+            nums.push(parseInt(hostarray[i]));
+        
+            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
+                if (checkdomin == 1) {
+                 var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+                itemnode && itemnode.append(h);  
+
+                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+                console.log(new Date().getTime() + '----' + isLogin + '----51job');
+                 jm_tools.getMessageFromBackground({
+                    operate: "getLocalStorage",
+                    data: {"key": 'gotourl'}
+                }, function(data) {
+                    var gotourl = data ? data.value : '';
+                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
+                    if(isLogin.toString() == "true" && !gotourl){
+                        //已登录
+                        // alert("denglu");
+                        KISSY.use("jmPopup", 
+                        function(a, b) {
+                            jm_global_popup_obj = new b;
+                        });
+                    }else if(!gotourl){
+                        //未登录
+                        KISSY.one("#jm_pop_tab").attr("width",'50px');
+                        KISSY.all("#notifications").css("width",'300px');
+                        
+                        $("#qw-notifications-bottom-right-tab").addClass('animated ' + 'fadeInRight');
+                        KISSY.all("#qw-notifications").show();
+                        $('#qw-notifications .close').click(function(){
+                            $(this).parent().fadeOut(200);
+                            KISSY.all("#qw-notifications").hide();
+                        });
+                        KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
+                            $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                        });
+              
+                 
+                        KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
+                       // window.jmLogin.logout();
+                    }else{
+                        if(gotourl.indexOf('wapbasic_iframe') > -1){
+                            // KISSY.one(".jm-register iframe").attr("height",'480px');
+                        }
+                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+                        KISSY.all('.jm-register,#jm-logo').show();
+                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
+                        //     isLock: "true"
+                        // });
+                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
+                            isLock: "false"
+                        });
+                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+                    }
+                });
+                } 
+            }
+        }
+        
     }
     
     function u() {}
@@ -899,53 +1054,615 @@ function(a,b,c,d) {
 }),
 
 
+KISSY.add("renrenFunction", 
+function(a,b,c,d) {
+    function e(){
+        var g = {};
+        
+        var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+   
+        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
+        var host = jm_get_remote_js("matchHost");
+        var hostarray = host.split(",");
+        var nums = [];
+        var pathname = jm_get_remote_js("matchPathname");
+        var pathnamearray = pathname.split(',');
+        var hash = jm_get_remote_js("matchHash");
+        var hasharray = hash.split(',');
+        var checkdomin = 0;
+        for (var i = 0; i< pathnamearray.length; i++) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "" ) {
+                for (var k = 0; k < hasharray.length; k++) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
+                        checkdomin = 1;
+                        break;
+                    } 
+                }
+            }   
+        }
+        for (var i = 0 ; i<hostarray.length ; i++) {
+            
+            nums.push(parseInt(hostarray[i]));
+        
+            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
+                if (checkdomin == 1) {
+                 var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+                itemnode && itemnode.append(h);  
+
+                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+                console.log(new Date().getTime() + '----' + isLogin + '----51job');
+                 jm_tools.getMessageFromBackground({
+                    operate: "getLocalStorage",
+                    data: {"key": 'gotourl'}
+                }, function(data) {
+                    var gotourl = data ? data.value : '';
+                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
+                    if(isLogin.toString() == "true" && !gotourl){
+                        //已登录
+                        // alert("denglu");
+                        KISSY.use("jmPopup", 
+                        function(a, b) {
+                            jm_global_popup_obj = new b;
+                        });
+                    }else if(!gotourl){
+                        //未登录
+                        KISSY.one("#jm_pop_tab").attr("width",'50px');
+                        KISSY.all("#notifications").css("width",'300px');
+                        
+                        $("#qw-notifications-bottom-right-tab").addClass('animated ' + 'fadeInRight');
+                        KISSY.all("#qw-notifications").show();
+                        $('#qw-notifications .close').click(function(){
+                            $(this).parent().fadeOut(200);
+                            KISSY.all("#qw-notifications").hide();
+                        });
+                        KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
+                            $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                        });
+              
+                 
+                        KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
+                       // window.jmLogin.logout();
+                    }else{
+                        if(gotourl.indexOf('wapbasic_iframe') > -1){
+                            // KISSY.one(".jm-register iframe").attr("height",'480px');
+                        }
+                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+                        KISSY.all('.jm-register,#jm-logo').show();
+                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
+                        //     isLock: "true"
+                        // });
+                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
+                            isLock: "false"
+                        });
+                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+                    }
+                });
+                } 
+            }
+        }
+        
+    }
+    
+    function u() {}
+    return a.augment(u, {
+        init: function() {
+            e()
+        }
+    }),
+    u
+},
+{
+    requires: ["menubutton", "mu", "overlay", "switchable"]
+}),
+
+KISSY.add("ajingaFunction", 
+function(a,b,c,d) {
+    function e(){
+        var g = {};
+        
+        var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+   
+        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
+        var host = jm_get_remote_js("matchHost");
+        var hostarray = host.split(",");
+        var nums = [];
+        var pathname = jm_get_remote_js("matchPathname");
+        var pathnamearray = pathname.split(',');
+        var hash = jm_get_remote_js("matchHash");
+        var hasharray = hash.split(',');
+        var checkdomin = 0;
+        for (var i = 0; i< pathnamearray.length; i++) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "" ) {
+                for (var k = 0; k < hasharray.length; k++) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
+                        checkdomin = 1;
+                        break;
+                    } 
+                }
+            }   
+        }
+        for (var i = 0 ; i<hostarray.length ; i++) {
+            
+            nums.push(parseInt(hostarray[i]));
+        
+            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
+                if (checkdomin == 1) {
+                 var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+                itemnode && itemnode.append(h);  
+
+                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+                console.log(new Date().getTime() + '----' + isLogin + '----51job');
+                 jm_tools.getMessageFromBackground({
+                    operate: "getLocalStorage",
+                    data: {"key": 'gotourl'}
+                }, function(data) {
+                    var gotourl = data ? data.value : '';
+                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
+                    if(isLogin.toString() == "true" && !gotourl){
+                        //已登录
+                        // alert("denglu");
+                        KISSY.use("jmPopup", 
+                        function(a, b) {
+                            jm_global_popup_obj = new b;
+                        });
+                    }else if(!gotourl){
+                        //未登录
+                        KISSY.one("#jm_pop_tab").attr("width",'50px');
+                        KISSY.all("#notifications").css("width",'300px');
+                        
+                        $("#qw-notifications-bottom-right-tab").addClass('animated ' + 'fadeInRight');
+                        KISSY.all("#qw-notifications").show();
+                        $('#qw-notifications .close').click(function(){
+                            $(this).parent().fadeOut(200);
+                            KISSY.all("#qw-notifications").hide();
+                        });
+                        KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
+                            $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                        });
+              
+                 
+                        KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
+                       // window.jmLogin.logout();
+                    }else{
+                        if(gotourl.indexOf('wapbasic_iframe') > -1){
+                            // KISSY.one(".jm-register iframe").attr("height",'480px');
+                        }
+                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+                        KISSY.all('.jm-register,#jm-logo').show();
+                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
+                        //     isLock: "true"
+                        // });
+                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
+                            isLock: "false"
+                        });
+                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+                    }
+                });
+                } 
+            }
+        }
+        
+    }
+    
+    function u() {}
+    return a.augment(u, {
+        init: function() {
+            e()
+        }
+    }),
+    u
+},
+{
+    requires: ["menubutton", "mu", "overlay", "switchable"]
+}),
+
+KISSY.add("yhdFunction", 
+function(a,b,c,d) {
+    function e(){
+        var g = {};
+        
+        var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+   
+        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
+        var host = jm_get_remote_js("matchHost");
+        var hostarray = host.split(",");
+        var nums = [];
+        var pathname = jm_get_remote_js("matchPathname");
+        var pathnamearray = pathname.split(',');
+        var hash = jm_get_remote_js("matchHash");
+        var hasharray = hash.split(',');
+        var checkdomin = 0;
+        for (var i = 0; i< pathnamearray.length; i++) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "" ) {
+                for (var k = 0; k < hasharray.length; k++) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
+                        checkdomin = 1;
+                        break;
+                    } 
+                }
+            }   
+        }
+        for (var i = 0 ; i<hostarray.length ; i++) {
+            
+            nums.push(parseInt(hostarray[i]));
+        
+            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
+                if (checkdomin == 1) {
+                 var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+                itemnode && itemnode.append(h);  
+
+                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+                console.log(new Date().getTime() + '----' + isLogin + '----51job');
+                 jm_tools.getMessageFromBackground({
+                    operate: "getLocalStorage",
+                    data: {"key": 'gotourl'}
+                }, function(data) {
+                    var gotourl = data ? data.value : '';
+                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
+                    if(isLogin.toString() == "true" && !gotourl){
+                        //已登录
+                        // alert("denglu");
+                        KISSY.use("jmPopup", 
+                        function(a, b) {
+                            jm_global_popup_obj = new b;
+                        });
+                    }else if(!gotourl){
+                        //未登录
+                        KISSY.one("#jm_pop_tab").attr("width",'50px');
+                        KISSY.all("#notifications").css("width",'300px');
+                        
+                        $("#qw-notifications-bottom-right-tab").addClass('animated ' + 'fadeInRight');
+                        KISSY.all("#qw-notifications").show();
+                        $('#qw-notifications .close').click(function(){
+                            $(this).parent().fadeOut(200);
+                            KISSY.all("#qw-notifications").hide();
+                        });
+                        KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
+                            $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                        });
+              
+                 
+                        KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
+                       // window.jmLogin.logout();
+                    }else{
+                        if(gotourl.indexOf('wapbasic_iframe') > -1){
+                            // KISSY.one(".jm-register iframe").attr("height",'480px');
+                        }
+                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+                        KISSY.all('.jm-register,#jm-logo').show();
+                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
+                        //     isLock: "true"
+                        // });
+                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
+                            isLock: "false"
+                        });
+                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+                    }
+                });
+                } 
+            }
+        }
+        
+    }
+    
+    function u() {}
+    return a.augment(u, {
+        init: function() {
+            e()
+        }
+    }),
+    u
+},
+{
+    requires: ["menubutton", "mu", "overlay", "switchable"]
+}), 
+
+KISSY.add("zhenaiFunction", 
+function(a,b,c,d) {
+    function e(){
+        var g = {};
+        
+        var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+   
+        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
+        var host = jm_get_remote_js("matchHost");
+        var hostarray = host.split(",");
+        var nums = [];
+        var pathname = jm_get_remote_js("matchPathname");
+        var pathnamearray = pathname.split(',');
+        var hash = jm_get_remote_js("matchHash");
+        var hasharray = hash.split(',');
+        var checkdomin = 0;
+        for (var i = 0; i< pathnamearray.length; i++) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "" ) {
+                for (var k = 0; k < hasharray.length; k++) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
+                        checkdomin = 1;
+                        break;
+                    } 
+                }
+            }   
+        }
+        for (var i = 0 ; i<hostarray.length ; i++) {
+            
+            nums.push(parseInt(hostarray[i]));
+        
+            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
+                if (checkdomin == 1) {
+                 var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+                itemnode && itemnode.append(h);  
+
+                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+                console.log(new Date().getTime() + '----' + isLogin + '----51job');
+                 jm_tools.getMessageFromBackground({
+                    operate: "getLocalStorage",
+                    data: {"key": 'gotourl'}
+                }, function(data) {
+                    var gotourl = data ? data.value : '';
+                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
+                    if(isLogin.toString() == "true" && !gotourl){
+                        //已登录
+                        // alert("denglu");
+                        KISSY.use("jmPopup", 
+                        function(a, b) {
+                            jm_global_popup_obj = new b;
+                        });
+                    }else if(!gotourl){
+                        //未登录
+                        KISSY.one("#jm_pop_tab").attr("width",'50px');
+                        KISSY.all("#notifications").css("width",'300px');
+                        
+                        $("#qw-notifications-bottom-right-tab").addClass('animated ' + 'fadeInRight');
+                        KISSY.all("#qw-notifications").show();
+                        $('#qw-notifications .close').click(function(){
+                            $(this).parent().fadeOut(200);
+                            KISSY.all("#qw-notifications").hide();
+                        });
+                        KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
+                            $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                        });
+              
+                 
+                        KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
+                       // window.jmLogin.logout();
+                    }else{
+                        if(gotourl.indexOf('wapbasic_iframe') > -1){
+                            // KISSY.one(".jm-register iframe").attr("height",'480px');
+                        }
+                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+                        KISSY.all('.jm-register,#jm-logo').show();
+                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
+                        //     isLock: "true"
+                        // });
+                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
+                            isLock: "false"
+                        });
+                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+                    }
+                });
+                } 
+            }
+        }
+        
+    }
+    
+    function u() {}
+    return a.augment(u, {
+        init: function() {
+            e()
+        }
+    }),
+    u
+},
+{
+    requires: ["menubutton", "mu", "overlay", "switchable"]
+}), 
+
+ KISSY.add("hnagroupFunction", 
+function(a,b,c,d) {
+    function e(){
+        var g = {};
+        
+        var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+   
+        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
+        var host = jm_get_remote_js("matchHost");
+        var hostarray = host.split(",");
+        var nums = [];
+        var pathname = jm_get_remote_js("matchPathname");
+        var pathnamearray = pathname.split(',');
+        var hash = jm_get_remote_js("matchHash");
+        var hasharray = hash.split(',');
+        var checkdomin = 0;
+        for (var i = 0; i< pathnamearray.length; i++) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "" ) {
+                for (var k = 0; k < hasharray.length; k++) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
+                        checkdomin = 1;
+                        break;
+                    } 
+                }
+            }   
+        }
+        for (var i = 0 ; i<hostarray.length ; i++) {
+            
+            nums.push(parseInt(hostarray[i]));
+        
+            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
+                if (checkdomin == 1) {
+                 var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+                itemnode && itemnode.append(h);  
+
+                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+                console.log(new Date().getTime() + '----' + isLogin + '----51job');
+                 jm_tools.getMessageFromBackground({
+                    operate: "getLocalStorage",
+                    data: {"key": 'gotourl'}
+                }, function(data) {
+                    var gotourl = data ? data.value : '';
+                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
+                    if(isLogin.toString() == "true" && !gotourl){
+                        //已登录
+                        // alert("denglu");
+                        KISSY.use("jmPopup", 
+                        function(a, b) {
+                            jm_global_popup_obj = new b;
+                        });
+                    }else if(!gotourl){
+                        //未登录
+                        KISSY.one("#jm_pop_tab").attr("width",'50px');
+                        KISSY.all("#notifications").css("width",'300px');
+                        
+                        $("#qw-notifications-bottom-right-tab").addClass('animated ' + 'fadeInRight');
+                        KISSY.all("#qw-notifications").show();
+                        $('#qw-notifications .close').click(function(){
+                            $(this).parent().fadeOut(200);
+                            KISSY.all("#qw-notifications").hide();
+                        });
+                        KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
+                            $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                        });
+              
+                 
+                        KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
+                       // window.jmLogin.logout();
+                    }else{
+                        if(gotourl.indexOf('wapbasic_iframe') > -1){
+                            // KISSY.one(".jm-register iframe").attr("height",'480px');
+                        }
+                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+                        KISSY.all('.jm-register,#jm-logo').show();
+                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
+                        //     isLock: "true"
+                        // });
+                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
+                            isLock: "false"
+                        });
+                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+                    }
+                });
+                } 
+            }
+        }
+        
+    }
+    
+    function u() {}
+    return a.augment(u, {
+        init: function() {
+            e()
+        }
+    }),
+    u
+},
+{
+    requires: ["menubutton", "mu", "overlay", "switchable"]
+}), 
+
 KISSY.add("oppoFunction", 
 function(a,b,c,d) {
     function e(){
         var g = {};
         
         var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-        if (isLogin.toString() == "true") {
+        
         var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
         var host = jm_get_remote_js("matchHost");
-        if(jm_get_remote_js("jobwebshowpos") && window.location.host == host){
-            var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
-            itemnode && itemnode.append(h);  
-
-            var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-            console.log(new Date().getTime() + '----' + isLogin + '----oppo');
-            jm_tools.getMessageFromBackground({
-                operate: "getLocalStorage",
-                data: {"key": 'gotourl'}
-            }, function(data) {
-                var gotourl = data ? data.value : '';
-                window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
-                if(isLogin.toString() == "true" && !gotourl){
-                    //已登录
-                    KISSY.use("jmPopup", 
-                    function(a, b) {
-                        jm_global_popup_obj = new b;
-                    });
-                }else if(!gotourl){
-                    //未登录
-                    window.jmLogin.logout();
-                }else{
-                    if(gotourl.indexOf('wapbasic_iframe') > -1){
-                        KISSY.one(".jm-register iframe").attr("height",'480px');
-                    }
-                    KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
-                    KISSY.all('.jm-register,#jm-logo').show();
-                    // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
-                    //     isLock: "true"
-                    // });
-                    window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
-                        isLock: "false"
-                    });
-                    KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+         var hostarray = host.split(",");
+        var nums = [];
+        var pathname = jm_get_remote_js("matchPathname");
+        var pathnamearray = pathname.split(',');
+        var hash = jm_get_remote_js("matchHash");
+        var hasharray = hash.split(',');
+        var checkdomin = 0;
+        for (var i = 0; i< pathnamearray.length; i++) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "" ) {
+                for (var k = 0; k < hasharray.length; k++) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
+                        checkdomin = 1;
+                        break;
+                    } 
                 }
-            });
+            }   
         }
-        } 
+        for (var i = 0 ; i<hostarray.length ; i++) {
+            
+            nums.push(parseInt(hostarray[i]));
+        
+            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
+                if (checkdomin == 1) {
+                 var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+                itemnode && itemnode.append(h);  
+
+                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+                console.log(new Date().getTime() + '----' + isLogin + '----51job');
+                 jm_tools.getMessageFromBackground({
+                    operate: "getLocalStorage",
+                    data: {"key": 'gotourl'}
+                }, function(data) {
+                    var gotourl = data ? data.value : '';
+                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
+                    if(isLogin.toString() == "true" && !gotourl){
+                        //已登录
+                        // alert("denglu");
+                        KISSY.use("jmPopup", 
+                        function(a, b) {
+                            jm_global_popup_obj = new b;
+                        });
+                    }else if(!gotourl){
+                        //未登录
+                        KISSY.one("#jm_pop_tab").attr("width",'50px');
+                        KISSY.all("#notifications").css("width",'300px');
+                        
+                        $("#qw-notifications-bottom-right-tab").addClass('animated ' + 'fadeInRight');
+                        KISSY.all("#qw-notifications").show();
+                        $('#qw-notifications .close').click(function(){
+                            $(this).parent().fadeOut(200);
+                            KISSY.all("#qw-notifications").hide();
+                        });
+                        KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
+                            $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                        });
+              
+                 
+                        KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
+                       // window.jmLogin.logout();
+                    }else{
+                        if(gotourl.indexOf('wapbasic_iframe') > -1){
+                            // KISSY.one(".jm-register iframe").attr("height",'480px');
+                        }
+                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+                        KISSY.all('.jm-register,#jm-logo').show();
+                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
+                        //     isLock: "true"
+                        // });
+                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
+                            isLock: "false"
+                        });
+                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+                    }
+                });
+                } 
+            }
+        }
     }
     
     function u() {}
@@ -967,47 +1684,92 @@ function(a,b,c,d) {
         var g = {};
        
        var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-        if (isLogin.toString() == "true") {
+        
         var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
         var host = jm_get_remote_js("matchHost");
-        if(jm_get_remote_js("jobwebshowpos") && window.location.host == host){
-            var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
-            itemnode && itemnode.append(h);  
+        var hostarray = host.split(",");
 
-            var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-            console.log(new Date().getTime() + '----' + isLogin + '----163jobs');
-            jm_tools.getMessageFromBackground({
-                operate: "getLocalStorage",
-                data: {"key": 'gotourl'}
-            }, function(data) {
-                var gotourl = data ? data.value : '';
-                window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
-                if(isLogin.toString() == "true" && !gotourl){
-                    //已登录
-                    KISSY.use("jmPopup", 
-                    function(a, b) {
-                        jm_global_popup_obj = new b;
-                    });
-                }else if(!gotourl){
-                    //未登录
-                    window.jmLogin.logout();
-                }else{
-                    if(gotourl.indexOf('wapbasic_iframe') > -1){
-                        KISSY.one(".jm-register iframe").attr("height",'480px');
-                    }
-                    KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
-                    KISSY.all('.jm-register,#jm-logo').show();
-                    // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
-                    //     isLock: "true"
-                    // });
-                    window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
-                        isLock: "false"
-                    });
-                    KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+        var nums = [];
+        var pathname = jm_get_remote_js("matchPathname");
+        var pathnamearray = pathname.split(',');
+        var hash = jm_get_remote_js("matchHash");
+        var hasharray = hash.split(',');
+
+        var checkdomin = 0;
+        for (var i = 0; i< pathnamearray.length; i++) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "" ) {
+                for (var k = 0; k < hasharray.length; k++) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
+                        checkdomin = 1;
+                        break;
+                    } 
                 }
-            });
-        } 
+            }   
         }
+        for (var i = 0 ; i<hostarray.length ; i++) {
+            
+            nums.push(parseInt(hostarray[i]));
+        
+            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
+                if (checkdomin == 1) {
+                 var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+                itemnode && itemnode.append(h);  
+
+                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+                console.log(new Date().getTime() + '----' + isLogin + '----51job');
+                 jm_tools.getMessageFromBackground({
+                    operate: "getLocalStorage",
+                    data: {"key": 'gotourl'}
+                }, function(data) {
+                    var gotourl = data ? data.value : '';
+                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
+                    if(isLogin.toString() == "true" && !gotourl){
+                        //已登录
+                        // alert("denglu");
+                        KISSY.use("jmPopup", 
+                        function(a, b) {
+                            jm_global_popup_obj = new b;
+                        });
+                    }else if(!gotourl){
+                        //未登录
+                        KISSY.one("#jm_pop_tab").attr("width",'50px');
+                        KISSY.all("#notifications").css("width",'300px');
+                        
+                        $("#qw-notifications-bottom-right-tab").addClass('animated ' + 'fadeInRight');
+                        KISSY.all("#qw-notifications").show();
+                        $('#qw-notifications .close').click(function(){
+                            $(this).parent().fadeOut(200);
+                            KISSY.all("#qw-notifications").hide();
+                        });
+                        KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
+                            $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                        });
+              
+                 
+                        KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
+                       // window.jmLogin.logout();
+                    }else{
+                        if(gotourl.indexOf('wapbasic_iframe') > -1){
+                            // KISSY.one(".jm-register iframe").attr("height",'480px');
+                        }
+                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+                        KISSY.all('.jm-register,#jm-logo').show();
+                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
+                        //     isLock: "true"
+                        // });
+                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
+                            isLock: "false"
+                        });
+                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+                    }
+                });
+                } 
+            }
+        }
+        
     }
     
     function u() {}
@@ -1028,22 +1790,40 @@ function(a,b,c,d) {
         var g = {};
         
         var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-        if (isLogin.toString() == "true") {
+        
         var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
         var host = jm_get_remote_js("matchHost");
 
         var hostarray = host.split(",");
         var nums = [];
+        var pathname = jm_get_remote_js("matchPathname");
+        var pathnamearray = pathname.split(',');
+        var hash = jm_get_remote_js("matchHash");
+        var hasharray = hash.split(',');
+        var checkdomin = 0;
+        for (var i = 0; i< pathnamearray.length; i++) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "" ) {
+                for (var k = 0; k < hasharray.length; k++) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
+                        checkdomin = 1;
+                        break;
+                    } 
+                }
+            }   
+        }
         for (var i = 0 ; i<hostarray.length ; i++) {
+            
             nums.push(parseInt(hostarray[i]));
-
+        
             if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
-                var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+                if (checkdomin == 1) {
+
+                 var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
                 itemnode && itemnode.append(h);  
 
                 // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-                console.log(new Date().getTime() + '----' + isLogin + '----vankejob');
-                jm_tools.getMessageFromBackground({
+                console.log(new Date().getTime() + '----' + isLogin + '----51job');
+                 jm_tools.getMessageFromBackground({
                     operate: "getLocalStorage",
                     data: {"key": 'gotourl'}
                 }, function(data) {
@@ -1051,31 +1831,51 @@ function(a,b,c,d) {
                     window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
                     if(isLogin.toString() == "true" && !gotourl){
                         //已登录
+                        // alert("denglu");
                         KISSY.use("jmPopup", 
                         function(a, b) {
                             jm_global_popup_obj = new b;
                         });
                     }else if(!gotourl){
                         //未登录
-                        window.jmLogin.logout();
+                        KISSY.one("#jm_pop_tab").attr("width",'50px');
+                        KISSY.all("#notifications").css("width",'300px');
+                        
+                        $("#qw-notifications-bottom-right-tab").addClass('animated ' + 'fadeInRight');
+                        KISSY.all("#qw-notifications").show();
+                        $('#qw-notifications .close').click(function(){
+                            $(this).parent().fadeOut(200);
+                            KISSY.all("#qw-notifications").hide();
+                        });
+                        KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
+                            $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                        });
+              
+                 
+                        KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
+                       // window.jmLogin.logout();
                     }else{
                         if(gotourl.indexOf('wapbasic_iframe') > -1){
-                            KISSY.one(".jm-register iframe").attr("height",'480px');
+                            // KISSY.one(".jm-register iframe").attr("height",'480px');
                         }
                         KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
                         KISSY.all('.jm-register,#jm-logo').show();
                         // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
-                    //     isLock: "true"
-                    // });
-                    window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
-                        isLock: "false"
-                    });
+                        //     isLock: "true"
+                        // });
+                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
+                            isLock: "false"
+                        });
                         KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
                     }
                 });
+                } 
             }
         } 
-    }
+    
     }
     
     function u() {}
@@ -1096,47 +1896,90 @@ function(a,b,c,d) {
         var g = {};
         
         var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-        if (isLogin.toString() == "true") {
+        
         var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
         var host = jm_get_remote_js("matchHost");
-        if(jm_get_remote_js("jobwebshowpos") && window.location.host == host){
-            var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
-            itemnode && itemnode.append(h);  
-
-            // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-            console.log(new Date().getTime() + '----' + isLogin + '----vankejob');
-            jm_tools.getMessageFromBackground({
-                operate: "getLocalStorage",
-                data: {"key": 'gotourl'}
-            }, function(data) {
-                var gotourl = data ? data.value : '';
-                window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
-                if(isLogin.toString() == "true" && !gotourl){
-                    //已登录
-                    KISSY.use("jmPopup", 
-                    function(a, b) {
-                        jm_global_popup_obj = new b;
-                    });
-                }else if(!gotourl){
-                    //未登录
-                    window.jmLogin.logout();
-                }else{
-                    if(gotourl.indexOf('wapbasic_iframe') > -1){
-                        KISSY.one(".jm-register iframe").attr("height",'480px');
-                    }
-                    KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
-                    KISSY.all('.jm-register,#jm-logo').show();
-                    // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
-                    //     isLock: "true"
-                    // });
-                    window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
-                        isLock: "false"
-                    });
-                    KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+        var hostarray = host.split(",");
+        var nums = [];
+        var pathname = jm_get_remote_js("matchPathname");
+        var pathnamearray = pathname.split(',');
+        var hash = jm_get_remote_js("matchHash");
+        var hasharray = hash.split(',');
+        var checkdomin = 0;
+        for (var i = 0; i< pathnamearray.length; i++) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "" ) {
+                for (var k = 0; k < hasharray.length; k++) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
+                        checkdomin = 1;
+                        break;
+                    } 
                 }
-            });
-        } 
-    }
+            }   
+        }
+        for (var i = 0 ; i<hostarray.length ; i++) {
+            
+            nums.push(parseInt(hostarray[i]));
+        
+            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
+                if (checkdomin == 1) {
+                 var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+                itemnode && itemnode.append(h);  
+
+                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+                console.log(new Date().getTime() + '----' + isLogin + '----51job');
+                 jm_tools.getMessageFromBackground({
+                    operate: "getLocalStorage",
+                    data: {"key": 'gotourl'}
+                }, function(data) {
+                    var gotourl = data ? data.value : '';
+                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
+                    if(isLogin.toString() == "true" && !gotourl){
+                        //已登录
+                        // alert("denglu");
+                        KISSY.use("jmPopup", 
+                        function(a, b) {
+                            jm_global_popup_obj = new b;
+                        });
+                    }else if(!gotourl){
+                        //未登录
+                        KISSY.one("#jm_pop_tab").attr("width",'50px');
+                        KISSY.all("#notifications").css("width",'300px');
+                        
+                        $("#qw-notifications-bottom-right-tab").addClass('animated ' + 'fadeInRight');
+                        KISSY.all("#qw-notifications").show();
+                        $('#qw-notifications .close').click(function(){
+                            $(this).parent().fadeOut(200);
+                            KISSY.all("#qw-notifications").hide();
+                        });
+                        KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
+                            $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                        });
+              
+                 
+                        KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
+                       // window.jmLogin.logout();
+                    }else{
+                        if(gotourl.indexOf('wapbasic_iframe') > -1){
+                            // KISSY.one(".jm-register iframe").attr("height",'480px');
+                        }
+                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+                        KISSY.all('.jm-register,#jm-logo').show();
+                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
+                        //     isLock: "true"
+                        // });
+                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
+                            isLock: "false"
+                        });
+                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+                    }
+                });
+                } 
+            }
+        }
+    
     }
     
     function u() {}
@@ -1157,7 +2000,6 @@ function(a,b,c,d) {
         var g = {};
         
         var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-        if (isLogin.toString() == "true") {
         var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
         var host = jm_get_remote_js("matchHost");
         var pathname = jm_get_remote_js("matchPathname");
@@ -1224,7 +2066,6 @@ function(a,b,c,d) {
                 });
         } 
     }
-    }
     
     function u() {}
     return a.augment(u, {
@@ -1245,48 +2086,91 @@ function(a,b,c,d) {
         var g = {};
         
         var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-        if (isLogin.toString() == "true") {
+       
         var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
         var host = jm_get_remote_js("matchHost");
 
-        if(jm_get_remote_js("jobwebshowpos") && window.location.host == host ){
-            var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
-            itemnode && itemnode.append(h);  
-
-            // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-            console.log(new Date().getTime() + '----' + isLogin + '----baidu');
-            jm_tools.getMessageFromBackground({
-                operate: "getLocalStorage",
-                data: {"key": 'gotourl'}
-            }, function(data) {
-                var gotourl = data ? data.value : '';
-                window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
-                if(isLogin.toString() == "true" && !gotourl){
-                    //已登录
-                    KISSY.use("jmPopup", 
-                    function(a, b) {
-                        jm_global_popup_obj = new b;
-                    });
-                }else if(!gotourl){
-                    //未登录
-                    window.jmLogin.logout();
-                }else{
-                    if(gotourl.indexOf('wapbasic_iframe') > -1){
-                        KISSY.one(".jm-register iframe").attr("height",'480px');
-                    }
-                    KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
-                    KISSY.all('.jm-register,#jm-logo').show();
-                    // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
-                    //     isLock: "true"
-                    // });
-                    window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
-                        isLock: "false"
-                    });
-                    KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+        var hostarray = host.split(",");
+        var nums = [];
+        var pathname = jm_get_remote_js("matchPathname");
+        var pathnamearray = pathname.split(',');
+        var hash = jm_get_remote_js("matchHash");
+        var hasharray = hash.split(',');
+        var checkdomin = 0;
+        for (var i = 0; i< pathnamearray.length; i++) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "" ) {
+                for (var k = 0; k < hasharray.length; k++) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
+                        checkdomin = 1;
+                        break;
+                    } 
                 }
-            });
-        } 
-    }
+            }   
+        }
+        for (var i = 0 ; i<hostarray.length ; i++) {
+            
+            nums.push(parseInt(hostarray[i]));
+        
+            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
+                if (checkdomin == 1) {
+                 var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+                itemnode && itemnode.append(h);  
+
+                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+                console.log(new Date().getTime() + '----' + isLogin + '----51job');
+                 jm_tools.getMessageFromBackground({
+                    operate: "getLocalStorage",
+                    data: {"key": 'gotourl'}
+                }, function(data) {
+                    var gotourl = data ? data.value : '';
+                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
+                    if(isLogin.toString() == "true" && !gotourl){
+                        //已登录
+                        // alert("denglu");
+                        KISSY.use("jmPopup", 
+                        function(a, b) {
+                            jm_global_popup_obj = new b;
+                        });
+                    }else if(!gotourl){
+                        //未登录
+                        KISSY.one("#jm_pop_tab").attr("width",'50px');
+                        KISSY.all("#notifications").css("width",'300px');
+                        
+                        $("#qw-notifications-bottom-right-tab").addClass('animated ' + 'fadeInRight');
+                        KISSY.all("#qw-notifications").show();
+                        $('#qw-notifications .close').click(function(){
+                            $(this).parent().fadeOut(200);
+                            KISSY.all("#qw-notifications").hide();
+                        });
+                        KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
+                            $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                        });
+              
+                 
+                        KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
+                       // window.jmLogin.logout();
+                    }else{
+                        if(gotourl.indexOf('wapbasic_iframe') > -1){
+                            // KISSY.one(".jm-register iframe").attr("height",'480px');
+                        }
+                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+                        KISSY.all('.jm-register,#jm-logo').show();
+                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
+                        //     isLock: "true"
+                        // });
+                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
+                            isLock: "false"
+                        });
+                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+                    }
+                });
+                } 
+            }
+        }
+    
     }
     
     function u() {}
@@ -1316,9 +2200,9 @@ function(a,b,c,d) {
         var hasharray = hash.split(',');
         var checkdomin = 0;
         for (var i = 0; i< pathnamearray.length; i++) {
-            if (window.location.pathname == pathnamearray[i] ) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "" ) {
                 for (var k = 0; k < hasharray.length; k++) {
-                    if (window.location.hash == hasharray[k]) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
                         checkdomin = 1;
                         break;
                     } 
@@ -1405,48 +2289,82 @@ function(a,b,c,d) {
     function e(){
         var g = {};
        
-       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-        if (isLogin.toString() == "true") {
+        var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
         var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
         var host = jm_get_remote_js("matchHost");
-        if(jm_get_remote_js("jobwebshowpos") && window.location.host == host){
-            var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
-            itemnode && itemnode.append(h);  
-
-            // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-            console.log(new Date().getTime() + '----' + isLogin + '----baidu');
-            jm_tools.getMessageFromBackground({
-                operate: "getLocalStorage",
-                data: {"key": 'gotourl'}
-            }, function(data) {
-                var gotourl = data ? data.value : '';
-                window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
-                if(isLogin.toString() == "true" && !gotourl){
-                    //已登录
-                    KISSY.use("jmPopup", 
-                    function(a, b) {
-                        jm_global_popup_obj = new b;
-                    });
-                }else if(!gotourl){
-                    //未登录
-                    window.jmLogin.logout();
-                }else{
-                    if(gotourl.indexOf('wapbasic_iframe') > -1){
-                        KISSY.one(".jm-register iframe").attr("height",'480px');
-                    }
-                    KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
-                    KISSY.all('.jm-register,#jm-logo').show();
-                    // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
-                    //     isLock: "true"
-                    // });
-                    window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
-                        isLock: "false"
-                    });
-                    KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+        var pathname = jm_get_remote_js("matchPathname");
+        var pathnamearray = pathname.split(',');
+        var hash = jm_get_remote_js("matchHash");
+        var hasharray = hash.split(',');
+        var checkdomin = 0;
+        for (var i = 0; i< pathnamearray.length; i++) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "" ) {
+                for (var k = 0; k < hasharray.length; k++) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
+                        checkdomin = 1;
+                        break;
+                    } 
                 }
-            });
+            }   
+        }
+        if(jm_get_remote_js("jobwebshowpos") && window.location.host == host){
+             if (checkdomin == 1) {
+            var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+                itemnode && itemnode.append(h);  
+
+                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+               // console.log(new Date().getTime() + '----' + isLogin + '----jd');
+                 jm_tools.getMessageFromBackground({
+                    operate: "getLocalStorage",
+                    data: {"key": 'gotourl'}
+                }, function(data) {
+                    var gotourl = data ? data.value : '';
+                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
+                    if(isLogin.toString() == "true" && !gotourl){
+                        //已登录
+                        // alert("denglu");
+                        KISSY.use("jmPopup", 
+                        function(a, b) {
+                            jm_global_popup_obj = new b;
+                        });
+                    }else if(!gotourl){
+                        //未登录
+                        KISSY.one("#jm_pop_tab").attr("width",'50px');
+                        KISSY.all("#notifications").css("width",'300px');
+                        
+                        $("#qw-notifications-bottom-right-tab").addClass('animated ' + 'fadeInRight');
+                        KISSY.all("#qw-notifications").show();
+                        $('#qw-notifications .close').click(function(){
+                            $(this).parent().fadeOut(200);
+                            KISSY.all("#qw-notifications").hide();
+                        });
+                        KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
+                            $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                        });
+              
+                 
+                        KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
+                       // window.jmLogin.logout();
+                    }else{
+                        if(gotourl.indexOf('wapbasic_iframe') > -1){
+                            // KISSY.one(".jm-register iframe").attr("height",'480px');
+                        }
+                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+                        KISSY.all('.jm-register,#jm-logo').show();
+                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
+                        //     isLock: "true"
+                        // });
+                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
+                            isLock: "false"
+                        });
+                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+                    }
+                });
+             }
         } 
-    }
     }
     
     function u() {}
@@ -1468,47 +2386,194 @@ function(a,b,c,d) {
         var g = {};
         
         var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-        if (isLogin.toString() == "true") {
+        //if (isLogin.toString() == "true") {
         var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
         var host = jm_get_remote_js("matchHost");
-        if(jm_get_remote_js("jobwebshowpos") && window.location.host == host){
-            var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
-            itemnode && itemnode.append(h);  
-
-            // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-            console.log(new Date().getTime() + '----' + isLogin + '----baidu');
-            jm_tools.getMessageFromBackground({
-                operate: "getLocalStorage",
-                data: {"key": 'gotourl'}
-            }, function(data) {
-                var gotourl = data ? data.value : '';
-                window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
-                if(isLogin.toString() == "true" && !gotourl){
-                    //已登录
-                    KISSY.use("jmPopup", 
-                    function(a, b) {
-                        jm_global_popup_obj = new b;
-                    });
-                }else if(!gotourl){
-                    //未登录
-                    window.jmLogin.logout();
-                }else{
-                    if(gotourl.indexOf('wapbasic_iframe') > -1){
-                        KISSY.one(".jm-register iframe").attr("height",'480px');
-                    }
-                    KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
-                    KISSY.all('.jm-register,#jm-logo').show();
-                    // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
-                    //     isLock: "true"
-                    // });
-                    window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
-                        isLock: "false"
-                    });
-                    KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+        var hostarray = host.split(",");
+        var nums = [];
+        var pathname = jm_get_remote_js("matchPathname");
+        var pathnamearray = pathname.split(',');
+        var hash = jm_get_remote_js("matchHash");
+        var hasharray = hash.split(',');
+        var checkdomin = 0;
+        for (var i = 0; i< pathnamearray.length; i++) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "" ) {
+                for (var k = 0; k < hasharray.length; k++) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
+                        checkdomin = 1;
+                        break;
+                    } 
                 }
-            });
-        } 
+            }   
+        }
+        for (var i = 0 ; i<hostarray.length ; i++) {
+            
+            nums.push(parseInt(hostarray[i]));
+        
+            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
+                if (checkdomin == 1) {
+                 var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+                itemnode && itemnode.append(h);  
+
+                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+                console.log(new Date().getTime() + '----' + isLogin + '----51job');
+                 jm_tools.getMessageFromBackground({
+                    operate: "getLocalStorage",
+                    data: {"key": 'gotourl'}
+                }, function(data) {
+                    var gotourl = data ? data.value : '';
+                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
+                    if(isLogin.toString() == "true" && !gotourl){
+                        //已登录
+                        // alert("denglu");
+                        KISSY.use("jmPopup", 
+                        function(a, b) {
+                            jm_global_popup_obj = new b;
+                        });
+                    }else if(!gotourl){
+                        //未登录
+                        KISSY.one("#jm_pop_tab").attr("width",'50px');
+                        KISSY.all("#notifications").css("width",'300px');
+                        
+                        $("#qw-notifications-bottom-right-tab").addClass('animated ' + 'fadeInRight');
+                        KISSY.all("#qw-notifications").show();
+                        $('#qw-notifications .close').click(function(){
+                            $(this).parent().fadeOut(200);
+                            KISSY.all("#qw-notifications").hide();
+                        });
+                        KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
+                            $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                        });
+              
+                 
+                        KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
+                       // window.jmLogin.logout();
+                    }else{
+                        if(gotourl.indexOf('wapbasic_iframe') > -1){
+                            // KISSY.one(".jm-register iframe").attr("height",'480px');
+                        }
+                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+                        KISSY.all('.jm-register,#jm-logo').show();
+                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
+                        //     isLock: "true"
+                        // });
+                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
+                            isLock: "false"
+                        });
+                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+                    }
+                });
+                } 
+            }
+        }
+    //}
     }
+    
+    function u() {}
+    return a.augment(u, {
+        init: function() {
+            e()
+        }
+    }),
+    u
+},
+{
+    requires: ["menubutton", "mu", "overlay", "switchable"]
+}),
+
+KISSY.add("sohuFunction", 
+function(a,b,c,d) {
+    function e(){
+        var g = {};
+        
+        var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+        //if (isLogin.toString() == "true") {
+        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
+        var host = jm_get_remote_js("matchHost");
+        var hostarray = host.split(",");
+        var nums = [];
+        var pathname = jm_get_remote_js("matchPathname");
+        var pathnamearray = pathname.split(',');
+        var hash = jm_get_remote_js("matchHash");
+        var hasharray = hash.split(',');
+        var checkdomin = 0;
+        for (var i = 0; i< pathnamearray.length; i++) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "" ) {
+                for (var k = 0; k < hasharray.length; k++) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
+                        checkdomin = 1;
+                        break;
+                    } 
+                }
+            }   
+        }
+        for (var i = 0 ; i<hostarray.length ; i++) {
+            
+            nums.push(parseInt(hostarray[i]));
+        
+            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
+                if (checkdomin == 1) {
+                 var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+                itemnode && itemnode.append(h);  
+
+                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+                console.log(new Date().getTime() + '----' + isLogin + '----51job');
+                 jm_tools.getMessageFromBackground({
+                    operate: "getLocalStorage",
+                    data: {"key": 'gotourl'}
+                }, function(data) {
+                    var gotourl = data ? data.value : '';
+                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
+                    if(isLogin.toString() == "true" && !gotourl){
+                        //已登录
+                        // alert("denglu");
+                        KISSY.use("jmPopup", 
+                        function(a, b) {
+                            jm_global_popup_obj = new b;
+                        });
+                    }else if(!gotourl){
+                        //未登录
+                        KISSY.one("#jm_pop_tab").attr("width",'50px');
+                        KISSY.all("#notifications").css("width",'300px');
+                        
+                        $("#qw-notifications-bottom-right-tab").addClass('animated ' + 'fadeInRight');
+                        KISSY.all("#qw-notifications").show();
+                        $('#qw-notifications .close').click(function(){
+                            $(this).parent().fadeOut(200);
+                            KISSY.all("#qw-notifications").hide();
+                        });
+                        KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
+                            $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                        });
+              
+                 
+                        KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
+                       // window.jmLogin.logout();
+                    }else{
+                        if(gotourl.indexOf('wapbasic_iframe') > -1){
+                            // KISSY.one(".jm-register iframe").attr("height",'480px');
+                        }
+                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+                        KISSY.all('.jm-register,#jm-logo').show();
+                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
+                        //     isLock: "true"
+                        // });
+                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
+                            isLock: "false"
+                        });
+                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+                    }
+                });
+                } 
+            }
+        }
+    //}
     }
     
     function u() {}
@@ -1524,6 +2589,4903 @@ function(a,b,c,d) {
 }),
 
 KISSY.add("51jobFunction", 
+function(a,b,c,d) {
+    function e(){
+        var g = {};
+      
+        var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+
+        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
+        var host = jm_get_remote_js("matchHost");
+
+        var hostarray = host.split(",");
+        var nums = [];
+        var pathname = jm_get_remote_js("matchPathname");
+        var pathnamearray = pathname.split(',');
+        var hash = jm_get_remote_js("matchHash");
+        var hasharray = hash.split(',');
+        var checkdomin = 0;
+        for (var i = 0; i< pathnamearray.length; i++) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "" ) {
+                for (var k = 0; k < hasharray.length; k++) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
+                        checkdomin = 1;
+                        break;
+                    } 
+                }
+            }   
+        }
+        for (var i = 0 ; i<hostarray.length ; i++) {
+
+            nums.push(parseInt(hostarray[i]));
+        
+            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
+                if (checkdomin == 1) {
+                 var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+                itemnode && itemnode.append(h);  
+
+                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+                console.log(new Date().getTime() + '----' + isLogin + '----51job');
+                 jm_tools.getMessageFromBackground({
+                    operate: "getLocalStorage",
+                    data: {"key": 'gotourl'}
+                }, function(data) {
+                    var gotourl = data ? data.value : '';
+                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
+                    if(isLogin.toString() == "true" && !gotourl){
+                        //已登录
+                        // alert("denglu");
+                        KISSY.use("jmPopup", 
+                        function(a, b) {
+                            jm_global_popup_obj = new b;
+                        });
+                    }else if(!gotourl){
+                        //未登录
+                        KISSY.one("#jm_pop_tab").attr("width",'50px');
+                        KISSY.all("#notifications").css("width",'300px');
+                        
+                        $("#qw-notifications-bottom-right-tab").addClass('animated ' + 'fadeInRight');
+                        KISSY.all("#qw-notifications").show();
+                        $('#qw-notifications .close').click(function(){
+                            $(this).parent().fadeOut(200);
+                            KISSY.all("#qw-notifications").hide();
+                        });
+                        KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
+                            $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                        });
+              
+                 
+                        KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
+                       // window.jmLogin.logout();
+                    }else{
+                        if(gotourl.indexOf('wapbasic_iframe') > -1){
+                            // KISSY.one(".jm-register iframe").attr("height",'480px');
+                        }
+                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+                        KISSY.all('.jm-register,#jm-logo').show();
+                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
+                        //     isLock: "true"
+                        // });
+                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
+                            isLock: "false"
+                        });
+                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+                    }
+                });
+            } 
+        }
+        }
+    }
+    
+    function u() {}
+    return a.augment(u, {
+        init: function() {
+            e()
+        }
+    }),
+    u
+},
+{
+    requires: ["menubutton", "mu", "overlay", "switchable"]
+}),
+
+
+
+KISSY.add("100talFunction", 
+function(a,b,c,d) {
+    function e(){
+        var g = {};
+      
+        var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+
+        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
+        var host = jm_get_remote_js("matchHost");
+
+        var hostarray = host.split(",");
+        var nums = [];
+        var pathname = jm_get_remote_js("matchPathname");
+        var pathnamearray = pathname.split(',');
+        var hash = jm_get_remote_js("matchHash");
+        var hasharray = hash.split(',');
+        var checkdomin = 0;
+        for (var i = 0; i< pathnamearray.length; i++) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "" ) {
+                for (var k = 0; k < hasharray.length; k++) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
+                        checkdomin = 1;
+                        break;
+                    } 
+                }
+            }   
+        }
+        for (var i = 0 ; i<hostarray.length ; i++) {
+
+            nums.push(parseInt(hostarray[i]));
+        
+            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
+                if (checkdomin == 1) {
+                 var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+                itemnode && itemnode.append(h);  
+
+                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+                console.log(new Date().getTime() + '----' + isLogin + '----51job');
+                 jm_tools.getMessageFromBackground({
+                    operate: "getLocalStorage",
+                    data: {"key": 'gotourl'}
+                }, function(data) {
+                    var gotourl = data ? data.value : '';
+                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
+                    if(isLogin.toString() == "true" && !gotourl){
+                        //已登录
+                        // alert("denglu");
+                        KISSY.use("jmPopup", 
+                        function(a, b) {
+                            jm_global_popup_obj = new b;
+                        });
+                    }else if(!gotourl){
+                        //未登录
+                        KISSY.one("#jm_pop_tab").attr("width",'50px');
+                        KISSY.all("#notifications").css("width",'300px');
+                        
+                        $("#qw-notifications-bottom-right-tab").addClass('animated ' + 'fadeInRight');
+                        KISSY.all("#qw-notifications").show();
+                        $('#qw-notifications .close').click(function(){
+                            $(this).parent().fadeOut(200);
+                            KISSY.all("#qw-notifications").hide();
+                        });
+                        KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
+                            $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                        });
+              
+                 
+                        KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
+                       // window.jmLogin.logout();
+                    }else{
+                        if(gotourl.indexOf('wapbasic_iframe') > -1){
+                            // KISSY.one(".jm-register iframe").attr("height",'480px');
+                        }
+                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+                        KISSY.all('.jm-register,#jm-logo').show();
+                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
+                        //     isLock: "true"
+                        // });
+                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
+                            isLock: "false"
+                        });
+                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+                    }
+                });
+            } 
+        }
+        }
+    }
+    
+    function u() {}
+    return a.augment(u, {
+        init: function() {
+            e()
+        }
+    }),
+    u
+},
+{
+    requires: ["menubutton", "mu", "overlay", "switchable"]
+}),
+
+
+KISSY.add("chinahrFunction", 
+function(a,b,c,d) {
+    function e(){
+        var g = {};
+       
+        var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+      
+        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
+        var host = jm_get_remote_js("matchHost");
+
+        var hostarray = host.split(",");
+        var nums = [];
+        var pathname = jm_get_remote_js("matchPathname");
+        var pathnamearray = pathname.split(',');
+        var hash = jm_get_remote_js("matchHash");
+        var hasharray = hash.split(',');
+        var checkdomin = 0;
+        for (var i = 0; i< pathnamearray.length; i++) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "" ) {
+                for (var k = 0; k < hasharray.length; k++) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
+                        checkdomin = 1;
+                        break;
+                    } 
+                }
+            }   
+        }
+        for (var i = 0 ; i<hostarray.length ; i++) {
+            
+            nums.push(parseInt(hostarray[i]));
+        
+            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
+                if (checkdomin == 1) {
+                 var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+                itemnode && itemnode.append(h);  
+
+                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+                console.log(new Date().getTime() + '----' + isLogin + '----51job');
+                 jm_tools.getMessageFromBackground({
+                    operate: "getLocalStorage",
+                    data: {"key": 'gotourl'}
+                }, function(data) {
+                    var gotourl = data ? data.value : '';
+                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
+                    if(isLogin.toString() == "true" && !gotourl){
+                        //已登录
+                        // alert("denglu");
+                        KISSY.use("jmPopup", 
+                        function(a, b) {
+                            jm_global_popup_obj = new b;
+                        });
+                    }else if(!gotourl){
+                        //未登录
+                        KISSY.one("#jm_pop_tab").attr("width",'50px');
+                        KISSY.all("#notifications").css("width",'300px');
+                        
+                        $("#qw-notifications-bottom-right-tab").addClass('animated ' + 'fadeInRight');
+                        KISSY.all("#qw-notifications").show();
+                        $('#qw-notifications .close').click(function(){
+                            $(this).parent().fadeOut(200);
+                            KISSY.all("#qw-notifications").hide();
+                        });
+                        KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
+                            $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                        });
+              
+                 
+                        KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
+                       // window.jmLogin.logout();
+                    }else{
+                        if(gotourl.indexOf('wapbasic_iframe') > -1){
+                            // KISSY.one(".jm-register iframe").attr("height",'480px');
+                        }
+                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+                        KISSY.all('.jm-register,#jm-logo').show();
+                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
+                        //     isLock: "true"
+                        // });
+                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
+                            isLock: "false"
+                        });
+                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+                    }
+                });
+                } 
+            }
+        }
+    
+    }
+    
+    function u() {}
+    return a.augment(u, {
+        init: function() {
+            e()
+        }
+    }),
+    u
+},
+{
+    requires: ["menubutton", "mu", "overlay", "switchable"]
+}),
+
+KISSY.add("hiredeFunction", 
+function(a,b,c,d) {
+    function e(){
+        var g = {};
+        
+        var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+        //if (isLogin.toString() == "true") {
+        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
+        var host = jm_get_remote_js("matchHost");
+
+        var hostarray = host.split(",");
+        var nums = [];
+        var pathname = jm_get_remote_js("matchPathname");
+        var pathnamearray = pathname.split(',');
+        var hash = jm_get_remote_js("matchHash");
+        var hasharray = hash.split(',');
+        var checkdomin = 0;
+        for (var i = 0; i< pathnamearray.length; i++) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "" ) {
+                for (var k = 0; k < hasharray.length; k++) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
+                        checkdomin = 1;
+                        break;
+                    } 
+                }
+            }   
+        }
+        for (var i = 0 ; i<hostarray.length ; i++) {
+            
+            nums.push(parseInt(hostarray[i]));
+        
+            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
+                if (checkdomin == 1) {
+                 var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+                itemnode && itemnode.append(h);  
+
+                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+                console.log(new Date().getTime() + '----' + isLogin + '----51job');
+                 jm_tools.getMessageFromBackground({
+                    operate: "getLocalStorage",
+                    data: {"key": 'gotourl'}
+                }, function(data) {
+                    var gotourl = data ? data.value : '';
+                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
+                    if(isLogin.toString() == "true" && !gotourl){
+                        //已登录
+                        // alert("denglu");
+                        KISSY.use("jmPopup", 
+                        function(a, b) {
+                            jm_global_popup_obj = new b;
+                        });
+                    }else if(!gotourl){
+                        //未登录
+                        KISSY.one("#jm_pop_tab").attr("width",'50px');
+                        KISSY.all("#notifications").css("width",'300px');
+                        
+                        $("#qw-notifications-bottom-right-tab").addClass('animated ' + 'fadeInRight');
+                        KISSY.all("#qw-notifications").show();
+                        $('#qw-notifications .close').click(function(){
+                            $(this).parent().fadeOut(200);
+                            KISSY.all("#qw-notifications").hide();
+                        });
+                        KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
+                            $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                        });
+              
+                 
+                        KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
+                       // window.jmLogin.logout();
+                    }else{
+                        if(gotourl.indexOf('wapbasic_iframe') > -1){
+                            // KISSY.one(".jm-register iframe").attr("height",'480px');
+                        }
+                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+                        KISSY.all('.jm-register,#jm-logo').show();
+                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
+                        //     isLock: "true"
+                        // });
+                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
+                            isLock: "false"
+                        });
+                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+                    }
+                });
+                } 
+            }
+        }
+    //}
+    }
+    
+    function u() {}
+    return a.augment(u, {
+        init: function() {
+            e()
+        }
+    }),
+    u
+},
+{
+    requires: ["menubutton", "mu", "overlay", "switchable"]
+}),
+
+
+KISSY.add("chuangxinFunction", 
+function(a,b,c,d) {
+    function e(){
+        var g = {};
+        
+        var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+        //if (isLogin.toString() == "true") {
+        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
+        var host = jm_get_remote_js("matchHost");
+         var hostarray = host.split(",");
+        var nums = [];
+        var pathname = jm_get_remote_js("matchPathname");
+        var pathnamearray = pathname.split(',');
+        var hash = jm_get_remote_js("matchHash");
+        var hasharray = hash.split(',');
+        var checkdomin = 0;
+        for (var i = 0; i< pathnamearray.length; i++) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "" ) {
+                for (var k = 0; k < hasharray.length; k++) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
+                        checkdomin = 1;
+                        break;
+                    } 
+                }
+            }   
+        }
+        for (var i = 0 ; i<hostarray.length ; i++) {
+            
+            nums.push(parseInt(hostarray[i]));
+        
+            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
+                if (checkdomin == 1) {
+                 var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+                itemnode && itemnode.append(h);  
+
+                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+                console.log(new Date().getTime() + '----' + isLogin + '----51job');
+                 jm_tools.getMessageFromBackground({
+                    operate: "getLocalStorage",
+                    data: {"key": 'gotourl'}
+                }, function(data) {
+                    var gotourl = data ? data.value : '';
+                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
+                    if(isLogin.toString() == "true" && !gotourl){
+                        //已登录
+                        // alert("denglu");
+                        KISSY.use("jmPopup", 
+                        function(a, b) {
+                            jm_global_popup_obj = new b;
+                        });
+                    }else if(!gotourl){
+                        //未登录
+                        KISSY.one("#jm_pop_tab").attr("width",'50px');
+                        KISSY.all("#notifications").css("width",'300px');
+                        
+                        $("#qw-notifications-bottom-right-tab").addClass('animated ' + 'fadeInRight');
+                        KISSY.all("#qw-notifications").show();
+                        $('#qw-notifications .close').click(function(){
+                            $(this).parent().fadeOut(200);
+                            KISSY.all("#qw-notifications").hide();
+                        });
+                        KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
+                            $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                        });
+              
+                 
+                        KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
+                       // window.jmLogin.logout();
+                    }else{
+                        if(gotourl.indexOf('wapbasic_iframe') > -1){
+                            // KISSY.one(".jm-register iframe").attr("height",'480px');
+                        }
+                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+                        KISSY.all('.jm-register,#jm-logo').show();
+                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
+                        //     isLock: "true"
+                        // });
+                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
+                            isLock: "false"
+                        });
+                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+                    }
+                });
+                } 
+            }
+        } 
+    //}
+    }
+    
+    function u() {}
+    return a.augment(u, {
+        init: function() {
+            e()
+        }
+    }),
+    u
+},
+{
+    requires: ["menubutton", "mu", "overlay", "switchable"]
+}),
+
+
+KISSY.add("xunleiFunction", 
+function(a,b,c,d) {
+    function e(){
+        var g = {};
+       
+       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+        //if (isLogin.toString() == "true") {
+        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
+        var host = jm_get_remote_js("matchHost");
+        var hostarray = host.split(",");
+        var nums = [];
+        var pathname = jm_get_remote_js("matchPathname");
+        var pathnamearray = pathname.split(',');
+        var hash = jm_get_remote_js("matchHash");
+        var hasharray = hash.split(',');
+        var checkdomin = 0;
+        for (var i = 0; i< pathnamearray.length; i++) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "" ) {
+                for (var k = 0; k < hasharray.length; k++) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
+                        checkdomin = 1;
+                        break;
+                    } 
+                }
+            }   
+        }
+        for (var i = 0 ; i<hostarray.length ; i++) {
+            
+            nums.push(parseInt(hostarray[i]));
+        
+            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
+                if (checkdomin == 1) {
+                 var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+                itemnode && itemnode.append(h);  
+
+                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+                console.log(new Date().getTime() + '----' + isLogin + '----51job');
+                 jm_tools.getMessageFromBackground({
+                    operate: "getLocalStorage",
+                    data: {"key": 'gotourl'}
+                }, function(data) {
+                    var gotourl = data ? data.value : '';
+                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
+                    if(isLogin.toString() == "true" && !gotourl){
+                        //已登录
+                        // alert("denglu");
+                        KISSY.use("jmPopup", 
+                        function(a, b) {
+                            jm_global_popup_obj = new b;
+                        });
+                    }else if(!gotourl){
+                        //未登录
+                        KISSY.one("#jm_pop_tab").attr("width",'50px');
+                        KISSY.all("#notifications").css("width",'300px');
+                        
+                        $("#qw-notifications-bottom-right-tab").addClass('animated ' + 'fadeInRight');
+                        KISSY.all("#qw-notifications").show();
+                        $('#qw-notifications .close').click(function(){
+                            $(this).parent().fadeOut(200);
+                            KISSY.all("#qw-notifications").hide();
+                        });
+                        KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
+                            $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                        });
+              
+                 
+                        KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
+                       // window.jmLogin.logout();
+                    }else{
+                        if(gotourl.indexOf('wapbasic_iframe') > -1){
+                            // KISSY.one(".jm-register iframe").attr("height",'480px');
+                        }
+                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+                        KISSY.all('.jm-register,#jm-logo').show();
+                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
+                        //     isLock: "true"
+                        // });
+                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
+                            isLock: "false"
+                        });
+                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+                    }
+                });
+                } 
+            }
+        }
+    //}
+    }
+    
+    function u() {}
+    return a.augment(u, {
+        init: function() {
+            e()
+        }
+    }),
+    u
+},
+{
+    requires: ["menubutton", "mu", "overlay", "switchable"]
+}),
+
+KISSY.add("icebearFunction", 
+function(a,b,c,d) {
+    function e(){
+        function getCookie(name){
+            return (document.cookie.match(new RegExp("(^"+name+"| "+name+")=([^;]*)"))==null)?"":RegExp.$2;
+        }
+        console.log(getCookie);
+        var isLogin = getCookie("ot_home_login");
+        var homeUid = getCookie("ot_home_uid");
+        var ezHomeUid = getCookie("ot_home_ez_uid");
+        var a = {"ot_home_ez_uid":homeUid,"ot_home_uid":homeUid,"ot_home_login":isLogin,"login":"true"};
+        if(isLogin == 1){
+            jm_tools.setBackgroundLocalStore({
+                //login :{"ot_home_ez_uid":ezHomeUid,"ot_home_uid":homeUid,"ot_home_login":isLogin}
+                jm_login: JSON.stringify(a)
+            });
+            jm_tools.getMessageFromBackground({
+                operate: "getLocalStorage",
+                data: {"key": 'jm_login'}
+            }, function(data) {
+                console.log('icebear------' + data);
+            
+            });
+        } 
+        
+    }
+    
+    function u() {}
+    return a.augment(u, {
+        init: function() {
+            e()
+        }
+    }),
+    u
+},
+{
+    requires: ["menubutton", "mu", "overlay", "switchable"]
+}),
+
+
+KISSY.add("huaweiFunction", 
+function(a,b,c,d) {
+    function e(){
+        var g = {};
+       
+       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+        //if (isLogin.toString() == "true") {
+        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
+        var host = jm_get_remote_js("matchHost");
+        var hostarray = host.split(",");
+        var nums = [];
+        var pathname = jm_get_remote_js("matchPathname");
+        var pathnamearray = pathname.split(',');
+        var hash = jm_get_remote_js("matchHash");
+        var hasharray = hash.split(',');
+        var checkdomin = 0;
+
+        for (var i = 0; i< pathnamearray.length; i++) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "" ) {
+                
+                for (var k = 0; k < hasharray.length; k++) {
+                    if (window.location.hash == hasharray[k] || hasharray == "" ) {
+                        checkdomin = 1;
+                        break;
+                    } 
+                }
+            }   
+        }
+
+        for (var i = 0 ; i<hostarray.length ; i++) {
+            
+            nums.push(parseInt(hostarray[i]));
+        
+            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
+
+                if (checkdomin == 1) {
+
+                var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+                itemnode && itemnode.append(h);  
+
+                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+                console.log(new Date().getTime() + '----' + isLogin + '----51job');
+                 jm_tools.getMessageFromBackground({
+                    operate: "getLocalStorage",
+                    data: {"key": 'gotourl'}
+                }, function(data) {
+                    var gotourl = data ? data.value : '';
+                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
+                    if(isLogin.toString() == "true" && !gotourl){
+                        //已登录
+                        // alert("denglu");
+                        KISSY.use("jmPopup", 
+                        function(a, b) {
+                            jm_global_popup_obj = new b;
+                        });
+                    }else if(!gotourl){
+                        //未登录
+                        KISSY.one("#jm_pop_tab").attr("width",'50px');
+                        KISSY.all("#notifications").css("width",'300px');
+                        
+                        $("#qw-notifications-bottom-right-tab").addClass('animated ' + 'fadeInRight');
+                        KISSY.all("#qw-notifications").show();
+                        $('#qw-notifications .close').click(function(){
+                            $(this).parent().fadeOut(200);
+                            KISSY.all("#qw-notifications").hide();
+                        });
+                        KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
+                            $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                        });
+              
+                 
+                        KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
+                       // window.jmLogin.logout();
+                    }else{
+                        if(gotourl.indexOf('wapbasic_iframe') > -1){
+                            // KISSY.one(".jm-register iframe").attr("height",'480px');
+                        }
+                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+                        KISSY.all('.jm-register,#jm-logo').show();
+                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
+                        //     isLock: "true"
+                        // });
+                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
+                            isLock: "false"
+                        });
+                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+                    }
+                });
+                } 
+            }
+        }
+    //}
+    }
+    
+    function u() {}
+    return a.augment(u, {
+        init: function() {
+            e()
+        }
+    }),
+    u
+},
+{
+    requires: ["menubutton", "mu", "overlay", "switchable"]
+}),
+
+KISSY.add("wintalentFunction", 
+function(a,b,c,d) {
+    function e(){
+        var g = {};
+       
+       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
+        var host = jm_get_remote_js("matchHost");
+        var pathname = jm_get_remote_js("matchPathname");
+        var pathnamearray = pathname.split(',');
+        var hash = jm_get_remote_js("matchHash");
+        var hasharray = hash.split(',');
+        var checkdomin = 0;
+        for (var i = 0; i< pathnamearray.length; i++) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "" ) {
+                for (var k = 0; k < hasharray.length; k++) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
+                        checkdomin = 1;
+                        break;
+                    } 
+                }
+            }   
+        }
+        var hostarray = host.split(",");
+        var nums = [];
+        for (var i = 0 ; i<hostarray.length ; i++) {
+            nums.push(parseInt(hostarray[i]));
+
+            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
+                if (checkdomin == 1) {
+            var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+                itemnode && itemnode.append(h);  
+
+                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+               // console.log(new Date().getTime() + '----' + isLogin + '----jd');
+                 jm_tools.getMessageFromBackground({
+                    operate: "getLocalStorage",
+                    data: {"key": 'gotourl'}
+                }, function(data) {
+                    var gotourl = data ? data.value : '';
+                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
+                    if(isLogin.toString() == "true" && !gotourl){
+                        //已登录
+                        // alert("denglu");
+                        KISSY.use("jmPopup", 
+                        function(a, b) {
+                            jm_global_popup_obj = new b;
+                        });
+                    }else if(!gotourl){
+                        //未登录
+                        KISSY.one("#jm_pop_tab").attr("width",'50px');
+                        KISSY.all("#notifications").css("width",'300px');
+                        
+                        $("#qw-notifications-bottom-right-tab").addClass('animated ' + 'fadeInRight');
+                        KISSY.all("#qw-notifications").show();
+                        $('#qw-notifications .close').click(function(){
+                            $(this).parent().fadeOut(200);
+                            KISSY.all("#qw-notifications").hide();
+                        });
+                        KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
+                            $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                        });
+              
+                 
+                        KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
+                       // window.jmLogin.logout();
+                    }else{
+                        if(gotourl.indexOf('wapbasic_iframe') > -1){
+                            // KISSY.one(".jm-register iframe").attr("height",'480px');
+                        }
+                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+                        KISSY.all('.jm-register,#jm-logo').show();
+                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
+                        //     isLock: "true"
+                        // });
+                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
+                            isLock: "false"
+                        });
+                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+                    }
+                });
+             }
+            } 
+        }
+    }
+    
+    function u() {}
+    return a.augment(u, {
+        init: function() {
+            e()
+        }
+    }),
+    u
+},
+{
+    requires: ["menubutton", "mu", "overlay", "switchable"]
+}),
+
+KISSY.add("brassringFunction", 
+function(a,b,c,d) {
+    function e(){
+        var g = {};
+       
+       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+        //if (isLogin.toString() == "true") {
+        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
+        var host = jm_get_remote_js("matchHost");
+         var hostarray = host.split(",");
+        var nums = [];
+        var pathname = jm_get_remote_js("matchPathname");
+        var pathnamearray = pathname.split(',');
+        var hash = jm_get_remote_js("matchHash");
+        var hasharray = hash.split(',');
+        var checkdomin = 0;
+        for (var i = 0; i< pathnamearray.length; i++) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "" ) {
+                for (var k = 0; k < hasharray.length; k++) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
+                        checkdomin = 1;
+                        break;
+                    } 
+                }
+            }   
+        }
+        for (var i = 0 ; i<hostarray.length ; i++) {
+            
+            nums.push(parseInt(hostarray[i]));
+        
+            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
+                if (checkdomin == 1) {
+                 var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+                itemnode && itemnode.append(h);  
+
+                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+                console.log(new Date().getTime() + '----' + isLogin + '----51job');
+                 jm_tools.getMessageFromBackground({
+                    operate: "getLocalStorage",
+                    data: {"key": 'gotourl'}
+                }, function(data) {
+                    var gotourl = data ? data.value : '';
+                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
+                    if(isLogin.toString() == "true" && !gotourl){
+                        //已登录
+                        // alert("denglu");
+                        KISSY.use("jmPopup", 
+                        function(a, b) {
+                            jm_global_popup_obj = new b;
+                        });
+                    }else if(!gotourl){
+                        //未登录
+                        KISSY.one("#jm_pop_tab").attr("width",'50px');
+                        KISSY.all("#notifications").css("width",'300px');
+                        
+                        $("#qw-notifications-bottom-right-tab").addClass('animated ' + 'fadeInRight');
+                        KISSY.all("#qw-notifications").show();
+                        $('#qw-notifications .close').click(function(){
+                            $(this).parent().fadeOut(200);
+                            KISSY.all("#qw-notifications").hide();
+                        });
+                        KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
+                            $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                        });
+              
+                 
+                        KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
+                       // window.jmLogin.logout();
+                    }else{
+                        if(gotourl.indexOf('wapbasic_iframe') > -1){
+                            // KISSY.one(".jm-register iframe").attr("height",'480px');
+                        }
+                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+                        KISSY.all('.jm-register,#jm-logo').show();
+                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
+                        //     isLock: "true"
+                        // });
+                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
+                            isLock: "false"
+                        });
+                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+                    }
+                });
+                } 
+            }
+        }
+    //}
+    }
+    
+    function u() {}
+    return a.augment(u, {
+        init: function() {
+            e()
+        }
+    }),
+    u
+},
+{
+    requires: ["menubutton", "mu", "overlay", "switchable"]
+}),
+
+KISSY.add("cmbchinaFunction", 
+function(a,b,c,d) {
+    function e(){
+        var g = {};
+       
+       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+        //if (isLogin.toString() == "true") {
+        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
+        var host = jm_get_remote_js("matchHost");
+         var hostarray = host.split(",");
+        var nums = [];
+        var pathname = jm_get_remote_js("matchPathname");
+        var pathnamearray = pathname.split(',');
+        var hash = jm_get_remote_js("matchHash");
+        var hasharray = hash.split(',');
+        var checkdomin = 0;
+        for (var i = 0; i< pathnamearray.length; i++) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "" ) {
+                for (var k = 0; k < hasharray.length; k++) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
+                        checkdomin = 1;
+                        break;
+                    } 
+                }
+            }   
+        }
+        for (var i = 0 ; i<hostarray.length ; i++) {
+            
+            nums.push(parseInt(hostarray[i]));
+        
+            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
+                if (checkdomin == 1) {
+                 var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+                itemnode && itemnode.append(h);  
+
+                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+                console.log(new Date().getTime() + '----' + isLogin + '----51job');
+                 jm_tools.getMessageFromBackground({
+                    operate: "getLocalStorage",
+                    data: {"key": 'gotourl'}
+                }, function(data) {
+                    var gotourl = data ? data.value : '';
+                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
+                    if(isLogin.toString() == "true" && !gotourl){
+                        //已登录
+                        // alert("denglu");
+                        KISSY.use("jmPopup", 
+                        function(a, b) {
+                            jm_global_popup_obj = new b;
+                        });
+                    }else if(!gotourl){
+                        //未登录
+                        KISSY.one("#jm_pop_tab").attr("width",'50px');
+                        KISSY.all("#notifications").css("width",'300px');
+                        
+                        $("#qw-notifications-bottom-right-tab").addClass('animated ' + 'fadeInRight');
+                        KISSY.all("#qw-notifications").show();
+                        $('#qw-notifications .close').click(function(){
+                            $(this).parent().fadeOut(200);
+                            KISSY.all("#qw-notifications").hide();
+                        });
+                        KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
+                            $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                        });
+              
+                 
+                        KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
+                       // window.jmLogin.logout();
+                    }else{
+                        if(gotourl.indexOf('wapbasic_iframe') > -1){
+                            // KISSY.one(".jm-register iframe").attr("height",'480px');
+                        }
+                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+                        KISSY.all('.jm-register,#jm-logo').show();
+                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
+                        //     isLock: "true"
+                        // });
+                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
+                            isLock: "false"
+                        });
+                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+                    }
+                });
+                } 
+            }
+        } 
+    //}
+    }
+    
+    function u() {}
+    return a.augment(u, {
+        init: function() {
+            e()
+        }
+    }),
+    u
+},
+{
+    requires: ["menubutton", "mu", "overlay", "switchable"]
+}),
+
+KISSY.add("dearsamsungFunction", 
+function(a,b,c,d) {
+    function e(){
+        var g = {};
+       
+       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+       // if (isLogin.toString() == "true") {
+        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
+        var host = jm_get_remote_js("matchHost");
+         var hostarray = host.split(",");
+        var nums = [];
+        var pathname = jm_get_remote_js("matchPathname");
+        var pathnamearray = pathname.split(',');
+        var hash = jm_get_remote_js("matchHash");
+        var hasharray = hash.split(',');
+        var checkdomin = 0;
+        for (var i = 0; i< pathnamearray.length; i++) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "" ) {
+                for (var k = 0; k < hasharray.length; k++) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
+                        checkdomin = 1;
+                        break;
+                    } 
+                }
+            }   
+        }
+        for (var i = 0 ; i<hostarray.length ; i++) {
+            
+            nums.push(parseInt(hostarray[i]));
+        
+            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
+                if (checkdomin == 1) {
+                 var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+                itemnode && itemnode.append(h);  
+
+                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+                console.log(new Date().getTime() + '----' + isLogin + '----51job');
+                 jm_tools.getMessageFromBackground({
+                    operate: "getLocalStorage",
+                    data: {"key": 'gotourl'}
+                }, function(data) {
+                    var gotourl = data ? data.value : '';
+                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
+                    if(isLogin.toString() == "true" && !gotourl){
+                        //已登录
+                        // alert("denglu");
+                        KISSY.use("jmPopup", 
+                        function(a, b) {
+                            jm_global_popup_obj = new b;
+                        });
+                    }else if(!gotourl){
+                        //未登录
+                        KISSY.one("#jm_pop_tab").attr("width",'50px');
+                        KISSY.all("#notifications").css("width",'300px');
+                        
+                        $("#qw-notifications-bottom-right-tab").addClass('animated ' + 'fadeInRight');
+                        KISSY.all("#qw-notifications").show();
+                        $('#qw-notifications .close').click(function(){
+                            $(this).parent().fadeOut(200);
+                            KISSY.all("#qw-notifications").hide();
+                        });
+                        KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
+                            $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                        });
+              
+                 
+                        KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
+                       // window.jmLogin.logout();
+                    }else{
+                        if(gotourl.indexOf('wapbasic_iframe') > -1){
+                            // KISSY.one(".jm-register iframe").attr("height",'480px');
+                        }
+                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+                        KISSY.all('.jm-register,#jm-logo').show();
+                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
+                        //     isLock: "true"
+                        // });
+                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
+                            isLock: "false"
+                        });
+                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+                    }
+                });
+                } 
+            }
+        }
+    //}
+    }
+    
+    function u() {}
+    return a.augment(u, {
+        init: function() {
+            e()
+        }
+    }),
+    u
+},
+{
+    requires: ["menubutton", "mu", "overlay", "switchable"]
+}),
+
+KISSY.add("coolpadFunction", 
+function(a,b,c,d) {
+    function e(){
+        var g = {};
+       
+       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+        //if (isLogin.toString() == "true") {
+        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
+        var host = jm_get_remote_js("matchHost");
+         var hostarray = host.split(",");
+        var nums = [];
+        var pathname = jm_get_remote_js("matchPathname");
+        var pathnamearray = pathname.split(',');
+        var hash = jm_get_remote_js("matchHash");
+        var hasharray = hash.split(',');
+        var checkdomin = 0;
+        for (var i = 0; i< pathnamearray.length; i++) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "" ) {
+                for (var k = 0; k < hasharray.length; k++) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
+                        checkdomin = 1;
+                        break;
+                    } 
+                }
+            }   
+        }
+        for (var i = 0 ; i<hostarray.length ; i++) {
+            
+            nums.push(parseInt(hostarray[i]));
+        
+            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
+                if (checkdomin == 1) {
+                 var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+                itemnode && itemnode.append(h);  
+
+                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+                console.log(new Date().getTime() + '----' + isLogin + '----51job');
+                 jm_tools.getMessageFromBackground({
+                    operate: "getLocalStorage",
+                    data: {"key": 'gotourl'}
+                }, function(data) {
+                    var gotourl = data ? data.value : '';
+                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
+                    if(isLogin.toString() == "true" && !gotourl){
+                        //已登录
+                        // alert("denglu");
+                        KISSY.use("jmPopup", 
+                        function(a, b) {
+                            jm_global_popup_obj = new b;
+                        });
+                    }else if(!gotourl){
+                        //未登录
+                        KISSY.one("#jm_pop_tab").attr("width",'50px');
+                        KISSY.all("#notifications").css("width",'300px');
+                        
+                        $("#qw-notifications-bottom-right-tab").addClass('animated ' + 'fadeInRight');
+                        KISSY.all("#qw-notifications").show();
+                        $('#qw-notifications .close').click(function(){
+                            $(this).parent().fadeOut(200);
+                            KISSY.all("#qw-notifications").hide();
+                        });
+                        KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
+                            $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                        });
+              
+                 
+                        KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
+                       // window.jmLogin.logout();
+                    }else{
+                        if(gotourl.indexOf('wapbasic_iframe') > -1){
+                            // KISSY.one(".jm-register iframe").attr("height",'480px');
+                        }
+                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+                        KISSY.all('.jm-register,#jm-logo').show();
+                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
+                        //     isLock: "true"
+                        // });
+                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
+                            isLock: "false"
+                        });
+                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+                    }
+                });
+                } 
+            }
+        }
+    //}
+    }
+    
+    function u() {}
+    return a.augment(u, {
+        init: function() {
+            e()
+        }
+    }),
+    u
+},
+{
+    requires: ["menubutton", "mu", "overlay", "switchable"]
+}),
+
+
+KISSY.add("peopleclickFunction", 
+function(a,b,c,d) {
+    function e(){
+        var g = {};
+       
+       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+        //if (isLogin.toString() == "true") {
+        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
+        var host = jm_get_remote_js("matchHost");
+         var hostarray = host.split(",");
+        var nums = [];
+        var pathname = jm_get_remote_js("matchPathname");
+        var pathnamearray = pathname.split(',');
+        var hash = jm_get_remote_js("matchHash");
+        var hasharray = hash.split(',');
+        var checkdomin = 0;
+        for (var i = 0; i< pathnamearray.length; i++) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "" ) {
+                for (var k = 0; k < hasharray.length; k++) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
+                        checkdomin = 1;
+                        break;
+                    } 
+                }
+            }   
+        }
+        for (var i = 0 ; i<hostarray.length ; i++) {
+            
+            nums.push(parseInt(hostarray[i]));
+        
+            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
+                if (checkdomin == 1) {
+                 var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+                itemnode && itemnode.append(h);  
+
+                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+                console.log(new Date().getTime() + '----' + isLogin + '----51job');
+                 jm_tools.getMessageFromBackground({
+                    operate: "getLocalStorage",
+                    data: {"key": 'gotourl'}
+                }, function(data) {
+                    var gotourl = data ? data.value : '';
+                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
+                    if(isLogin.toString() == "true" && !gotourl){
+                        //已登录
+                        // alert("denglu");
+                        KISSY.use("jmPopup", 
+                        function(a, b) {
+                            jm_global_popup_obj = new b;
+                        });
+                    }else if(!gotourl){
+                        //未登录
+                        KISSY.one("#jm_pop_tab").attr("width",'50px');
+                        KISSY.all("#notifications").css("width",'300px');
+                        
+                        $("#qw-notifications-bottom-right-tab").addClass('animated ' + 'fadeInRight');
+                        KISSY.all("#qw-notifications").show();
+                        $('#qw-notifications .close').click(function(){
+                            $(this).parent().fadeOut(200);
+                            KISSY.all("#qw-notifications").hide();
+                        });
+                        KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
+                            $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                        });
+              
+                 
+                        KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
+                       // window.jmLogin.logout();
+                    }else{
+                        if(gotourl.indexOf('wapbasic_iframe') > -1){
+                            // KISSY.one(".jm-register iframe").attr("height",'480px');
+                        }
+                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+                        KISSY.all('.jm-register,#jm-logo').show();
+                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
+                        //     isLock: "true"
+                        // });
+                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
+                            isLock: "false"
+                        });
+                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+                    }
+                });
+                } 
+            }
+        }
+   // }
+    }
+    
+    function u() {}
+    return a.augment(u, {
+        init: function() {
+            e()
+        }
+    }),
+    u
+},
+{
+    requires: ["menubutton", "mu", "overlay", "switchable"]
+}),
+
+KISSY.add("apply2jobsFunction", 
+function(a,b,c,d) {
+    function e(){
+        var g = {};
+       
+       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+       // if (isLogin.toString() == "true") {
+        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
+        var host = jm_get_remote_js("matchHost");
+         var hostarray = host.split(",");
+        var nums = [];
+        var pathname = jm_get_remote_js("matchPathname");
+        var pathnamearray = pathname.split(',');
+        var hash = jm_get_remote_js("matchHash");
+        var hasharray = hash.split(',');
+        var checkdomin = 0;
+        for (var i = 0; i< pathnamearray.length; i++) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "" ) {
+                for (var k = 0; k < hasharray.length; k++) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
+                        checkdomin = 1;
+                        break;
+                    } 
+                }
+            }   
+        }
+        for (var i = 0 ; i<hostarray.length ; i++) {
+            
+            nums.push(parseInt(hostarray[i]));
+        
+            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
+                if (checkdomin == 1) {
+                 var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+                itemnode && itemnode.append(h);  
+
+                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+                console.log(new Date().getTime() + '----' + isLogin + '----51job');
+                 jm_tools.getMessageFromBackground({
+                    operate: "getLocalStorage",
+                    data: {"key": 'gotourl'}
+                }, function(data) {
+                    var gotourl = data ? data.value : '';
+                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
+                    if(isLogin.toString() == "true" && !gotourl){
+                        //已登录
+                        // alert("denglu");
+                        KISSY.use("jmPopup", 
+                        function(a, b) {
+                            jm_global_popup_obj = new b;
+                        });
+                    }else if(!gotourl){
+                        //未登录
+                        KISSY.one("#jm_pop_tab").attr("width",'50px');
+                        KISSY.all("#notifications").css("width",'300px');
+                        
+                        $("#qw-notifications-bottom-right-tab").addClass('animated ' + 'fadeInRight');
+                        KISSY.all("#qw-notifications").show();
+                        $('#qw-notifications .close').click(function(){
+                            $(this).parent().fadeOut(200);
+                            KISSY.all("#qw-notifications").hide();
+                        });
+                        KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
+                            $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                        });
+              
+                 
+                        KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
+                       // window.jmLogin.logout();
+                    }else{
+                        if(gotourl.indexOf('wapbasic_iframe') > -1){
+                            // KISSY.one(".jm-register iframe").attr("height",'480px');
+                        }
+                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+                        KISSY.all('.jm-register,#jm-logo').show();
+                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
+                        //     isLock: "true"
+                        // });
+                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
+                            isLock: "false"
+                        });
+                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+                    }
+                });
+                } 
+            }
+        }
+   // }
+    }
+    
+    function u() {}
+    return a.augment(u, {
+        init: function() {
+            e()
+        }
+    }),
+    u
+},
+{
+    requires: ["menubutton", "mu", "overlay", "switchable"]
+}),
+
+
+KISSY.add("forceFunction", 
+function(a,b,c,d) {
+    function e(){
+        var g = {};
+       
+       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+        //if (isLogin.toString() == "true") {
+        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
+        var host = jm_get_remote_js("matchHost");
+         var hostarray = host.split(",");
+        var nums = [];
+        var pathname = jm_get_remote_js("matchPathname");
+        var pathnamearray = pathname.split(',');
+        var hash = jm_get_remote_js("matchHash");
+        var hasharray = hash.split(',');
+        var checkdomin = 0;
+        for (var i = 0; i< pathnamearray.length; i++) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "" ) {
+                for (var k = 0; k < hasharray.length; k++) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
+                        checkdomin = 1;
+                        break;
+                    } 
+                }
+            }   
+        }
+        for (var i = 0 ; i<hostarray.length ; i++) {
+            
+            nums.push(parseInt(hostarray[i]));
+        
+            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
+                if (checkdomin == 1) {
+                 var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+                itemnode && itemnode.append(h);  
+
+                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+                console.log(new Date().getTime() + '----' + isLogin + '----51job');
+                 jm_tools.getMessageFromBackground({
+                    operate: "getLocalStorage",
+                    data: {"key": 'gotourl'}
+                }, function(data) {
+                    var gotourl = data ? data.value : '';
+                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
+                    if(isLogin.toString() == "true" && !gotourl){
+                        //已登录
+                        // alert("denglu");
+                        KISSY.use("jmPopup", 
+                        function(a, b) {
+                            jm_global_popup_obj = new b;
+                        });
+                    }else if(!gotourl){
+                        //未登录
+                        KISSY.one("#jm_pop_tab").attr("width",'50px');
+                        KISSY.all("#notifications").css("width",'300px');
+                        
+                        $("#qw-notifications-bottom-right-tab").addClass('animated ' + 'fadeInRight');
+                        KISSY.all("#qw-notifications").show();
+                        $('#qw-notifications .close').click(function(){
+                            $(this).parent().fadeOut(200);
+                            KISSY.all("#qw-notifications").hide();
+                        });
+                        KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
+                            $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                        });
+              
+                 
+                        KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
+                       // window.jmLogin.logout();
+                    }else{
+                        if(gotourl.indexOf('wapbasic_iframe') > -1){
+                            // KISSY.one(".jm-register iframe").attr("height",'480px');
+                        }
+                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+                        KISSY.all('.jm-register,#jm-logo').show();
+                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
+                        //     isLock: "true"
+                        // });
+                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
+                            isLock: "false"
+                        });
+                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+                    }
+                });
+                } 
+            }
+        } 
+    //}
+    }
+    
+    function u() {}
+    return a.augment(u, {
+        init: function() {
+            e()
+        }
+    }),
+    u
+},
+{
+    requires: ["menubutton", "mu", "overlay", "switchable"]
+}),
+
+KISSY.add("fangFunction", 
+function(a,b,c,d) {
+    function e(){
+        var g = {};
+       
+       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+       // if (isLogin.toString() == "true") {
+        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
+        var host = jm_get_remote_js("matchHost");
+         var hostarray = host.split(",");
+        var nums = [];
+        var pathname = jm_get_remote_js("matchPathname");
+        var pathnamearray = pathname.split(',');
+        var hash = jm_get_remote_js("matchHash");
+        var hasharray = hash.split(',');
+        var checkdomin = 0;
+
+        for (var i = 0; i< pathnamearray.length; i++) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "") {
+                for (var k = 0; k < hasharray.length; k++) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
+                        checkdomin = 1;
+                        break;
+                    } 
+                }
+            }   
+        }
+        for (var i = 0 ; i<hostarray.length ; i++) {
+            
+            nums.push(parseInt(hostarray[i]));
+        
+            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
+                if (checkdomin == 1) {
+                 var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+                itemnode && itemnode.append(h);  
+
+                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+                console.log(new Date().getTime() + '----' + isLogin + '----51job');
+                 jm_tools.getMessageFromBackground({
+                    operate: "getLocalStorage",
+                    data: {"key": 'gotourl'}
+                }, function(data) {
+                    var gotourl = data ? data.value : '';
+                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
+                    if(isLogin.toString() == "true" && !gotourl){
+                        //已登录
+                        // alert("denglu");
+                        KISSY.use("jmPopup", 
+                        function(a, b) {
+                            jm_global_popup_obj = new b;
+                        });
+                    }else if(!gotourl){
+                        //未登录
+                        KISSY.one("#jm_pop_tab").attr("width",'50px');
+                        KISSY.all("#notifications").css("width",'300px');
+                        
+                        $("#qw-notifications-bottom-right-tab").addClass('animated ' + 'fadeInRight');
+                        KISSY.all("#qw-notifications").show();
+                        $('#qw-notifications .close').click(function(){
+                            $(this).parent().fadeOut(200);
+                            KISSY.all("#qw-notifications").hide();
+                        });
+                        KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
+                            $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                        });
+              
+                 
+                        KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
+                       // window.jmLogin.logout();
+                    }else{
+                        if(gotourl.indexOf('wapbasic_iframe') > -1){
+                            // KISSY.one(".jm-register iframe").attr("height",'480px');
+                        }
+                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+                        KISSY.all('.jm-register,#jm-logo').show();
+                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
+                        //     isLock: "true"
+                        // });
+                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
+                            isLock: "false"
+                        });
+                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+                    }
+                });
+                } 
+            }
+        }
+    //}
+    }
+    
+    function u() {}
+    return a.augment(u, {
+        init: function() {
+            e()
+        }
+    }),
+    u
+},
+{
+    requires: ["menubutton", "mu", "overlay", "switchable"]
+}),
+
+KISSY.add("suningFunction", 
+function(a,b,c,d) {
+    function e(){
+        var g = {};
+       
+       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+       // if (isLogin.toString() == "true") {
+        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
+        var host = jm_get_remote_js("matchHost");
+         var hostarray = host.split(",");
+        var nums = [];
+        var pathname = jm_get_remote_js("matchPathname");
+        var pathnamearray = pathname.split(',');
+        var hash = jm_get_remote_js("matchHash");
+        var hasharray = hash.split(',');
+        var checkdomin = 0;
+
+        for (var i = 0; i< pathnamearray.length; i++) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "") {
+                for (var k = 0; k < hasharray.length; k++) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
+                        checkdomin = 1;
+                        break;
+                    } 
+                }
+            }   
+        }
+        for (var i = 0 ; i<hostarray.length ; i++) {
+            
+            nums.push(parseInt(hostarray[i]));
+        
+            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
+                if (checkdomin == 1) {
+                 var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+                itemnode && itemnode.append(h);  
+
+                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+                console.log(new Date().getTime() + '----' + isLogin + '----51job');
+                 jm_tools.getMessageFromBackground({
+                    operate: "getLocalStorage",
+                    data: {"key": 'gotourl'}
+                }, function(data) {
+                    var gotourl = data ? data.value : '';
+                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
+                    if(isLogin.toString() == "true" && !gotourl){
+                        //已登录
+                        // alert("denglu");
+                        KISSY.use("jmPopup", 
+                        function(a, b) {
+                            jm_global_popup_obj = new b;
+                        });
+                    }else if(!gotourl){
+                        //未登录
+                        KISSY.one("#jm_pop_tab").attr("width",'50px');
+                        KISSY.all("#notifications").css("width",'300px');
+                        
+                        $("#qw-notifications-bottom-right-tab").addClass('animated ' + 'fadeInRight');
+                        KISSY.all("#qw-notifications").show();
+                        $('#qw-notifications .close').click(function(){
+                            $(this).parent().fadeOut(200);
+                            KISSY.all("#qw-notifications").hide();
+                        });
+                        KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
+                            $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                        });
+              
+                 
+                        KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
+                       // window.jmLogin.logout();
+                    }else{
+                        if(gotourl.indexOf('wapbasic_iframe') > -1){
+                            // KISSY.one(".jm-register iframe").attr("height",'480px');
+                        }
+                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+                        KISSY.all('.jm-register,#jm-logo').show();
+                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
+                        //     isLock: "true"
+                        // });
+                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
+                            isLock: "false"
+                        });
+                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+                    }
+                });
+                } 
+            }
+        }
+    //}
+    }
+    
+    function u() {}
+    return a.augment(u, {
+        init: function() {
+            e()
+        }
+    }),
+    u
+},
+{
+    requires: ["menubutton", "mu", "overlay", "switchable"]
+}),
+
+KISSY.add("xiaomiFunction", 
+function(a,b,c,d) {
+    function e(){
+        var g = {};
+       
+       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+       // if (isLogin.toString() == "true") {
+        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
+        var host = jm_get_remote_js("matchHost");
+         var hostarray = host.split(",");
+        var nums = [];
+        var pathname = jm_get_remote_js("matchPathname");
+        var pathnamearray = pathname.split(',');
+        var hash = jm_get_remote_js("matchHash");
+        var hasharray = hash.split(',');
+        var checkdomin = 0;
+
+        for (var i = 0; i< pathnamearray.length; i++) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "") {
+                for (var k = 0; k < hasharray.length; k++) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
+                        checkdomin = 1;
+                        break;
+                    } 
+                }
+            }   
+        }
+        for (var i = 0 ; i<hostarray.length ; i++) {
+            
+            nums.push(parseInt(hostarray[i]));
+        
+            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
+                if (checkdomin == 1) {
+                 var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+                itemnode && itemnode.append(h);  
+
+                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+                console.log(new Date().getTime() + '----' + isLogin + '----51job');
+                 jm_tools.getMessageFromBackground({
+                    operate: "getLocalStorage",
+                    data: {"key": 'gotourl'}
+                }, function(data) {
+                    var gotourl = data ? data.value : '';
+                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
+                    if(isLogin.toString() == "true" && !gotourl){
+                        //已登录
+                        // alert("denglu");
+                        KISSY.use("jmPopup", 
+                        function(a, b) {
+                            jm_global_popup_obj = new b;
+                        });
+                    }else if(!gotourl){
+                        //未登录
+                        KISSY.one("#jm_pop_tab").attr("width",'50px');
+                        KISSY.all("#notifications").css("width",'300px');
+                        
+                        $("#qw-notifications-bottom-right-tab").addClass('animated ' + 'fadeInRight');
+                        KISSY.all("#qw-notifications").show();
+                        $('#qw-notifications .close').click(function(){
+                            $(this).parent().fadeOut(200);
+                            KISSY.all("#qw-notifications").hide();
+                        });
+                        KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
+                            $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                        });
+              
+                 
+                        KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
+                       // window.jmLogin.logout();
+                    }else{
+                        if(gotourl.indexOf('wapbasic_iframe') > -1){
+                            // KISSY.one(".jm-register iframe").attr("height",'480px');
+                        }
+                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+                        KISSY.all('.jm-register,#jm-logo').show();
+                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
+                        //     isLock: "true"
+                        // });
+                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
+                            isLock: "false"
+                        });
+                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+                    }
+                });
+                } 
+            }
+        }
+    //}
+    }
+    
+    function u() {}
+    return a.augment(u, {
+        init: function() {
+            e()
+        }
+    }),
+    u
+},
+{
+    requires: ["menubutton", "mu", "overlay", "switchable"]
+}),
+
+KISSY.add("pacteraFunction", 
+function(a,b,c,d) {
+    function e(){
+        var g = {};
+       
+       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+       // if (isLogin.toString() == "true") {
+        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
+        var host = jm_get_remote_js("matchHost");
+         var hostarray = host.split(",");
+        var nums = [];
+        var pathname = jm_get_remote_js("matchPathname");
+        var pathnamearray = pathname.split(',');
+        var hash = jm_get_remote_js("matchHash");
+        var hasharray = hash.split(',');
+        var checkdomin = 0;
+
+        for (var i = 0; i< pathnamearray.length; i++) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "") {
+                for (var k = 0; k < hasharray.length; k++) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
+                        checkdomin = 1;
+                        break;
+                    } 
+                }
+            }   
+        }
+        for (var i = 0 ; i<hostarray.length ; i++) {
+            
+            nums.push(parseInt(hostarray[i]));
+        
+            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
+                if (checkdomin == 1) {
+                 var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+                itemnode && itemnode.append(h);  
+
+                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+                console.log(new Date().getTime() + '----' + isLogin + '----51job');
+                 jm_tools.getMessageFromBackground({
+                    operate: "getLocalStorage",
+                    data: {"key": 'gotourl'}
+                }, function(data) {
+                    var gotourl = data ? data.value : '';
+                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
+                    if(isLogin.toString() == "true" && !gotourl){
+                        //已登录
+                        // alert("denglu");
+                        KISSY.use("jmPopup", 
+                        function(a, b) {
+                            jm_global_popup_obj = new b;
+                        });
+                    }else if(!gotourl){
+                        //未登录
+                        KISSY.one("#jm_pop_tab").attr("width",'50px');
+                        KISSY.all("#notifications").css("width",'300px');
+                        
+                        $("#qw-notifications-bottom-right-tab").addClass('animated ' + 'fadeInRight');
+                        KISSY.all("#qw-notifications").show();
+                        $('#qw-notifications .close').click(function(){
+                            $(this).parent().fadeOut(200);
+                            KISSY.all("#qw-notifications").hide();
+                        });
+                        KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
+                            $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                        });
+              
+                 
+                        KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
+                       // window.jmLogin.logout();
+                    }else{
+                        if(gotourl.indexOf('wapbasic_iframe') > -1){
+                            // KISSY.one(".jm-register iframe").attr("height",'480px');
+                        }
+                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+                        KISSY.all('.jm-register,#jm-logo').show();
+                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
+                        //     isLock: "true"
+                        // });
+                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
+                            isLock: "false"
+                        });
+                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+                    }
+                });
+                } 
+            }
+        }
+    //}
+    }
+    
+    function u() {}
+    return a.augment(u, {
+        init: function() {
+            e()
+        }
+    }),
+    u
+},
+{
+    requires: ["menubutton", "mu", "overlay", "switchable"]
+}),
+
+
+KISSY.add("ihrscloudFunction", 
+function(a,b,c,d) {
+    function e(){
+        var g = {};
+       
+       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+       // if (isLogin.toString() == "true") {
+        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
+        var host = jm_get_remote_js("matchHost");
+         var hostarray = host.split(",");
+        var nums = [];
+        var pathname = jm_get_remote_js("matchPathname");
+        var pathnamearray = pathname.split(',');
+        var hash = jm_get_remote_js("matchHash");
+        var hasharray = hash.split(',');
+        var checkdomin = 0;
+
+        for (var i = 0; i< pathnamearray.length; i++) {
+            if (window.location.pathname == pathnamearray[i] || window.location.pathname.indexOf(pathnamearray[i]) || pathnamearray == "") {
+                for (var k = 0; k < hasharray.length; k++) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
+                        checkdomin = 1;
+                        break;
+                    } 
+                }
+            }   
+        }
+        for (var i = 0 ; i<hostarray.length ; i++) {
+            
+            nums.push(parseInt(hostarray[i]));
+        
+            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
+                if (checkdomin == 1) {
+                 var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+                itemnode && itemnode.append(h);  
+
+                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+                console.log(new Date().getTime() + '----' + isLogin + '----51job');
+                 jm_tools.getMessageFromBackground({
+                    operate: "getLocalStorage",
+                    data: {"key": 'gotourl'}
+                }, function(data) {
+                    var gotourl = data ? data.value : '';
+                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
+                    if(isLogin.toString() == "true" && !gotourl){
+                        //已登录
+                        // alert("denglu");
+                        KISSY.use("jmPopup", 
+                        function(a, b) {
+                            jm_global_popup_obj = new b;
+                        });
+                    }else if(!gotourl){
+                        //未登录
+                        KISSY.one("#jm_pop_tab").attr("width",'50px');
+                        KISSY.all("#notifications").css("width",'300px');
+                        
+                        $("#qw-notifications-bottom-right-tab").addClass('animated ' + 'fadeInRight');
+                        KISSY.all("#qw-notifications").show();
+                        $('#qw-notifications .close').click(function(){
+                            $(this).parent().fadeOut(200);
+                            KISSY.all("#qw-notifications").hide();
+                        });
+                        KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
+                            $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                        });
+              
+                 
+                        KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
+                       // window.jmLogin.logout();
+                    }else{
+                        if(gotourl.indexOf('wapbasic_iframe') > -1){
+                            // KISSY.one(".jm-register iframe").attr("height",'480px');
+                        }
+                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+                        KISSY.all('.jm-register,#jm-logo').show();
+                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
+                        //     isLock: "true"
+                        // });
+                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
+                            isLock: "false"
+                        });
+                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+                    }
+                });
+                } 
+            }
+        }
+    //}
+    }
+    
+    function u() {}
+    return a.augment(u, {
+        init: function() {
+            e()
+        }
+    }),
+    u
+},
+{
+    requires: ["menubutton", "mu", "overlay", "switchable"]
+}),
+KISSY.add("4399Function", 
+function(a,b,c,d) {
+    function e(){
+        var g = {};
+       
+       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+       // if (isLogin.toString() == "true") {
+        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
+        var host = jm_get_remote_js("matchHost");
+         var hostarray = host.split(",");
+        var nums = [];
+        var pathname = jm_get_remote_js("matchPathname");
+        var pathnamearray = pathname.split(',');
+        var hash = jm_get_remote_js("matchHash");
+        var hasharray = hash.split(',');
+        var checkdomin = 0;
+        for (var i = 0; i< pathnamearray.length; i++) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "" ) {
+                for (var k = 0; k < hasharray.length; k++) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
+                        checkdomin = 1;
+                        break;
+                    } 
+                }
+            }   
+        }
+        for (var i = 0 ; i<hostarray.length ; i++) {
+            
+            nums.push(parseInt(hostarray[i]));
+        
+            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
+                if (checkdomin == 1) {
+                 var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+                itemnode && itemnode.append(h);  
+
+                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+                console.log(new Date().getTime() + '----' + isLogin + '----51job');
+                 jm_tools.getMessageFromBackground({
+                    operate: "getLocalStorage",
+                    data: {"key": 'gotourl'}
+                }, function(data) {
+                    var gotourl = data ? data.value : '';
+                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
+                    if(isLogin.toString() == "true" && !gotourl){
+                        //已登录
+                        // alert("denglu");
+                        KISSY.use("jmPopup", 
+                        function(a, b) {
+                            jm_global_popup_obj = new b;
+                        });
+                    }else if(!gotourl){
+                        //未登录
+                        KISSY.one("#jm_pop_tab").attr("width",'50px');
+                        KISSY.all("#notifications").css("width",'300px');
+                        
+                        $("#qw-notifications-bottom-right-tab").addClass('animated ' + 'fadeInRight');
+                        KISSY.all("#qw-notifications").show();
+                        $('#qw-notifications .close').click(function(){
+                            $(this).parent().fadeOut(200);
+                            KISSY.all("#qw-notifications").hide();
+                        });
+                        KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
+                            $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                        });
+              
+                 
+                        KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
+                       // window.jmLogin.logout();
+                    }else{
+                        if(gotourl.indexOf('wapbasic_iframe') > -1){
+                            // KISSY.one(".jm-register iframe").attr("height",'480px');
+                        }
+                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+                        KISSY.all('.jm-register,#jm-logo').show();
+                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
+                        //     isLock: "true"
+                        // });
+                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
+                            isLock: "false"
+                        });
+                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+                    }
+                });
+                } 
+            }
+        }
+    //}
+    }
+    
+    function u() {}
+    return a.augment(u, {
+        init: function() {
+            e()
+        }
+    }),
+    u
+},
+{
+    requires: ["menubutton", "mu", "overlay", "switchable"]
+}),
+
+
+KISSY.add("zhaopinFunction", 
+function(a,b,c,d) {
+    function e(){
+        var g = {};
+       
+       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+        //if (isLogin.toString() == "true") {
+        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
+        var host = jm_get_remote_js("matchHost");
+
+         var hostarray = host.split(",");
+        var nums = [];
+        var pathname = jm_get_remote_js("matchPathname");
+        var pathnamearray = pathname.split(',');
+        var hash = jm_get_remote_js("matchHash");
+        var hasharray = hash.split(',');
+        var checkdomin = 0;
+        for (var i = 0; i< pathnamearray.length; i++) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "" ) {
+                for (var k = 0; k < hasharray.length; k++) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
+                        checkdomin = 1;
+                        break;
+                    } 
+                }
+            }   
+        }
+        for (var i = 0 ; i<hostarray.length ; i++) {
+            
+            nums.push(parseInt(hostarray[i]));
+        
+            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
+                if (checkdomin == 1) {
+                 var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+                itemnode && itemnode.append(h);  
+
+                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+                console.log(new Date().getTime() + '----' + isLogin + '----51job');
+                 jm_tools.getMessageFromBackground({
+                    operate: "getLocalStorage",
+                    data: {"key": 'gotourl'}
+                }, function(data) {
+                    var gotourl = data ? data.value : '';
+                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
+                    if(isLogin.toString() == "true" && !gotourl){
+                        //已登录
+                        // alert("denglu");
+                        KISSY.use("jmPopup", 
+                        function(a, b) {
+                            jm_global_popup_obj = new b;
+                        });
+                    }else if(!gotourl){
+                        //未登录
+                        KISSY.one("#jm_pop_tab").attr("width",'50px');
+                        KISSY.all("#notifications").css("width",'300px');
+                        
+                        $("#qw-notifications-bottom-right-tab").addClass('animated ' + 'fadeInRight');
+                        KISSY.all("#qw-notifications").show();
+                        $('#qw-notifications .close').click(function(){
+                            $(this).parent().fadeOut(200);
+                            KISSY.all("#qw-notifications").hide();
+                        });
+                        KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
+                            $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                        });
+              
+                 
+                        KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
+                       // window.jmLogin.logout();
+                    }else{
+                        if(gotourl.indexOf('wapbasic_iframe') > -1){
+                            // KISSY.one(".jm-register iframe").attr("height",'480px');
+                        }
+                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+                        KISSY.all('.jm-register,#jm-logo').show();
+                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
+                        //     isLock: "true"
+                        // });
+                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
+                            isLock: "false"
+                        });
+                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+                    }
+                });
+                } 
+            }
+        }
+    //}
+    }
+    
+    function u() {}
+    return a.augment(u, {
+        init: function() {
+            e()
+        }
+    }),
+    u
+},
+{
+    requires: ["menubutton", "mu", "overlay", "switchable"]
+}),
+
+
+KISSY.add("hundsunFunction", 
+function(a,b,c,d) {
+    function e(){
+        var g = {};
+       
+       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+       // if (isLogin.toString() == "true") {
+        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
+        var host = jm_get_remote_js("matchHost");
+         var hostarray = host.split(",");
+        var nums = [];
+        var pathname = jm_get_remote_js("matchPathname");
+        var pathnamearray = pathname.split(',');
+        var hash = jm_get_remote_js("matchHash");
+        var hasharray = hash.split(',');
+        var checkdomin = 0;
+        for (var i = 0; i< pathnamearray.length; i++) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "" ) {
+                for (var k = 0; k < hasharray.length; k++) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
+                        checkdomin = 1;
+                        break;
+                    } 
+                }
+            }   
+        }
+        for (var i = 0 ; i<hostarray.length ; i++) {
+            
+            nums.push(parseInt(hostarray[i]));
+        
+            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
+                if (checkdomin == 1) {
+                 var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+                itemnode && itemnode.append(h);  
+
+                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+                console.log(new Date().getTime() + '----' + isLogin + '----51job');
+                 jm_tools.getMessageFromBackground({
+                    operate: "getLocalStorage",
+                    data: {"key": 'gotourl'}
+                }, function(data) {
+                    var gotourl = data ? data.value : '';
+                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
+                    if(isLogin.toString() == "true" && !gotourl){
+                        //已登录
+                        // alert("denglu");
+                        KISSY.use("jmPopup", 
+                        function(a, b) {
+                            jm_global_popup_obj = new b;
+                        });
+                    }else if(!gotourl){
+                        //未登录
+                        KISSY.one("#jm_pop_tab").attr("width",'50px');
+                        KISSY.all("#notifications").css("width",'300px');
+                        
+                        $("#qw-notifications-bottom-right-tab").addClass('animated ' + 'fadeInRight');
+                        KISSY.all("#qw-notifications").show();
+                        $('#qw-notifications .close').click(function(){
+                            $(this).parent().fadeOut(200);
+                            KISSY.all("#qw-notifications").hide();
+                        });
+                        KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
+                            $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                        });
+              
+                 
+                        KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
+                       // window.jmLogin.logout();
+                    }else{
+                        if(gotourl.indexOf('wapbasic_iframe') > -1){
+                            // KISSY.one(".jm-register iframe").attr("height",'480px');
+                        }
+                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+                        KISSY.all('.jm-register,#jm-logo').show();
+                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
+                        //     isLock: "true"
+                        // });
+                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
+                            isLock: "false"
+                        });
+                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+                    }
+                });
+                } 
+            }
+        } 
+    //}
+    }
+    
+    function u() {}
+    return a.augment(u, {
+        init: function() {
+            e()
+        }
+    }),
+    u
+},
+{
+    requires: ["menubutton", "mu", "overlay", "switchable"]
+}),
+
+
+KISSY.add("realsilFunction", 
+function(a,b,c,d) {
+    function e(){
+        var g = {};
+       
+       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+       // if (isLogin.toString() == "true") {
+        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
+        var host = jm_get_remote_js("matchHost");
+         var hostarray = host.split(",");
+        var nums = [];
+        var pathname = jm_get_remote_js("matchPathname");
+        var pathnamearray = pathname.split(',');
+        var hash = jm_get_remote_js("matchHash");
+        var hasharray = hash.split(',');
+        var checkdomin = 0;
+        for (var i = 0; i< pathnamearray.length; i++) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "" ) {
+                for (var k = 0; k < hasharray.length; k++) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
+                        checkdomin = 1;
+                        break;
+                    } 
+                }
+            }   
+        }
+        for (var i = 0 ; i<hostarray.length ; i++) {
+            
+            nums.push(parseInt(hostarray[i]));
+        
+            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
+                if (checkdomin == 1) {
+                 var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+                itemnode && itemnode.append(h);  
+
+                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+                console.log(new Date().getTime() + '----' + isLogin + '----51job');
+                 jm_tools.getMessageFromBackground({
+                    operate: "getLocalStorage",
+                    data: {"key": 'gotourl'}
+                }, function(data) {
+                    var gotourl = data ? data.value : '';
+                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
+                    if(isLogin.toString() == "true" && !gotourl){
+                        //已登录
+                        // alert("denglu");
+                        KISSY.use("jmPopup", 
+                        function(a, b) {
+                            jm_global_popup_obj = new b;
+                        });
+                    }else if(!gotourl){
+                        //未登录
+                        KISSY.one("#jm_pop_tab").attr("width",'50px');
+                        KISSY.all("#notifications").css("width",'300px');
+                        
+                        $("#qw-notifications-bottom-right-tab").addClass('animated ' + 'fadeInRight');
+                        KISSY.all("#qw-notifications").show();
+                        $('#qw-notifications .close').click(function(){
+                            $(this).parent().fadeOut(200);
+                            KISSY.all("#qw-notifications").hide();
+                        });
+                        KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
+                            $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                        });
+              
+                 
+                        KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
+                       // window.jmLogin.logout();
+                    }else{
+                        if(gotourl.indexOf('wapbasic_iframe') > -1){
+                            // KISSY.one(".jm-register iframe").attr("height",'480px');
+                        }
+                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+                        KISSY.all('.jm-register,#jm-logo').show();
+                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
+                        //     isLock: "true"
+                        // });
+                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
+                            isLock: "false"
+                        });
+                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+                    }
+                });
+                } 
+            }
+        }
+   // }
+    }
+    
+    function u() {}
+    return a.augment(u, {
+        init: function() {
+            e()
+        }
+    }),
+    u
+},
+{
+    requires: ["menubutton", "mu", "overlay", "switchable"]
+}),
+
+KISSY.add("arcsoftFunction", 
+function(a,b,c,d) {
+    function e(){
+        var g = {};
+       
+       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+        //if (isLogin.toString() == "true") {
+        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
+        var host = jm_get_remote_js("matchHost");
+         var hostarray = host.split(",");
+        var nums = [];
+        var pathname = jm_get_remote_js("matchPathname");
+        var pathnamearray = pathname.split(',');
+        var hash = jm_get_remote_js("matchHash");
+        var hasharray = hash.split(',');
+        var checkdomin = 0;
+        for (var i = 0; i< pathnamearray.length; i++) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "" ) {
+                for (var k = 0; k < hasharray.length; k++) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
+                        checkdomin = 1;
+                        break;
+                    } 
+                }
+            }   
+        }
+        for (var i = 0 ; i<hostarray.length ; i++) {
+            
+            nums.push(parseInt(hostarray[i]));
+        
+            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
+                if (checkdomin == 1) {
+                 var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+                itemnode && itemnode.append(h);  
+
+                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+                console.log(new Date().getTime() + '----' + isLogin + '----51job');
+                 jm_tools.getMessageFromBackground({
+                    operate: "getLocalStorage",
+                    data: {"key": 'gotourl'}
+                }, function(data) {
+                    var gotourl = data ? data.value : '';
+                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
+                    if(isLogin.toString() == "true" && !gotourl){
+                        //已登录
+                        // alert("denglu");
+                        KISSY.use("jmPopup", 
+                        function(a, b) {
+                            jm_global_popup_obj = new b;
+                        });
+                    }else if(!gotourl){
+                        //未登录
+                        KISSY.one("#jm_pop_tab").attr("width",'50px');
+                        KISSY.all("#notifications").css("width",'300px');
+                        
+                        $("#qw-notifications-bottom-right-tab").addClass('animated ' + 'fadeInRight');
+                        KISSY.all("#qw-notifications").show();
+                        $('#qw-notifications .close').click(function(){
+                            $(this).parent().fadeOut(200);
+                            KISSY.all("#qw-notifications").hide();
+                        });
+                        KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
+                            $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                        });
+              
+                 
+                        KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
+                       // window.jmLogin.logout();
+                    }else{
+                        if(gotourl.indexOf('wapbasic_iframe') > -1){
+                            // KISSY.one(".jm-register iframe").attr("height",'480px');
+                        }
+                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+                        KISSY.all('.jm-register,#jm-logo').show();
+                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
+                        //     isLock: "true"
+                        // });
+                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
+                            isLock: "false"
+                        });
+                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+                    }
+                });
+                } 
+            }
+        } 
+    //}
+    }
+    
+    function u() {}
+    return a.augment(u, {
+        init: function() {
+            e()
+        }
+    }),
+    u
+},
+{
+    requires: ["menubutton", "mu", "overlay", "switchable"]
+}),
+
+KISSY.add("actions-semiFunction", 
+function(a,b,c,d) {
+    function e(){
+        var g = {};
+       
+       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+        //if (isLogin.toString() == "true") {
+        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
+        var host = jm_get_remote_js("matchHost");
+         var hostarray = host.split(",");
+        var nums = [];
+        var pathname = jm_get_remote_js("matchPathname");
+        var pathnamearray = pathname.split(',');
+        var hash = jm_get_remote_js("matchHash");
+        var hasharray = hash.split(',');
+        var checkdomin = 0;
+        for (var i = 0; i< pathnamearray.length; i++) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "" ) {
+                for (var k = 0; k < hasharray.length; k++) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
+                        checkdomin = 1;
+                        break;
+                    } 
+                }
+            }   
+        }
+        for (var i = 0 ; i<hostarray.length ; i++) {
+            
+            nums.push(parseInt(hostarray[i]));
+        
+            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
+                if (checkdomin == 1) {
+                 var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+                itemnode && itemnode.append(h);  
+
+                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+                console.log(new Date().getTime() + '----' + isLogin + '----51job');
+                 jm_tools.getMessageFromBackground({
+                    operate: "getLocalStorage",
+                    data: {"key": 'gotourl'}
+                }, function(data) {
+                    var gotourl = data ? data.value : '';
+                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
+                    if(isLogin.toString() == "true" && !gotourl){
+                        //已登录
+                        // alert("denglu");
+                        KISSY.use("jmPopup", 
+                        function(a, b) {
+                            jm_global_popup_obj = new b;
+                        });
+                    }else if(!gotourl){
+                        //未登录
+                        KISSY.one("#jm_pop_tab").attr("width",'50px');
+                        KISSY.all("#notifications").css("width",'300px');
+                        
+                        $("#qw-notifications-bottom-right-tab").addClass('animated ' + 'fadeInRight');
+                        KISSY.all("#qw-notifications").show();
+                        $('#qw-notifications .close').click(function(){
+                            $(this).parent().fadeOut(200);
+                            KISSY.all("#qw-notifications").hide();
+                        });
+                        KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
+                            $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                        });
+              
+                 
+                        KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
+                       // window.jmLogin.logout();
+                    }else{
+                        if(gotourl.indexOf('wapbasic_iframe') > -1){
+                            // KISSY.one(".jm-register iframe").attr("height",'480px');
+                        }
+                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+                        KISSY.all('.jm-register,#jm-logo').show();
+                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
+                        //     isLock: "true"
+                        // });
+                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
+                            isLock: "false"
+                        });
+                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+                    }
+                });
+                } 
+            }
+        } 
+    //}
+    }
+    
+    function u() {}
+    return a.augment(u, {
+        init: function() {
+            e()
+        }
+    }),
+    u
+},
+{
+    requires: ["menubutton", "mu", "overlay", "switchable"]
+}),
+
+KISSY.add("inspurFunction", 
+function(a,b,c,d) {
+    function e(){
+        var g = {};
+       
+       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+        //if (isLogin.toString() == "true") {
+        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
+        var host = jm_get_remote_js("matchHost");
+         var hostarray = host.split(",");
+        var nums = [];
+        var pathname = jm_get_remote_js("matchPathname");
+        var pathnamearray = pathname.split(',');
+        var hash = jm_get_remote_js("matchHash");
+        var hasharray = hash.split(',');
+        var checkdomin = 0;
+        for (var i = 0; i< pathnamearray.length; i++) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "" ) {
+                for (var k = 0; k < hasharray.length; k++) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
+                        checkdomin = 1;
+                        break;
+                    } 
+                }
+            }   
+        }
+        for (var i = 0 ; i<hostarray.length ; i++) {
+            
+            nums.push(parseInt(hostarray[i]));
+        
+            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
+                if (checkdomin == 1) {
+                 var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+                itemnode && itemnode.append(h);  
+
+                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+                console.log(new Date().getTime() + '----' + isLogin + '----51job');
+                 jm_tools.getMessageFromBackground({
+                    operate: "getLocalStorage",
+                    data: {"key": 'gotourl'}
+                }, function(data) {
+                    var gotourl = data ? data.value : '';
+                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
+                    if(isLogin.toString() == "true" && !gotourl){
+                        //已登录
+                        // alert("denglu");
+                        KISSY.use("jmPopup", 
+                        function(a, b) {
+                            jm_global_popup_obj = new b;
+                        });
+                    }else if(!gotourl){
+                        //未登录
+                        KISSY.one("#jm_pop_tab").attr("width",'50px');
+                        KISSY.all("#notifications").css("width",'300px');
+                        
+                        $("#qw-notifications-bottom-right-tab").addClass('animated ' + 'fadeInRight');
+                        KISSY.all("#qw-notifications").show();
+                        $('#qw-notifications .close').click(function(){
+                            $(this).parent().fadeOut(200);
+                            KISSY.all("#qw-notifications").hide();
+                        });
+                        KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
+                            $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                        });
+              
+                 
+                        KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
+                       // window.jmLogin.logout();
+                    }else{
+                        if(gotourl.indexOf('wapbasic_iframe') > -1){
+                            // KISSY.one(".jm-register iframe").attr("height",'480px');
+                        }
+                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+                        KISSY.all('.jm-register,#jm-logo').show();
+                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
+                        //     isLock: "true"
+                        // });
+                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
+                            isLock: "false"
+                        });
+                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+                    }
+                });
+                } 
+            }
+        }
+    //}
+    }
+    
+    function u() {}
+    return a.augment(u, {
+        init: function() {
+            e()
+        }
+    }),
+    u
+},
+{
+    requires: ["menubutton", "mu", "overlay", "switchable"]
+}),
+
+KISSY.add("dajieFunction", 
+function(a,b,c,d) {
+    function e(){
+        var g = {};
+       
+       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+        //if (isLogin.toString() == "true") {
+        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
+        var host = jm_get_remote_js("matchHost");
+         var hostarray = host.split(",");
+        var nums = [];
+        var pathname = jm_get_remote_js("matchPathname");
+        var pathnamearray = pathname.split(',');
+        var hash = jm_get_remote_js("matchHash");
+        var hasharray = hash.split(',');
+        var checkdomin = 0;
+        for (var i = 0; i< pathnamearray.length; i++) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "" ) {
+                for (var k = 0; k < hasharray.length; k++) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
+                        checkdomin = 1;
+                        break;
+                    } 
+                }
+            }   
+        }
+        for (var i = 0 ; i<hostarray.length ; i++) {
+            
+            nums.push(parseInt(hostarray[i]));
+        
+            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
+                if (checkdomin == 1) {
+                 var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+                itemnode && itemnode.append(h);  
+
+                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+                console.log(new Date().getTime() + '----' + isLogin + '----51job');
+                 jm_tools.getMessageFromBackground({
+                    operate: "getLocalStorage",
+                    data: {"key": 'gotourl'}
+                }, function(data) {
+                    var gotourl = data ? data.value : '';
+                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
+                    if(isLogin.toString() == "true" && !gotourl){
+                        //已登录
+                        // alert("denglu");
+                        KISSY.use("jmPopup", 
+                        function(a, b) {
+                            jm_global_popup_obj = new b;
+                        });
+                    }else if(!gotourl){
+                        //未登录
+                        KISSY.one("#jm_pop_tab").attr("width",'50px');
+                        KISSY.all("#notifications").css("width",'300px');
+                        
+                        $("#qw-notifications-bottom-right-tab").addClass('animated ' + 'fadeInRight');
+                        KISSY.all("#qw-notifications").show();
+                        $('#qw-notifications .close').click(function(){
+                            $(this).parent().fadeOut(200);
+                            KISSY.all("#qw-notifications").hide();
+                        });
+                        KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
+                            $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                        });
+              
+                 
+                        KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
+                       // window.jmLogin.logout();
+                    }else{
+                        if(gotourl.indexOf('wapbasic_iframe') > -1){
+                            // KISSY.one(".jm-register iframe").attr("height",'480px');
+                        }
+                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+                        KISSY.all('.jm-register,#jm-logo').show();
+                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
+                        //     isLock: "true"
+                        // });
+                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
+                            isLock: "false"
+                        });
+                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+                    }
+                });
+                } 
+            }
+        }
+    //}
+    }
+    
+    function u() {}
+    return a.augment(u, {
+        init: function() {
+            e()
+        }
+    }),
+    u
+},
+{
+    requires: ["menubutton", "mu", "overlay", "switchable"]
+}),
+
+KISSY.add("longforFunction", 
+function(a,b,c,d) {
+    function e(){
+        var g = {};
+       
+       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+       // if (isLogin.toString() == "true") {
+        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
+        var host = jm_get_remote_js("matchHost");
+        var hostarray = host.split(",");
+        var nums = [];
+        var pathname = jm_get_remote_js("matchPathname");
+        var pathnamearray = pathname.split(',');
+        var hash = jm_get_remote_js("matchHash");
+        var hasharray = hash.split(',');
+        var checkdomin = 0;
+        for (var i = 0; i< pathnamearray.length; i++) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "" ) {
+                for (var k = 0; k < hasharray.length; k++) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
+                        checkdomin = 1;
+                        break;
+                    } 
+                }
+            }   
+        }
+        for (var i = 0 ; i<hostarray.length ; i++) {
+            
+            nums.push(parseInt(hostarray[i]));
+        
+            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
+                if (checkdomin == 1) {
+                 var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+                itemnode && itemnode.append(h);  
+
+                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+                console.log(new Date().getTime() + '----' + isLogin + '----51job');
+                 jm_tools.getMessageFromBackground({
+                    operate: "getLocalStorage",
+                    data: {"key": 'gotourl'}
+                }, function(data) {
+                    var gotourl = data ? data.value : '';
+                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
+                    if(isLogin.toString() == "true" && !gotourl){
+                        //已登录
+                        // alert("denglu");
+                        KISSY.use("jmPopup", 
+                        function(a, b) {
+                            jm_global_popup_obj = new b;
+                        });
+                    }else if(!gotourl){
+                        //未登录
+                        KISSY.one("#jm_pop_tab").attr("width",'50px');
+                        KISSY.all("#notifications").css("width",'300px');
+                        
+                        $("#qw-notifications-bottom-right-tab").addClass('animated ' + 'fadeInRight');
+                        KISSY.all("#qw-notifications").show();
+                        $('#qw-notifications .close').click(function(){
+                            $(this).parent().fadeOut(200);
+                            KISSY.all("#qw-notifications").hide();
+                        });
+                        KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
+                            $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                        });
+              
+                 
+                        KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
+                       // window.jmLogin.logout();
+                    }else{
+                        if(gotourl.indexOf('wapbasic_iframe') > -1){
+                            // KISSY.one(".jm-register iframe").attr("height",'480px');
+                        }
+                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+                        KISSY.all('.jm-register,#jm-logo').show();
+                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
+                        //     isLock: "true"
+                        // });
+                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
+                            isLock: "false"
+                        });
+                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+                    }
+                });
+                } 
+            }
+        }
+    //}
+    }
+    
+    function u() {}
+    return a.augment(u, {
+        init: function() {
+            e()
+        }
+    }),
+    u
+},
+{
+    requires: ["menubutton", "mu", "overlay", "switchable"]
+}),
+
+KISSY.add("zteFunction", 
+function(a,b,c,d) {
+    function e(){
+        var g = {};
+       
+       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+        //if (isLogin.toString() == "true") {
+        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
+        var host = jm_get_remote_js("matchHost");
+        var hostarray = host.split(",");
+        var nums = [];
+        var pathname = jm_get_remote_js("matchPathname");
+        var pathnamearray = pathname.split(',');
+        var hash = jm_get_remote_js("matchHash");
+        var hasharray = hash.split(',');
+        var checkdomin = 0;
+        for (var i = 0; i< pathnamearray.length; i++) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "" ) {
+                for (var k = 0; k < hasharray.length; k++) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
+                        checkdomin = 1;
+                        break;
+                    } 
+                }
+            }   
+        }
+
+        for (var i = 0 ; i<hostarray.length ; i++) {
+            
+            nums.push(parseInt(hostarray[i]));
+        
+            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
+                if (checkdomin == 1) {
+                 var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+                itemnode && itemnode.append(h);  
+
+                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+                console.log(new Date().getTime() + '----' + isLogin + '----51job');
+                 jm_tools.getMessageFromBackground({
+                    operate: "getLocalStorage",
+                    data: {"key": 'gotourl'}
+                }, function(data) {
+                    var gotourl = data ? data.value : '';
+                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
+                    if(isLogin.toString() == "true" && !gotourl){
+                        //已登录
+                        // alert("denglu");
+                        KISSY.use("jmPopup", 
+                        function(a, b) {
+                            jm_global_popup_obj = new b;
+                        });
+                    }else if(!gotourl){
+                        //未登录
+                        KISSY.one("#jm_pop_tab").attr("width",'50px');
+                        KISSY.all("#notifications").css("width",'300px');
+                        
+                        $("#qw-notifications-bottom-right-tab").addClass('animated ' + 'fadeInRight');
+                        KISSY.all("#qw-notifications").show();
+                        $('#qw-notifications .close').click(function(){
+                            $(this).parent().fadeOut(200);
+                            KISSY.all("#qw-notifications").hide();
+                        });
+                        KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
+                            $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                        });
+              
+                 
+                        KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
+                       // window.jmLogin.logout();
+                    }else{
+                        if(gotourl.indexOf('wapbasic_iframe') > -1){
+                            // KISSY.one(".jm-register iframe").attr("height",'480px');
+                        }
+                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+                        KISSY.all('.jm-register,#jm-logo').show();
+                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
+                        //     isLock: "true"
+                        // });
+                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
+                            isLock: "false"
+                        });
+                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+                    }
+                });
+                } 
+            }
+        }
+    //}
+    }
+    
+    function u() {}
+    return a.augment(u, {
+        init: function() {
+            e()
+        }
+    }),
+    u
+},
+{
+    requires: ["menubutton", "mu", "overlay", "switchable"]
+}), 
+
+KISSY.add("taleoFunction", 
+function(a,b,c,d) {
+    function e(){
+        var g = {};
+       
+       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+        //if (isLogin.toString() == "true") {
+        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
+        var host = jm_get_remote_js("matchHost");
+
+        var hostarray = host.split(",");
+        var nums = [];
+        var pathname = jm_get_remote_js("matchPathname");
+        var pathnamearray = pathname.split(',');
+        var hash = jm_get_remote_js("matchHash");
+        var hasharray = hash.split(',');
+        var checkdomin = 0;
+        for (var i = 0; i< pathnamearray.length; i++) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "" ) {
+                for (var k = 0; k < hasharray.length; k++) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
+                        checkdomin = 1;
+                        break;
+                    } 
+                }
+            }   
+        }
+        for (var i = 0 ; i<hostarray.length ; i++) {
+            
+            nums.push(parseInt(hostarray[i]));
+        
+            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
+                if (checkdomin == 1) {
+                 var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+                itemnode && itemnode.append(h);  
+
+                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+                console.log(new Date().getTime() + '----' + isLogin + '----51job');
+                 jm_tools.getMessageFromBackground({
+                    operate: "getLocalStorage",
+                    data: {"key": 'gotourl'}
+                }, function(data) {
+                    var gotourl = data ? data.value : '';
+                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
+                    if(isLogin.toString() == "true" && !gotourl){
+                        //已登录
+                        // alert("denglu");
+                        KISSY.use("jmPopup", 
+                        function(a, b) {
+                            jm_global_popup_obj = new b;
+                        });
+                    }else if(!gotourl){
+                        //未登录
+                        KISSY.one("#jm_pop_tab").attr("width",'50px');
+                        KISSY.all("#notifications").css("width",'300px');
+                        
+                        $("#qw-notifications-bottom-right-tab").addClass('animated ' + 'fadeInRight');
+                        KISSY.all("#qw-notifications").show();
+                        $('#qw-notifications .close').click(function(){
+                            $(this).parent().fadeOut(200);
+                            KISSY.all("#qw-notifications").hide();
+                        });
+                        KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
+                            $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                        });
+              
+                 
+                        KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
+                       // window.jmLogin.logout();
+                    }else{
+                        if(gotourl.indexOf('wapbasic_iframe') > -1){
+                            // KISSY.one(".jm-register iframe").attr("height",'480px');
+                        }
+                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+                        KISSY.all('.jm-register,#jm-logo').show();
+                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
+                        //     isLock: "true"
+                        // });
+                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
+                            isLock: "false"
+                        });
+                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+                    }
+                });
+                } 
+            }
+        }
+    //}
+    }
+    
+    function u() {}
+    return a.augment(u, {
+        init: function() {
+            e()
+        }
+    }),
+    u
+},
+{
+    requires: ["menubutton", "mu", "overlay", "switchable"]
+}),
+
+KISSY.add("htscFunction", 
+function(a,b,c,d) {
+    function e(){
+        var g = {};
+       
+       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+        //if (isLogin.toString() == "true") {
+        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
+        var host = jm_get_remote_js("matchHost");
+         var hostarray = host.split(",");
+        var nums = [];
+        var pathname = jm_get_remote_js("matchPathname");
+        var pathnamearray = pathname.split(',');
+        var hash = jm_get_remote_js("matchHash");
+        var hasharray = hash.split(',');
+        var checkdomin = 0;
+        for (var i = 0; i< pathnamearray.length; i++) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "" ) {
+                for (var k = 0; k < hasharray.length; k++) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
+                        checkdomin = 1;
+                        break;
+                    } 
+                }
+            }   
+        }
+        for (var i = 0 ; i<hostarray.length ; i++) {
+            
+            nums.push(parseInt(hostarray[i]));
+        
+            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
+                if (checkdomin == 1) {
+                 var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+                itemnode && itemnode.append(h);  
+
+                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+                console.log(new Date().getTime() + '----' + isLogin + '----51job');
+                 jm_tools.getMessageFromBackground({
+                    operate: "getLocalStorage",
+                    data: {"key": 'gotourl'}
+                }, function(data) {
+                    var gotourl = data ? data.value : '';
+                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
+                    if(isLogin.toString() == "true" && !gotourl){
+                        //已登录
+                        // alert("denglu");
+                        KISSY.use("jmPopup", 
+                        function(a, b) {
+                            jm_global_popup_obj = new b;
+                        });
+                    }else if(!gotourl){
+                        //未登录
+                        KISSY.one("#jm_pop_tab").attr("width",'50px');
+                        KISSY.all("#notifications").css("width",'300px');
+                        
+                        $("#qw-notifications-bottom-right-tab").addClass('animated ' + 'fadeInRight');
+                        KISSY.all("#qw-notifications").show();
+                        $('#qw-notifications .close').click(function(){
+                            $(this).parent().fadeOut(200);
+                            KISSY.all("#qw-notifications").hide();
+                        });
+                        KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
+                            $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                        });
+              
+                 
+                        KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
+                       // window.jmLogin.logout();
+                    }else{
+                        if(gotourl.indexOf('wapbasic_iframe') > -1){
+                            // KISSY.one(".jm-register iframe").attr("height",'480px');
+                        }
+                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+                        KISSY.all('.jm-register,#jm-logo').show();
+                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
+                        //     isLock: "true"
+                        // });
+                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
+                            isLock: "false"
+                        });
+                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+                    }
+                });
+                } 
+            }
+        }
+    //}
+    }
+    
+    function u() {}
+    return a.augment(u, {
+        init: function() {
+            e()
+        }
+    }),
+    u
+},
+{
+    requires: ["menubutton", "mu", "overlay", "switchable"]
+}),
+
+KISSY.add("foxconnFunction", 
+function(a,b,c,d) {
+    function e(){
+        var g = {};
+       
+       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+        //if (isLogin.toString() == "true") {
+        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
+        var host = jm_get_remote_js("matchHost");
+         var hostarray = host.split(",");
+        var nums = [];
+        var pathname = jm_get_remote_js("matchPathname");
+        var pathnamearray = pathname.split(',');
+        var hash = jm_get_remote_js("matchHash");
+        var hasharray = hash.split(',');
+        var checkdomin = 0;
+        for (var i = 0; i< pathnamearray.length; i++) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "" ) {
+                for (var k = 0; k < hasharray.length; k++) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
+                        checkdomin = 1;
+                        break;
+                    } 
+                }
+            }   
+        }
+        for (var i = 0 ; i<hostarray.length ; i++) {
+            
+            nums.push(parseInt(hostarray[i]));
+        
+            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
+                if (checkdomin == 1) {
+                 var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+                itemnode && itemnode.append(h);  
+
+                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+                console.log(new Date().getTime() + '----' + isLogin + '----51job');
+                 jm_tools.getMessageFromBackground({
+                    operate: "getLocalStorage",
+                    data: {"key": 'gotourl'}
+                }, function(data) {
+                    var gotourl = data ? data.value : '';
+                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
+                    if(isLogin.toString() == "true" && !gotourl){
+                        //已登录
+                        // alert("denglu");
+                        KISSY.use("jmPopup", 
+                        function(a, b) {
+                            jm_global_popup_obj = new b;
+                        });
+                    }else if(!gotourl){
+                        //未登录
+                        KISSY.one("#jm_pop_tab").attr("width",'50px');
+                        KISSY.all("#notifications").css("width",'300px');
+                        
+                        $("#qw-notifications-bottom-right-tab").addClass('animated ' + 'fadeInRight');
+                        KISSY.all("#qw-notifications").show();
+                        $('#qw-notifications .close').click(function(){
+                            $(this).parent().fadeOut(200);
+                            KISSY.all("#qw-notifications").hide();
+                        });
+                        KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
+                            $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                        });
+              
+                 
+                        KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
+                       // window.jmLogin.logout();
+                    }else{
+                        if(gotourl.indexOf('wapbasic_iframe') > -1){
+                            // KISSY.one(".jm-register iframe").attr("height",'480px');
+                        }
+                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+                        KISSY.all('.jm-register,#jm-logo').show();
+                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
+                        //     isLock: "true"
+                        // });
+                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
+                            isLock: "false"
+                        });
+                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+                    }
+                });
+                } 
+            }
+        }
+       // } 
+    }
+    
+    function u() {}
+    return a.augment(u, {
+        init: function() {
+            e()
+        }
+    }),
+    u
+},
+{
+    requires: ["menubutton", "mu", "overlay", "switchable"]
+}), 
+
+KISSY.add("skyallhereFunction", 
+function(a,b,c,d) {
+    function e(){
+        var g = {};
+       
+       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+        //if (isLogin.toString() == "true") {
+        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
+        var host = jm_get_remote_js("matchHost");
+        var hostarray = host.split(",");
+        var nums = [];
+        var pathname = jm_get_remote_js("matchPathname");
+        var pathnamearray = pathname.split(',');
+        var hash = jm_get_remote_js("matchHash");
+        var hasharray = hash.split(',');
+        var checkdomin = 0;
+        for (var i = 0; i< pathnamearray.length; i++) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "" ) {
+                for (var k = 0; k < hasharray.length; k++) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
+                        checkdomin = 1;
+                        break;
+                    } 
+                }
+            }   
+        }
+        for (var i = 0 ; i<hostarray.length ; i++) {
+            
+            nums.push(parseInt(hostarray[i]));
+        
+            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
+                if (checkdomin == 1) {
+                 var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+                itemnode && itemnode.append(h);  
+
+                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+                console.log(new Date().getTime() + '----' + isLogin + '----51job');
+                 jm_tools.getMessageFromBackground({
+                    operate: "getLocalStorage",
+                    data: {"key": 'gotourl'}
+                }, function(data) {
+                    var gotourl = data ? data.value : '';
+                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
+                    if(isLogin.toString() == "true" && !gotourl){
+                        //已登录
+                        // alert("denglu");
+                        KISSY.use("jmPopup", 
+                        function(a, b) {
+                            jm_global_popup_obj = new b;
+                        });
+                    }else if(!gotourl){
+                        //未登录
+                        KISSY.one("#jm_pop_tab").attr("width",'50px');
+                        KISSY.all("#notifications").css("width",'300px');
+                        
+                        $("#qw-notifications-bottom-right-tab").addClass('animated ' + 'fadeInRight');
+                        KISSY.all("#qw-notifications").show();
+                        $('#qw-notifications .close').click(function(){
+                            $(this).parent().fadeOut(200);
+                            KISSY.all("#qw-notifications").hide();
+                        });
+                        KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
+                            $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                        });
+              
+                 
+                        KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
+                       // window.jmLogin.logout();
+                    }else{
+                        if(gotourl.indexOf('wapbasic_iframe') > -1){
+                            // KISSY.one(".jm-register iframe").attr("height",'480px');
+                        }
+                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+                        KISSY.all('.jm-register,#jm-logo').show();
+                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
+                        //     isLock: "true"
+                        // });
+                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
+                            isLock: "false"
+                        });
+                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+                    }
+                });
+                } 
+            }
+        }
+            
+        //} 
+    }
+    
+    function u() {}
+    return a.augment(u, {
+        init: function() {
+            e()
+        }
+    }),
+    u
+},
+{
+    requires: ["menubutton", "mu", "overlay", "switchable"]
+}), 
+
+KISSY.add("kpmgFunction", 
+function(a,b,c,d) {
+    function e(){
+        var g = {};
+       
+       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+       // if (isLogin.toString() == "true") {
+        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
+        var host = jm_get_remote_js("matchHost");
+         var hostarray = host.split(",");
+        var nums = [];
+        var pathname = jm_get_remote_js("matchPathname");
+        var pathnamearray = pathname.split(',');
+        var hash = jm_get_remote_js("matchHash");
+        var hasharray = hash.split(',');
+        var checkdomin = 0;
+        for (var i = 0; i< pathnamearray.length; i++) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "" ) {
+                for (var k = 0; k < hasharray.length; k++) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
+                        checkdomin = 1;
+                        break;
+                    } 
+                }
+            }   
+        }
+        for (var i = 0 ; i<hostarray.length ; i++) {
+            
+            nums.push(parseInt(hostarray[i]));
+        
+            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
+                if (checkdomin == 1) {
+                 var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+                itemnode && itemnode.append(h);  
+
+                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+                console.log(new Date().getTime() + '----' + isLogin + '----51job');
+                 jm_tools.getMessageFromBackground({
+                    operate: "getLocalStorage",
+                    data: {"key": 'gotourl'}
+                }, function(data) {
+                    var gotourl = data ? data.value : '';
+                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
+                    if(isLogin.toString() == "true" && !gotourl){
+                        //已登录
+                        // alert("denglu");
+                        KISSY.use("jmPopup", 
+                        function(a, b) {
+                            jm_global_popup_obj = new b;
+                        });
+                    }else if(!gotourl){
+                        //未登录
+                        KISSY.one("#jm_pop_tab").attr("width",'50px');
+                        KISSY.all("#notifications").css("width",'300px');
+                        
+                        $("#qw-notifications-bottom-right-tab").addClass('animated ' + 'fadeInRight');
+                        KISSY.all("#qw-notifications").show();
+                        $('#qw-notifications .close').click(function(){
+                            $(this).parent().fadeOut(200);
+                            KISSY.all("#qw-notifications").hide();
+                        });
+                        KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
+                            $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                        });
+              
+                 
+                        KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
+                       // window.jmLogin.logout();
+                    }else{
+                        if(gotourl.indexOf('wapbasic_iframe') > -1){
+                            // KISSY.one(".jm-register iframe").attr("height",'480px');
+                        }
+                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+                        KISSY.all('.jm-register,#jm-logo').show();
+                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
+                        //     isLock: "true"
+                        // });
+                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
+                            isLock: "false"
+                        });
+                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+                    }
+                });
+                } 
+            }
+        }
+            
+       // } 
+    }
+    
+    function u() {}
+    return a.augment(u, {
+        init: function() {
+            e()
+        }
+    }),
+    u
+},
+{
+    requires: ["menubutton", "mu", "overlay", "switchable"]
+}),
+
+KISSY.add("sctaleoFunction", 
+function(a,b,c,d) {
+    function e(){
+        var g = {};
+       
+       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+        //if (isLogin.toString() == "true") {
+        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
+        var host = jm_get_remote_js("matchHost");
+         var hostarray = host.split(",");
+        var nums = [];
+        var pathname = jm_get_remote_js("matchPathname");
+        var pathnamearray = pathname.split(',');
+        var hash = jm_get_remote_js("matchHash");
+        var hasharray = hash.split(',');
+        var checkdomin = 0;
+        for (var i = 0; i< pathnamearray.length; i++) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "" ) {
+                for (var k = 0; k < hasharray.length; k++) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
+                        checkdomin = 1;
+                        break;
+                    } 
+                }
+            }   
+        }
+        for (var i = 0 ; i<hostarray.length ; i++) {
+            
+            nums.push(parseInt(hostarray[i]));
+        
+            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
+                if (checkdomin == 1) {
+                 var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+                itemnode && itemnode.append(h);  
+
+                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+                console.log(new Date().getTime() + '----' + isLogin + '----51job');
+                 jm_tools.getMessageFromBackground({
+                    operate: "getLocalStorage",
+                    data: {"key": 'gotourl'}
+                }, function(data) {
+                    var gotourl = data ? data.value : '';
+                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
+                    if(isLogin.toString() == "true" && !gotourl){
+                        //已登录
+                        // alert("denglu");
+                        KISSY.use("jmPopup", 
+                        function(a, b) {
+                            jm_global_popup_obj = new b;
+                        });
+                    }else if(!gotourl){
+                        //未登录
+                        KISSY.one("#jm_pop_tab").attr("width",'50px');
+                        KISSY.all("#notifications").css("width",'300px');
+                        
+                        $("#qw-notifications-bottom-right-tab").addClass('animated ' + 'fadeInRight');
+                        KISSY.all("#qw-notifications").show();
+                        $('#qw-notifications .close').click(function(){
+                            $(this).parent().fadeOut(200);
+                            KISSY.all("#qw-notifications").hide();
+                        });
+                        KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
+                            $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                        });
+              
+                 
+                        KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
+                       // window.jmLogin.logout();
+                    }else{
+                        if(gotourl.indexOf('wapbasic_iframe') > -1){
+                            // KISSY.one(".jm-register iframe").attr("height",'480px');
+                        }
+                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+                        KISSY.all('.jm-register,#jm-logo').show();
+                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
+                        //     isLock: "true"
+                        // });
+                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
+                            isLock: "false"
+                        });
+                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+                    }
+                });
+                } 
+            }
+        }
+        //} 
+    }
+    
+    function u() {}
+    return a.augment(u, {
+        init: function() {
+            e()
+        }
+    }),
+    u
+},
+{
+    requires: ["menubutton", "mu", "overlay", "switchable"]
+}), 
+
+KISSY.add("gdtelFunction", 
+function(a,b,c,d) {
+    function e(){
+        var g = {};
+       
+       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+        //if (isLogin.toString() == "true") {
+        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
+        var host = jm_get_remote_js("matchHost");
+         var hostarray = host.split(",");
+        var nums = [];
+        var pathname = jm_get_remote_js("matchPathname");
+        var pathnamearray = pathname.split(',');
+        var hash = jm_get_remote_js("matchHash");
+        var hasharray = hash.split(',');
+        var checkdomin = 0;
+        for (var i = 0; i< pathnamearray.length; i++) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "" ) {
+                for (var k = 0; k < hasharray.length; k++) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
+                        checkdomin = 1;
+                        break;
+                    } 
+                }
+            }   
+        }
+        for (var i = 0 ; i<hostarray.length ; i++) {
+            
+            nums.push(parseInt(hostarray[i]));
+        
+            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
+                if (checkdomin == 1) {
+                 var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+                itemnode && itemnode.append(h);  
+
+                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+                console.log(new Date().getTime() + '----' + isLogin + '----51job');
+                 jm_tools.getMessageFromBackground({
+                    operate: "getLocalStorage",
+                    data: {"key": 'gotourl'}
+                }, function(data) {
+                    var gotourl = data ? data.value : '';
+                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
+                    if(isLogin.toString() == "true" && !gotourl){
+                        //已登录
+                        // alert("denglu");
+                        KISSY.use("jmPopup", 
+                        function(a, b) {
+                            jm_global_popup_obj = new b;
+                        });
+                    }else if(!gotourl){
+                        //未登录
+                        KISSY.one("#jm_pop_tab").attr("width",'50px');
+                        KISSY.all("#notifications").css("width",'300px');
+                        
+                        $("#qw-notifications-bottom-right-tab").addClass('animated ' + 'fadeInRight');
+                        KISSY.all("#qw-notifications").show();
+                        $('#qw-notifications .close').click(function(){
+                            $(this).parent().fadeOut(200);
+                            KISSY.all("#qw-notifications").hide();
+                        });
+                        KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
+                            $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                        });
+              
+                 
+                        KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
+                       // window.jmLogin.logout();
+                    }else{
+                        if(gotourl.indexOf('wapbasic_iframe') > -1){
+                            // KISSY.one(".jm-register iframe").attr("height",'480px');
+                        }
+                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+                        KISSY.all('.jm-register,#jm-logo').show();
+                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
+                        //     isLock: "true"
+                        // });
+                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
+                            isLock: "false"
+                        });
+                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+                    }
+                });
+                } 
+            }
+        }
+        //} 
+    }
+    
+    function u() {}
+    return a.augment(u, {
+        init: function() {
+            e()
+        }
+    }),
+    u
+},
+{
+    requires: ["menubutton", "mu", "overlay", "switchable"]
+}), 
+
+KISSY.add("talFunction", 
+function(a,b,c,d) {
+    function e(){
+        var g = {};
+       
+       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+        //if (isLogin.toString() == "true") {
+        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
+        var host = jm_get_remote_js("matchHost");
+         var hostarray = host.split(",");
+        var nums = [];
+        var pathname = jm_get_remote_js("matchPathname");
+        var pathnamearray = pathname.split(',');
+        var hash = jm_get_remote_js("matchHash");
+        var hasharray = hash.split(',');
+        var checkdomin = 0;
+        for (var i = 0; i< pathnamearray.length; i++) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "" ) {
+                for (var k = 0; k < hasharray.length; k++) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
+                        checkdomin = 1;
+                        break;
+                    } 
+                }
+            }   
+        }
+        for (var i = 0 ; i<hostarray.length ; i++) {
+            
+            nums.push(parseInt(hostarray[i]));
+        
+            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
+                if (checkdomin == 1) {
+                 var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+                itemnode && itemnode.append(h);  
+
+                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+                console.log(new Date().getTime() + '----' + isLogin + '----51job');
+                 jm_tools.getMessageFromBackground({
+                    operate: "getLocalStorage",
+                    data: {"key": 'gotourl'}
+                }, function(data) {
+                    var gotourl = data ? data.value : '';
+                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
+                    if(isLogin.toString() == "true" && !gotourl){
+                        //已登录
+                        // alert("denglu");
+                        KISSY.use("jmPopup", 
+                        function(a, b) {
+                            jm_global_popup_obj = new b;
+                        });
+                    }else if(!gotourl){
+                        //未登录
+                        KISSY.one("#jm_pop_tab").attr("width",'50px');
+                        KISSY.all("#notifications").css("width",'300px');
+                        
+                        $("#qw-notifications-bottom-right-tab").addClass('animated ' + 'fadeInRight');
+                        KISSY.all("#qw-notifications").show();
+                        $('#qw-notifications .close').click(function(){
+                            $(this).parent().fadeOut(200);
+                            KISSY.all("#qw-notifications").hide();
+                        });
+                        KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
+                            $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                        });
+              
+                 
+                        KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
+                       // window.jmLogin.logout();
+                    }else{
+                        if(gotourl.indexOf('wapbasic_iframe') > -1){
+                            // KISSY.one(".jm-register iframe").attr("height",'480px');
+                        }
+                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+                        KISSY.all('.jm-register,#jm-logo').show();
+                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
+                        //     isLock: "true"
+                        // });
+                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
+                            isLock: "false"
+                        });
+                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+                    }
+                });
+                } 
+            }
+        }
+        //} 
+    }
+    
+    function u() {}
+    return a.augment(u, {
+        init: function() {
+            e()
+        }
+    }),
+    u
+},
+{
+    requires: ["menubutton", "mu", "overlay", "switchable"]
+}),  
+
+KISSY.add("jobsminerFunction", 
+function(a,b,c,d) {
+    function e(){
+        function getCookie(name){
+            return (document.cookie.match(new RegExp("(^"+name+"| "+name+")=([^;]*)"))==null)?"":RegExp.$2;
+        }
+        var isLogin = getCookie("ot_home_login");
+        var homeUid = getCookie("ot_home_uid");
+        var ezHomeUid = getCookie("ot_home_ez_uid");
+        var a = {"ot_home_ez_uid":homeUid,"ot_home_uid":homeUid,"ot_home_login":isLogin,"login":"true"};
+        if(isLogin == 1){
+            jm_tools.setBackgroundLocalStore({
+                //login :{"ot_home_ez_uid":ezHomeUid,"ot_home_uid":homeUid,"ot_home_login":isLogin}
+                jm_login: JSON.stringify(a)
+            });
+            jm_tools.getMessageFromBackground({
+                operate: "getLocalStorage",
+                data: {"key": 'jm_login'}
+            }, function(data) {
+                console.log('jobsminer------' + data);
+            
+            });
+        } 
+        
+    }
+    
+    function u() {}
+    return a.augment(u, {
+        init: function() {
+            e()
+        }
+    }),
+    u
+},
+{
+    requires: ["menubutton", "mu", "overlay", "switchable"]
+}),
+
+KISSY.add("boeFunction", 
+function(a,b,c,d) {
+    function e(){
+        var g = {};
+        
+        var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+        //if (isLogin.toString() == "true") {
+        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
+        var host = jm_get_remote_js("matchHost");
+
+         var hostarray = host.split(",");
+        var nums = [];
+        var pathname = jm_get_remote_js("matchPathname");
+        var pathnamearray = pathname.split(',');
+        var hash = jm_get_remote_js("matchHash");
+        var hasharray = hash.split(',');
+        var checkdomin = 0;
+        for (var i = 0; i< pathnamearray.length; i++) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "" ) {
+                for (var k = 0; k < hasharray.length; k++) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
+                        checkdomin = 1;
+                        break;
+                    } 
+                }
+            }   
+        }
+        for (var i = 0 ; i<hostarray.length ; i++) {
+            
+            nums.push(parseInt(hostarray[i]));
+        
+            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
+                if (checkdomin == 1) {
+                 var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+                itemnode && itemnode.append(h);  
+
+                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+                console.log(new Date().getTime() + '----' + isLogin + '----51job');
+                 jm_tools.getMessageFromBackground({
+                    operate: "getLocalStorage",
+                    data: {"key": 'gotourl'}
+                }, function(data) {
+                    var gotourl = data ? data.value : '';
+                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
+                    if(isLogin.toString() == "true" && !gotourl){
+                        //已登录
+                        // alert("denglu");
+                        KISSY.use("jmPopup", 
+                        function(a, b) {
+                            jm_global_popup_obj = new b;
+                        });
+                    }else if(!gotourl){
+                        //未登录
+                        KISSY.one("#jm_pop_tab").attr("width",'50px');
+                        KISSY.all("#notifications").css("width",'300px');
+                        
+                        $("#qw-notifications-bottom-right-tab").addClass('animated ' + 'fadeInRight');
+                        KISSY.all("#qw-notifications").show();
+                        $('#qw-notifications .close').click(function(){
+                            $(this).parent().fadeOut(200);
+                            KISSY.all("#qw-notifications").hide();
+                        });
+                        KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
+                            $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                        });
+              
+                 
+                        KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
+                       // window.jmLogin.logout();
+                    }else{
+                        if(gotourl.indexOf('wapbasic_iframe') > -1){
+                            // KISSY.one(".jm-register iframe").attr("height",'480px');
+                        }
+                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+                        KISSY.all('.jm-register,#jm-logo').show();
+                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
+                        //     isLock: "true"
+                        // });
+                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
+                            isLock: "false"
+                        });
+                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+                    }
+                });
+                } 
+            }
+        }
+    //}
+    }
+    
+    function u() {}
+    return a.augment(u, {
+        init: function() {
+            e()
+        }
+    }),
+    u
+},
+{
+    requires: ["menubutton", "mu", "overlay", "switchable"]
+}),
+
+
+KISSY.add("ccbFunction", 
+function(a,b,c,d) {
+    function e(){
+        var g = {};
+       
+       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+       // if (isLogin.toString() == "true") {
+        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
+        var host = jm_get_remote_js("matchHost");
+         var hostarray = host.split(",");
+        var nums = [];
+        var pathname = jm_get_remote_js("matchPathname");
+        var pathnamearray = pathname.split(',');
+        var hash = jm_get_remote_js("matchHash");
+        var hasharray = hash.split(',');
+        var checkdomin = 0;
+        for (var i = 0; i< pathnamearray.length; i++) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "" ) {
+                for (var k = 0; k < hasharray.length; k++) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
+                        checkdomin = 1;
+                        break;
+                    } 
+                }
+            }   
+        }
+        for (var i = 0 ; i<hostarray.length ; i++) {
+            
+            nums.push(parseInt(hostarray[i]));
+        
+            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
+                if (checkdomin == 1) {
+                 var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+                itemnode && itemnode.append(h);  
+
+                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+                console.log(new Date().getTime() + '----' + isLogin + '----51job');
+                 jm_tools.getMessageFromBackground({
+                    operate: "getLocalStorage",
+                    data: {"key": 'gotourl'}
+                }, function(data) {
+                    var gotourl = data ? data.value : '';
+                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
+                    if(isLogin.toString() == "true" && !gotourl){
+                        //已登录
+                        // alert("denglu");
+                        KISSY.use("jmPopup", 
+                        function(a, b) {
+                            jm_global_popup_obj = new b;
+                        });
+                    }else if(!gotourl){
+                        //未登录
+                        KISSY.one("#jm_pop_tab").attr("width",'50px');
+                        KISSY.all("#notifications").css("width",'300px');
+                        
+                        $("#qw-notifications-bottom-right-tab").addClass('animated ' + 'fadeInRight');
+                        KISSY.all("#qw-notifications").show();
+                        $('#qw-notifications .close').click(function(){
+                            $(this).parent().fadeOut(200);
+                            KISSY.all("#qw-notifications").hide();
+                        });
+                        KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
+                            $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                        });
+              
+                 
+                        KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
+                       // window.jmLogin.logout();
+                    }else{
+                        if(gotourl.indexOf('wapbasic_iframe') > -1){
+                            // KISSY.one(".jm-register iframe").attr("height",'480px');
+                        }
+                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+                        KISSY.all('.jm-register,#jm-logo').show();
+                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
+                        //     isLock: "true"
+                        // });
+                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
+                            isLock: "false"
+                        });
+                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+                    }
+                });
+                } 
+            }
+        }
+        //} 
+    }
+    
+    function u() {}
+    return a.augment(u, {
+        init: function() {
+            e()
+        }
+    }),
+    u
+},
+{
+    requires: ["menubutton", "mu", "overlay", "switchable"]
+}), 
+
+KISSY.add("hxbFunction", 
+function(a,b,c,d) {
+    function e(){
+        var g = {};
+        
+        var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+        //if (isLogin.toString() == "true") {
+        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
+        var host = jm_get_remote_js("matchHost");
+
+        var hostarray = host.split(",");
+        var nums = [];
+        var pathname = jm_get_remote_js("matchPathname");
+        var pathnamearray = pathname.split(',');
+        var hash = jm_get_remote_js("matchHash");
+        var hasharray = hash.split(',');
+        var checkdomin = 0;
+        for (var i = 0; i< pathnamearray.length; i++) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "" ) {
+                for (var k = 0; k < hasharray.length; k++) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
+                        checkdomin = 1;
+                        break;
+                    } 
+                }
+            }   
+        }
+        for (var i = 0 ; i<hostarray.length ; i++) {
+            
+            nums.push(parseInt(hostarray[i]));
+        
+            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
+                if (checkdomin == 1) {
+                 var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+                itemnode && itemnode.append(h);  
+
+                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+                console.log(new Date().getTime() + '----' + isLogin + '----51job');
+                 jm_tools.getMessageFromBackground({
+                    operate: "getLocalStorage",
+                    data: {"key": 'gotourl'}
+                }, function(data) {
+                    var gotourl = data ? data.value : '';
+                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
+                    if(isLogin.toString() == "true" && !gotourl){
+                        //已登录
+                        // alert("denglu");
+                        KISSY.use("jmPopup", 
+                        function(a, b) {
+                            jm_global_popup_obj = new b;
+                        });
+                    }else if(!gotourl){
+                        //未登录
+                        KISSY.one("#jm_pop_tab").attr("width",'50px');
+                        KISSY.all("#notifications").css("width",'300px');
+                        
+                        $("#qw-notifications-bottom-right-tab").addClass('animated ' + 'fadeInRight');
+                        KISSY.all("#qw-notifications").show();
+                        $('#qw-notifications .close').click(function(){
+                            $(this).parent().fadeOut(200);
+                            KISSY.all("#qw-notifications").hide();
+                        });
+                        KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
+                            $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                        });
+              
+                 
+                        KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
+                       // window.jmLogin.logout();
+                    }else{
+                        if(gotourl.indexOf('wapbasic_iframe') > -1){
+                            // KISSY.one(".jm-register iframe").attr("height",'480px');
+                        }
+                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+                        KISSY.all('.jm-register,#jm-logo').show();
+                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
+                        //     isLock: "true"
+                        // });
+                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
+                            isLock: "false"
+                        });
+                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+                    }
+                });
+                } 
+            }
+        }
+   // }
+    }
+    
+    function u() {}
+    return a.augment(u, {
+        init: function() {
+            e()
+        }
+    }),
+    u
+},
+{
+    requires: ["menubutton", "mu", "overlay", "switchable"]
+}),
+
+
+KISSY.add("chinalifeFunction", 
+function(a,b,c,d) {
+    function e(){
+        var g = {};
+        
+        var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+        //if (isLogin.toString() == "true") {
+        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
+        var host = jm_get_remote_js("matchHost");
+
+         var hostarray = host.split(",");
+        var nums = [];
+        var pathname = jm_get_remote_js("matchPathname");
+        var pathnamearray = pathname.split(',');
+        var hash = jm_get_remote_js("matchHash");
+        var hasharray = hash.split(',');
+        var checkdomin = 0;
+        for (var i = 0; i< pathnamearray.length; i++) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "" ) {
+                for (var k = 0; k < hasharray.length; k++) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
+                        checkdomin = 1;
+                        break;
+                    } 
+                }
+            }   
+        }
+        for (var i = 0 ; i<hostarray.length ; i++) {
+            
+            nums.push(parseInt(hostarray[i]));
+        
+            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
+                if (checkdomin == 1) {
+                 var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+                itemnode && itemnode.append(h);  
+
+                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+                console.log(new Date().getTime() + '----' + isLogin + '----51job');
+                 jm_tools.getMessageFromBackground({
+                    operate: "getLocalStorage",
+                    data: {"key": 'gotourl'}
+                }, function(data) {
+                    var gotourl = data ? data.value : '';
+                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
+                    if(isLogin.toString() == "true" && !gotourl){
+                        //已登录
+                        // alert("denglu");
+                        KISSY.use("jmPopup", 
+                        function(a, b) {
+                            jm_global_popup_obj = new b;
+                        });
+                    }else if(!gotourl){
+                        //未登录
+                        KISSY.one("#jm_pop_tab").attr("width",'50px');
+                        KISSY.all("#notifications").css("width",'300px');
+                        
+                        $("#qw-notifications-bottom-right-tab").addClass('animated ' + 'fadeInRight');
+                        KISSY.all("#qw-notifications").show();
+                        $('#qw-notifications .close').click(function(){
+                            $(this).parent().fadeOut(200);
+                            KISSY.all("#qw-notifications").hide();
+                        });
+                        KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
+                            $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                        });
+              
+                 
+                        KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
+                       // window.jmLogin.logout();
+                    }else{
+                        if(gotourl.indexOf('wapbasic_iframe') > -1){
+                            // KISSY.one(".jm-register iframe").attr("height",'480px');
+                        }
+                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+                        KISSY.all('.jm-register,#jm-logo').show();
+                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
+                        //     isLock: "true"
+                        // });
+                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
+                            isLock: "false"
+                        });
+                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+                    }
+                });
+                } 
+            }
+        }
+    //}
+    }
+    
+    function u() {}
+    return a.augment(u, {
+        init: function() {
+            e()
+        }
+    }),
+    u
+},
+{
+    requires: ["menubutton", "mu", "overlay", "switchable"]
+}),
+
+KISSY.add("cvteFunction", 
+function(a,b,c,d) {
+    function e(){
+        var g = {};
+        
+        var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+        //if (isLogin.toString() == "true") {
+        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
+        var host = jm_get_remote_js("matchHost");
+
+         var hostarray = host.split(",");
+        var nums = [];
+        var pathname = jm_get_remote_js("matchPathname");
+        var pathnamearray = pathname.split(',');
+        var hash = jm_get_remote_js("matchHash");
+        var hasharray = hash.split(',');
+        var checkdomin = 0;
+        for (var i = 0; i< pathnamearray.length; i++) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "" ) {
+                for (var k = 0; k < hasharray.length; k++) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
+                        checkdomin = 1;
+                        break;
+                    } 
+                }
+            }   
+        }
+        for (var i = 0 ; i<hostarray.length ; i++) {
+            
+            nums.push(parseInt(hostarray[i]));
+        
+            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
+                if (checkdomin == 1) {
+                 var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+                itemnode && itemnode.append(h);  
+
+                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+                console.log(new Date().getTime() + '----' + isLogin + '----51job');
+                 jm_tools.getMessageFromBackground({
+                    operate: "getLocalStorage",
+                    data: {"key": 'gotourl'}
+                }, function(data) {
+                    var gotourl = data ? data.value : '';
+                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
+                    if(isLogin.toString() == "true" && !gotourl){
+                        //已登录
+                        // alert("denglu");
+                        KISSY.use("jmPopup", 
+                        function(a, b) {
+                            jm_global_popup_obj = new b;
+                        });
+                    }else if(!gotourl){
+                        //未登录
+                        KISSY.one("#jm_pop_tab").attr("width",'50px');
+                        KISSY.all("#notifications").css("width",'300px');
+                        
+                        $("#qw-notifications-bottom-right-tab").addClass('animated ' + 'fadeInRight');
+                        KISSY.all("#qw-notifications").show();
+                        $('#qw-notifications .close').click(function(){
+                            $(this).parent().fadeOut(200);
+                            KISSY.all("#qw-notifications").hide();
+                        });
+                        KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
+                            $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                        });
+              
+                 
+                        KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
+                       // window.jmLogin.logout();
+                    }else{
+                        if(gotourl.indexOf('wapbasic_iframe') > -1){
+                            // KISSY.one(".jm-register iframe").attr("height",'480px');
+                        }
+                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+                        KISSY.all('.jm-register,#jm-logo').show();
+                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
+                        //     isLock: "true"
+                        // });
+                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
+                            isLock: "false"
+                        });
+                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+                    }
+                });
+                } 
+            }
+        }
+    //}
+    }
+    
+    function u() {}
+    return a.augment(u, {
+        init: function() {
+            e()
+        }
+    }),
+    u
+},
+{
+    requires: ["menubutton", "mu", "overlay", "switchable"]
+}),
+
+KISSY.add("haierFunction", 
+function(a,b,c,d) {
+    function e(){
+        var g = {};
+        
+        var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+        //if (isLogin.toString() == "true") {
+        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
+        var host = jm_get_remote_js("matchHost");
+
+        var hostarray = host.split(",");
+        var nums = [];
+        var pathname = jm_get_remote_js("matchPathname");
+        var pathnamearray = pathname.split(',');
+        var hash = jm_get_remote_js("matchHash");
+        var hasharray = hash.split(',');
+        var checkdomin = 0;
+        for (var i = 0; i< pathnamearray.length; i++) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "" ) {
+                for (var k = 0; k < hasharray.length; k++) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
+                        checkdomin = 1;
+                        break;
+                    } 
+                }
+            }   
+        }
+        for (var i = 0 ; i<hostarray.length ; i++) {
+            
+            nums.push(parseInt(hostarray[i]));
+        
+            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
+                if (checkdomin == 1) {
+                 var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+                itemnode && itemnode.append(h);  
+
+                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+                console.log(new Date().getTime() + '----' + isLogin + '----51job');
+                 jm_tools.getMessageFromBackground({
+                    operate: "getLocalStorage",
+                    data: {"key": 'gotourl'}
+                }, function(data) {
+                    var gotourl = data ? data.value : '';
+                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
+                    if(isLogin.toString() == "true" && !gotourl){
+                        //已登录
+                        // alert("denglu");
+                        KISSY.use("jmPopup", 
+                        function(a, b) {
+                            jm_global_popup_obj = new b;
+                        });
+                    }else if(!gotourl){
+                        //未登录
+                        KISSY.one("#jm_pop_tab").attr("width",'50px');
+                        KISSY.all("#notifications").css("width",'300px');
+                        
+                        $("#qw-notifications-bottom-right-tab").addClass('animated ' + 'fadeInRight');
+                        KISSY.all("#qw-notifications").show();
+                        $('#qw-notifications .close').click(function(){
+                            $(this).parent().fadeOut(200);
+                            KISSY.all("#qw-notifications").hide();
+                        });
+                        KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
+                            $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                        });
+              
+                 
+                        KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
+                       // window.jmLogin.logout();
+                    }else{
+                        if(gotourl.indexOf('wapbasic_iframe') > -1){
+                            // KISSY.one(".jm-register iframe").attr("height",'480px');
+                        }
+                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+                        KISSY.all('.jm-register,#jm-logo').show();
+                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
+                        //     isLock: "true"
+                        // });
+                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
+                            isLock: "false"
+                        });
+                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+                    }
+                });
+                } 
+            }
+        }
+    //}
+    }
+    
+    function u() {}
+    return a.augment(u, {
+        init: function() {
+            e()
+        }
+    }),
+    u
+},
+{
+    requires: ["menubutton", "mu", "overlay", "switchable"]
+}),
+
+
+
+KISSY.add("comFunction", 
+function(a,b,c,d) {
+    function e(){
+        var g = {};
+        
+        var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+        //if (isLogin.toString() == "true") {
+        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
+        var host = jm_get_remote_js("matchHost");
+
+         var hostarray = host.split(",");
+        var nums = [];
+        var pathname = jm_get_remote_js("matchPathname");
+        var pathnamearray = pathname.split(',');
+        var hash = jm_get_remote_js("matchHash");
+        var hasharray = hash.split(',');
+        var checkdomin = 0;
+        for (var i = 0; i< pathnamearray.length; i++) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "" ) {
+                for (var k = 0; k < hasharray.length; k++) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
+                        checkdomin = 1;
+                        break;
+                    } 
+                }
+            }   
+        }
+        for (var i = 0 ; i<hostarray.length ; i++) {
+            
+            nums.push(parseInt(hostarray[i]));
+        
+            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
+                if (checkdomin == 1) {
+                 var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+                itemnode && itemnode.append(h);  
+
+                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+                console.log(new Date().getTime() + '----' + isLogin + '----51job');
+                 jm_tools.getMessageFromBackground({
+                    operate: "getLocalStorage",
+                    data: {"key": 'gotourl'}
+                }, function(data) {
+                    var gotourl = data ? data.value : '';
+                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
+                    if(isLogin.toString() == "true" && !gotourl){
+                        //已登录
+                        // alert("denglu");
+                        KISSY.use("jmPopup", 
+                        function(a, b) {
+                            jm_global_popup_obj = new b;
+                        });
+                    }else if(!gotourl){
+                        //未登录
+                        KISSY.one("#jm_pop_tab").attr("width",'50px');
+                        KISSY.all("#notifications").css("width",'300px');
+                        
+                        $("#qw-notifications-bottom-right-tab").addClass('animated ' + 'fadeInRight');
+                        KISSY.all("#qw-notifications").show();
+                        $('#qw-notifications .close').click(function(){
+                            $(this).parent().fadeOut(200);
+                            KISSY.all("#qw-notifications").hide();
+                        });
+                        KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
+                            $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                        });
+              
+                 
+                        KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
+                       // window.jmLogin.logout();
+                    }else{
+                        if(gotourl.indexOf('wapbasic_iframe') > -1){
+                            // KISSY.one(".jm-register iframe").attr("height",'480px');
+                        }
+                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+                        KISSY.all('.jm-register,#jm-logo').show();
+                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
+                        //     isLock: "true"
+                        // });
+                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
+                            isLock: "false"
+                        });
+                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+                    }
+                });
+                } 
+            }
+        }
+    //}
+    }
+    
+    function u() {}
+    return a.augment(u, {
+        init: function() {
+            e()
+        }
+    }),
+    u
+},
+{
+    requires: ["menubutton", "mu", "overlay", "switchable"]
+}),
+
+KISSY.add("cgnpcFunction", 
+function(a,b,c,d) {
+    function e(){
+        var g = {};
+        
+        var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+        //if (isLogin.toString() == "true") {
+        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
+        var host = jm_get_remote_js("matchHost");
+
+         var hostarray = host.split(",");
+        var nums = [];
+        var pathname = jm_get_remote_js("matchPathname");
+        var pathnamearray = pathname.split(',');
+        var hash = jm_get_remote_js("matchHash");
+        var hasharray = hash.split(',');
+        var checkdomin = 0;
+        for (var i = 0; i< pathnamearray.length; i++) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "" ) {
+                for (var k = 0; k < hasharray.length; k++) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
+                        checkdomin = 1;
+                        break;
+                    } 
+                }
+            }   
+        }
+        for (var i = 0 ; i<hostarray.length ; i++) {
+            
+            nums.push(parseInt(hostarray[i]));
+        
+            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
+                if (checkdomin == 1) {
+                 var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+                itemnode && itemnode.append(h);  
+
+                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+                console.log(new Date().getTime() + '----' + isLogin + '----51job');
+                 jm_tools.getMessageFromBackground({
+                    operate: "getLocalStorage",
+                    data: {"key": 'gotourl'}
+                }, function(data) {
+                    var gotourl = data ? data.value : '';
+                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
+                    if(isLogin.toString() == "true" && !gotourl){
+                        //已登录
+                        // alert("denglu");
+                        KISSY.use("jmPopup", 
+                        function(a, b) {
+                            jm_global_popup_obj = new b;
+                        });
+                    }else if(!gotourl){
+                        //未登录
+                        KISSY.one("#jm_pop_tab").attr("width",'50px');
+                        KISSY.all("#notifications").css("width",'300px');
+                        
+                        $("#qw-notifications-bottom-right-tab").addClass('animated ' + 'fadeInRight');
+                        KISSY.all("#qw-notifications").show();
+                        $('#qw-notifications .close').click(function(){
+                            $(this).parent().fadeOut(200);
+                            KISSY.all("#qw-notifications").hide();
+                        });
+                        KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
+                            $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                        });
+              
+                 
+                        KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
+                       // window.jmLogin.logout();
+                    }else{
+                        if(gotourl.indexOf('wapbasic_iframe') > -1){
+                            // KISSY.one(".jm-register iframe").attr("height",'480px');
+                        }
+                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+                        KISSY.all('.jm-register,#jm-logo').show();
+                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
+                        //     isLock: "true"
+                        // });
+                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
+                            isLock: "false"
+                        });
+                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+                    }
+                });
+                } 
+            }
+        }
+    //}
+    }
+    
+    function u() {}
+    return a.augment(u, {
+        init: function() {
+            e()
+        }
+    }),
+    u
+},
+{
+    requires: ["menubutton", "mu", "overlay", "switchable"]
+}),
+
+KISSY.add("changyouFunction", 
 function(a,b,c,d) {
     function e(){
         var g = {};
@@ -1609,29 +7571,43 @@ function(a,b,c,d) {
     requires: ["menubutton", "mu", "overlay", "switchable"]
 }),
 
-
-
-KISSY.add("100talFunction", 
+KISSY.add("nhrdcFunction", 
 function(a,b,c,d) {
     function e(){
         var g = {};
-      
+        
         var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-
+        //if (isLogin.toString() == "true") {
         var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
         var host = jm_get_remote_js("matchHost");
-
-        var hostarray = host.split(",");
+         var hostarray = host.split(",");
         var nums = [];
+        var pathname = jm_get_remote_js("matchPathname");
+        var pathnamearray = pathname.split(',');
+        var hash = jm_get_remote_js("matchHash");
+        var hasharray = hash.split(',');
+        var checkdomin = 0;
+        for (var i = 0; i< pathnamearray.length; i++) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "" ) {
+                for (var k = 0; k < hasharray.length; k++) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
+                        checkdomin = 1;
+                        break;
+                    } 
+                }
+            }   
+        }
         for (var i = 0 ; i<hostarray.length ; i++) {
+            
             nums.push(parseInt(hostarray[i]));
         
             if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
+                if (checkdomin == 1) {
                  var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
                 itemnode && itemnode.append(h);  
 
                 // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-                console.log(new Date().getTime() + '----' + isLogin + '----100tal');
+                console.log(new Date().getTime() + '----' + isLogin + '----51job');
                  jm_tools.getMessageFromBackground({
                     operate: "getLocalStorage",
                     data: {"key": 'gotourl'}
@@ -1681,2675 +7657,10 @@ function(a,b,c,d) {
                         KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
                     }
                 });
-            } 
-        }
-    }
-    
-    function u() {}
-    return a.augment(u, {
-        init: function() {
-            e()
-        }
-    }),
-    u
-},
-{
-    requires: ["menubutton", "mu", "overlay", "switchable"]
-}),
-
-
-KISSY.add("chinahrFunction", 
-function(a,b,c,d) {
-    function e(){
-        var g = {};
-       
-       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-        if (isLogin.toString() == "true") {
-        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
-        var host = jm_get_remote_js("matchHost");
-
-        var hostarray = host.split(",");
-        var nums = [];
-        for (var i = 0 ; i<hostarray.length ; i++) {
-            nums.push(parseInt(hostarray[i]));
-
-            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
-                var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
-                itemnode && itemnode.append(h);  
-
-                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-                console.log(new Date().getTime() + '----' + isLogin + '----baidu');
-                jm_tools.getMessageFromBackground({
-                    operate: "getLocalStorage",
-                    data: {"key": 'gotourl'}
-                }, function(data) {
-                    var gotourl = data ? data.value : '';
-                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
-                    if(isLogin.toString() == "true" && !gotourl){
-                        //已登录
-                        KISSY.use("jmPopup", 
-                        function(a, b) {
-                            jm_global_popup_obj = new b;
-                        });
-                    }else if(!gotourl){
-                        //未登录
-                        window.jmLogin.logout();
-                    }else{
-                        if(gotourl.indexOf('wapbasic_iframe') > -1){
-                            KISSY.one(".jm-register iframe").attr("height",'480px');
-                        }
-                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
-                        KISSY.all('.jm-register,#jm-logo').show();
-                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
-                    //     isLock: "true"
-                    // });
-                    window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
-                        isLock: "false"
-                    });
-                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
-                    }
-                });
-            } 
-        }
-    }
-    }
-    
-    function u() {}
-    return a.augment(u, {
-        init: function() {
-            e()
-        }
-    }),
-    u
-},
-{
-    requires: ["menubutton", "mu", "overlay", "switchable"]
-}),
-
-KISSY.add("hiredeFunction", 
-function(a,b,c,d) {
-    function e(){
-        var g = {};
-        
-        var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-        if (isLogin.toString() == "true") {
-        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
-        var host = jm_get_remote_js("matchHost");
-
-        var hostarray = host.split(",");
-        var nums = [];
-        for (var i = 0 ; i<hostarray.length ; i++) {
-            nums.push(parseInt(hostarray[i]));
-
-            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
-                var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
-                itemnode && itemnode.append(h);  
-
-                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-                console.log(new Date().getTime() + '----' + isLogin + '----baidu');
-                jm_tools.getMessageFromBackground({
-                    operate: "getLocalStorage",
-                    data: {"key": 'gotourl'}
-                }, function(data) {
-                    var gotourl = data ? data.value : '';
-                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
-                    if(isLogin.toString() == "true" && !gotourl){
-                        //已登录
-                        KISSY.use("jmPopup", 
-                        function(a, b) {
-                            jm_global_popup_obj = new b;
-                        });
-                    }else if(!gotourl){
-                        //未登录
-                        window.jmLogin.logout();
-                    }else{
-                        if(gotourl.indexOf('wapbasic_iframe') > -1){
-                            KISSY.one(".jm-register iframe").attr("height",'480px');
-                        }
-                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
-                        KISSY.all('.jm-register,#jm-logo').show();
-                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
-                    //     isLock: "true"
-                    // });
-                    window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
-                        isLock: "false"
-                    });
-                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
-                    }
-                });
-            } 
-        }
-    }
-    }
-    
-    function u() {}
-    return a.augment(u, {
-        init: function() {
-            e()
-        }
-    }),
-    u
-},
-{
-    requires: ["menubutton", "mu", "overlay", "switchable"]
-}),
-
-
-KISSY.add("chuangxinFunction", 
-function(a,b,c,d) {
-    function e(){
-        var g = {};
-        
-        var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-        if (isLogin.toString() == "true") {
-        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
-        var host = jm_get_remote_js("matchHost");
-        if(jm_get_remote_js("jobwebshowpos") && window.location.host == host){
-            var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
-            itemnode && itemnode.append(h);  
-
-            // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-            console.log(new Date().getTime() + '----' + isLogin + '----baidu');
-            jm_tools.getMessageFromBackground({
-                operate: "getLocalStorage",
-                data: {"key": 'gotourl'}
-            }, function(data) {
-                var gotourl = data ? data.value : '';
-                window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
-                if(isLogin.toString() == "true" && !gotourl){
-                    //已登录
-                    KISSY.use("jmPopup", 
-                    function(a, b) {
-                        jm_global_popup_obj = new b;
-                    });
-                }else if(!gotourl){
-                    //未登录
-                    window.jmLogin.logout();
-                }else{
-                    if(gotourl.indexOf('wapbasic_iframe') > -1){
-                        KISSY.one(".jm-register iframe").attr("height",'480px');
-                    }
-                    KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
-                    KISSY.all('.jm-register,#jm-logo').show();
-                    // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
-                    //     isLock: "true"
-                    // });
-                    window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
-                        isLock: "false"
-                    });
-                    KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
-                }
-            });
-        } 
-    }
-    }
-    
-    function u() {}
-    return a.augment(u, {
-        init: function() {
-            e()
-        }
-    }),
-    u
-},
-{
-    requires: ["menubutton", "mu", "overlay", "switchable"]
-}),
-
-
-KISSY.add("xunleiFunction", 
-function(a,b,c,d) {
-    function e(){
-        var g = {};
-       
-       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-        if (isLogin.toString() == "true") {
-        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
-        var host = jm_get_remote_js("matchHost");
-        if(jm_get_remote_js("jobwebshowpos") && window.location.host == host){
-            var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
-            itemnode && itemnode.append(h);  
-
-            // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-            console.log(new Date().getTime() + '----' + isLogin + '----baidu');
-            jm_tools.getMessageFromBackground({
-                operate: "getLocalStorage",
-                data: {"key": 'gotourl'}
-            }, function(data) {
-                var gotourl = data ? data.value : '';
-                window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
-                if(isLogin.toString() == "true" && !gotourl){
-                    //已登录
-                    KISSY.use("jmPopup", 
-                    function(a, b) {
-                        jm_global_popup_obj = new b;
-                    });
-                }else if(!gotourl){
-                    //未登录
-                    window.jmLogin.logout();
-                }else{
-                    if(gotourl.indexOf('wapbasic_iframe') > -1){
-                        KISSY.one(".jm-register iframe").attr("height",'480px');
-                    }
-                    KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
-                    KISSY.all('.jm-register,#jm-logo').show();
-                    // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
-                    //     isLock: "true"
-                    // });
-                    window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
-                        isLock: "false"
-                    });
-                    KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
-                }
-            });
-        } 
-    }
-    }
-    
-    function u() {}
-    return a.augment(u, {
-        init: function() {
-            e()
-        }
-    }),
-    u
-},
-{
-    requires: ["menubutton", "mu", "overlay", "switchable"]
-}),
-
-KISSY.add("icebearFunction", 
-function(a,b,c,d) {
-    function e(){
-        function getCookie(name){
-            return (document.cookie.match(new RegExp("(^"+name+"| "+name+")=([^;]*)"))==null)?"":RegExp.$2;
-        }
-        console.log(getCookie);
-        var isLogin = getCookie("ot_home_login");
-        var homeUid = getCookie("ot_home_uid");
-        var ezHomeUid = getCookie("ot_home_ez_uid");
-        var a = {"ot_home_ez_uid":homeUid,"ot_home_uid":homeUid,"ot_home_login":isLogin,"login":"true"};
-        if(isLogin == 1){
-            jm_tools.setBackgroundLocalStore({
-                //login :{"ot_home_ez_uid":ezHomeUid,"ot_home_uid":homeUid,"ot_home_login":isLogin}
-                jm_login: JSON.stringify(a)
-            });
-            jm_tools.getMessageFromBackground({
-                operate: "getLocalStorage",
-                data: {"key": 'jm_login'}
-            }, function(data) {
-                console.log('icebear------' + data);
-            
-            });
-        } 
-        
-    }
-    
-    function u() {}
-    return a.augment(u, {
-        init: function() {
-            e()
-        }
-    }),
-    u
-},
-{
-    requires: ["menubutton", "mu", "overlay", "switchable"]
-}),
-
-
-KISSY.add("huaweiFunction", 
-function(a,b,c,d) {
-    function e(){
-        var g = {};
-       
-       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-        if (isLogin.toString() == "true") {
-        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
-        var host = jm_get_remote_js("matchHost");
-        if(jm_get_remote_js("jobwebshowpos") && window.location.host == host){
-            var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
-            itemnode && itemnode.append(h);  
-
-            // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-            console.log(new Date().getTime() + '----' + isLogin + '----baidu');
-            jm_tools.getMessageFromBackground({
-                operate: "getLocalStorage",
-                data: {"key": 'gotourl'}
-            }, function(data) {
-                var gotourl = data ? data.value : '';
-                window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
-                if(isLogin.toString() == "true" && !gotourl){
-                    //已登录
-                    KISSY.use("jmPopup", 
-                    function(a, b) {
-                        jm_global_popup_obj = new b;
-                    });
-                }else if(!gotourl){
-                    //未登录
-                    window.jmLogin.logout();
-                }else{
-                    if(gotourl.indexOf('wapbasic_iframe') > -1){
-                        KISSY.one(".jm-register iframe").attr("height",'480px');
-                    }
-                    KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
-                    KISSY.all('.jm-register,#jm-logo').show();
-                    // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
-                    //     isLock: "true"
-                    // });
-                    window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
-                        isLock: "false"
-                    });
-                    KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
-                }
-            });
-        } 
-    }
-    }
-    
-    function u() {}
-    return a.augment(u, {
-        init: function() {
-            e()
-        }
-    }),
-    u
-},
-{
-    requires: ["menubutton", "mu", "overlay", "switchable"]
-}),
-
-KISSY.add("wintalentFunction", 
-function(a,b,c,d) {
-    function e(){
-        var g = {};
-       
-       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-        if (isLogin.toString() == "true") {
-        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
-        var host = jm_get_remote_js("matchHost");
-
-        var hostarray = host.split(",");
-        var nums = [];
-        for (var i = 0 ; i<hostarray.length ; i++) {
-            nums.push(parseInt(hostarray[i]));
-
-            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
-                var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
-                itemnode && itemnode.append(h);  
-
-                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-                console.log(new Date().getTime() + '----' + isLogin + '----baidu');
-                jm_tools.getMessageFromBackground({
-                    operate: "getLocalStorage",
-                    data: {"key": 'gotourl'}
-                }, function(data) {
-                    var gotourl = data ? data.value : '';
-                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
-                    if(isLogin.toString() == "true" && !gotourl){
-                        //已登录
-                        KISSY.use("jmPopup", 
-                        function(a, b) {
-                            jm_global_popup_obj = new b;
-                        });
-                    }else if(!gotourl){
-                        //未登录
-                        window.jmLogin.logout();
-                    }else{
-                        if(gotourl.indexOf('wapbasic_iframe') > -1){
-                            KISSY.one(".jm-register iframe").attr("height",'480px');
-                        }
-                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
-                        KISSY.all('.jm-register,#jm-logo').show();
-                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
-                        //     isLock: "true"
-                        // });
-                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
-                            isLock: "false"
-                        });
-                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
-                    }
-                });
-            } 
-        }
-    }
-    }
-    
-    function u() {}
-    return a.augment(u, {
-        init: function() {
-            e()
-        }
-    }),
-    u
-},
-{
-    requires: ["menubutton", "mu", "overlay", "switchable"]
-}),
-
-KISSY.add("brassringFunction", 
-function(a,b,c,d) {
-    function e(){
-        var g = {};
-       
-       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-        if (isLogin.toString() == "true") {
-        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
-        var host = jm_get_remote_js("matchHost");
-        if(jm_get_remote_js("jobwebshowpos") && window.location.host == host){
-            var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
-            itemnode && itemnode.append(h);  
-
-            // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-            console.log(new Date().getTime() + '----' + isLogin + '----baidu');
-            jm_tools.getMessageFromBackground({
-                operate: "getLocalStorage",
-                data: {"key": 'gotourl'}
-            }, function(data) {
-                var gotourl = data ? data.value : '';
-                window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
-                if(isLogin.toString() == "true" && !gotourl){
-                    //已登录
-                    KISSY.use("jmPopup", 
-                    function(a, b) {
-                        jm_global_popup_obj = new b;
-                    });
-                }else if(!gotourl){
-                    //未登录
-                    window.jmLogin.logout();
-                }else{
-                    if(gotourl.indexOf('wapbasic_iframe') > -1){
-                        KISSY.one(".jm-register iframe").attr("height",'480px');
-                    }
-                    KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
-                    KISSY.all('.jm-register,#jm-logo').show();
-                    // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
-                    //     isLock: "true"
-                    // });
-                    window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
-                        isLock: "false"
-                    });
-                    KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
-                }
-            });
-        } 
-    }
-    }
-    
-    function u() {}
-    return a.augment(u, {
-        init: function() {
-            e()
-        }
-    }),
-    u
-},
-{
-    requires: ["menubutton", "mu", "overlay", "switchable"]
-}),
-
-KISSY.add("cmbchinaFunction", 
-function(a,b,c,d) {
-    function e(){
-        var g = {};
-       
-       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-        if (isLogin.toString() == "true") {
-        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
-        var host = jm_get_remote_js("matchHost");
-        if(jm_get_remote_js("jobwebshowpos") && window.location.host == host){
-            var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
-            itemnode && itemnode.append(h);  
-
-            // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-            console.log(new Date().getTime() + '----' + isLogin + '----baidu');
-            jm_tools.getMessageFromBackground({
-                operate: "getLocalStorage",
-                data: {"key": 'gotourl'}
-            }, function(data) {
-                var gotourl = data ? data.value : '';
-                window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
-                if(isLogin.toString() == "true" && !gotourl){
-                    //已登录
-                    KISSY.use("jmPopup", 
-                    function(a, b) {
-                        jm_global_popup_obj = new b;
-                    });
-                }else if(!gotourl){
-                    //未登录
-                    window.jmLogin.logout();
-                }else{
-                    if(gotourl.indexOf('wapbasic_iframe') > -1){
-                        KISSY.one(".jm-register iframe").attr("height",'480px');
-                    }
-                    KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
-                    KISSY.all('.jm-register,#jm-logo').show();
-                   // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
-                    //     isLock: "true"
-                    // });
-                    window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
-                        isLock: "false"
-                    });
-                    KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
-                }
-            });
-        } 
-    }
-    }
-    
-    function u() {}
-    return a.augment(u, {
-        init: function() {
-            e()
-        }
-    }),
-    u
-},
-{
-    requires: ["menubutton", "mu", "overlay", "switchable"]
-}),
-
-KISSY.add("dearsamsungFunction", 
-function(a,b,c,d) {
-    function e(){
-        var g = {};
-       
-       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-        if (isLogin.toString() == "true") {
-        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
-        var host = jm_get_remote_js("matchHost");
-        if(jm_get_remote_js("jobwebshowpos") && window.location.host == host){
-            var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
-            itemnode && itemnode.append(h);  
-
-            // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-            console.log(new Date().getTime() + '----' + isLogin + '----baidu');
-            jm_tools.getMessageFromBackground({
-                operate: "getLocalStorage",
-                data: {"key": 'gotourl'}
-            }, function(data) {
-                var gotourl = data ? data.value : '';
-                window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
-                if(isLogin.toString() == "true" && !gotourl){
-                    //已登录
-                    KISSY.use("jmPopup", 
-                    function(a, b) {
-                        jm_global_popup_obj = new b;
-                    });
-                }else if(!gotourl){
-                    //未登录
-                    window.jmLogin.logout();
-                }else{
-                    if(gotourl.indexOf('wapbasic_iframe') > -1){
-                        KISSY.one(".jm-register iframe").attr("height",'480px');
-                    }
-                    KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
-                    KISSY.all('.jm-register,#jm-logo').show();
-                    // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
-                    //     isLock: "true"
-                    // });
-                    window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
-                        isLock: "false"
-                    });
-                    KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
-                }
-            });
-        } 
-    }
-    }
-    
-    function u() {}
-    return a.augment(u, {
-        init: function() {
-            e()
-        }
-    }),
-    u
-},
-{
-    requires: ["menubutton", "mu", "overlay", "switchable"]
-}),
-
-KISSY.add("coolpadFunction", 
-function(a,b,c,d) {
-    function e(){
-        var g = {};
-       
-       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-        if (isLogin.toString() == "true") {
-        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
-        var host = jm_get_remote_js("matchHost");
-        if(jm_get_remote_js("jobwebshowpos") && window.location.host == host){
-            var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
-            itemnode && itemnode.append(h);  
-
-            // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-            console.log(new Date().getTime() + '----' + isLogin + '----baidu');
-            jm_tools.getMessageFromBackground({
-                operate: "getLocalStorage",
-                data: {"key": 'gotourl'}
-            }, function(data) {
-                var gotourl = data ? data.value : '';
-                window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
-                if(isLogin.toString() == "true" && !gotourl){
-                    //已登录
-                    KISSY.use("jmPopup", 
-                    function(a, b) {
-                        jm_global_popup_obj = new b;
-                    });
-                }else if(!gotourl){
-                    //未登录
-                    window.jmLogin.logout();
-                }else{
-                    if(gotourl.indexOf('wapbasic_iframe') > -1){
-                        KISSY.one(".jm-register iframe").attr("height",'480px');
-                    }
-                    KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
-                    KISSY.all('.jm-register,#jm-logo').show();
-                    // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
-                    //     isLock: "true"
-                    // });
-                    window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
-                        isLock: "false"
-                    });
-                    KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
-                }
-            });
-        } 
-    }
-    }
-    
-    function u() {}
-    return a.augment(u, {
-        init: function() {
-            e()
-        }
-    }),
-    u
-},
-{
-    requires: ["menubutton", "mu", "overlay", "switchable"]
-}),
-
-
-KISSY.add("peopleclickFunction", 
-function(a,b,c,d) {
-    function e(){
-        var g = {};
-       
-       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-        if (isLogin.toString() == "true") {
-        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
-        var host = jm_get_remote_js("matchHost");
-        if(jm_get_remote_js("jobwebshowpos") && window.location.host == host){
-            var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
-            itemnode && itemnode.append(h);  
-
-            // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-            console.log(new Date().getTime() + '----' + isLogin + '----baidu');
-            jm_tools.getMessageFromBackground({
-                operate: "getLocalStorage",
-                data: {"key": 'gotourl'}
-            }, function(data) {
-                var gotourl = data ? data.value : '';
-                window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
-                if(isLogin.toString() == "true" && !gotourl){
-                    //已登录
-                    KISSY.use("jmPopup", 
-                    function(a, b) {
-                        jm_global_popup_obj = new b;
-                    });
-                }else if(!gotourl){
-                    //未登录
-                    window.jmLogin.logout();
-                }else{
-                    if(gotourl.indexOf('wapbasic_iframe') > -1){
-                        KISSY.one(".jm-register iframe").attr("height",'480px');
-                    }
-                    KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
-                    KISSY.all('.jm-register,#jm-logo').show();
-                    // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
-                    //     isLock: "true"
-                    // });
-                    window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
-                        isLock: "false"
-                    });
-                    KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
-                }
-            });
-        } 
-    }
-    }
-    
-    function u() {}
-    return a.augment(u, {
-        init: function() {
-            e()
-        }
-    }),
-    u
-},
-{
-    requires: ["menubutton", "mu", "overlay", "switchable"]
-}),
-
-KISSY.add("apply2jobsFunction", 
-function(a,b,c,d) {
-    function e(){
-        var g = {};
-       
-       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-        if (isLogin.toString() == "true") {
-        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
-        var host = jm_get_remote_js("matchHost");
-        if(jm_get_remote_js("jobwebshowpos") && window.location.host == host){
-            var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
-            itemnode && itemnode.append(h);  
-
-            // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-            console.log(new Date().getTime() + '----' + isLogin + '----baidu');
-            jm_tools.getMessageFromBackground({
-                operate: "getLocalStorage",
-                data: {"key": 'gotourl'}
-            }, function(data) {
-                var gotourl = data ? data.value : '';
-                window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
-                if(isLogin.toString() == "true" && !gotourl){
-                    //已登录
-                    KISSY.use("jmPopup", 
-                    function(a, b) {
-                        jm_global_popup_obj = new b;
-                    });
-                }else if(!gotourl){
-                    //未登录
-                    window.jmLogin.logout();
-                }else{
-                    if(gotourl.indexOf('wapbasic_iframe') > -1){
-                        KISSY.one(".jm-register iframe").attr("height",'480px');
-                    }
-                    KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
-                    KISSY.all('.jm-register,#jm-logo').show();
-                    // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
-                    //     isLock: "true"
-                    // });
-                    window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
-                        isLock: "false"
-                    });
-                    KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
-                }
-            });
-        } 
-    }
-    }
-    
-    function u() {}
-    return a.augment(u, {
-        init: function() {
-            e()
-        }
-    }),
-    u
-},
-{
-    requires: ["menubutton", "mu", "overlay", "switchable"]
-}),
-
-
-KISSY.add("forceFunction", 
-function(a,b,c,d) {
-    function e(){
-        var g = {};
-       
-       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-        if (isLogin.toString() == "true") {
-        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
-        var host = jm_get_remote_js("matchHost");
-        if(jm_get_remote_js("jobwebshowpos") && window.location.host == host){
-            var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
-            itemnode && itemnode.append(h);  
-
-            // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-            console.log(new Date().getTime() + '----' + isLogin + '----baidu');
-            jm_tools.getMessageFromBackground({
-                operate: "getLocalStorage",
-                data: {"key": 'gotourl'}
-            }, function(data) {
-                var gotourl = data ? data.value : '';
-                window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
-                if(isLogin.toString() == "true" && !gotourl){
-                    //已登录
-                    KISSY.use("jmPopup", 
-                    function(a, b) {
-                        jm_global_popup_obj = new b;
-                    });
-                }else if(!gotourl){
-                    //未登录
-                    window.jmLogin.logout();
-                }else{
-                    if(gotourl.indexOf('wapbasic_iframe') > -1){
-                        KISSY.one(".jm-register iframe").attr("height",'480px');
-                    }
-                    KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
-                    KISSY.all('.jm-register,#jm-logo').show();
-                    // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
-                    //     isLock: "true"
-                    // });
-                    window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
-                        isLock: "false"
-                    });
-                    KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
-                }
-            });
-        } 
-    }
-    }
-    
-    function u() {}
-    return a.augment(u, {
-        init: function() {
-            e()
-        }
-    }),
-    u
-},
-{
-    requires: ["menubutton", "mu", "overlay", "switchable"]
-}),
-
-KISSY.add("fangFunction", 
-function(a,b,c,d) {
-    function e(){
-        var g = {};
-       
-       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-        if (isLogin.toString() == "true") {
-        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
-        var host = jm_get_remote_js("matchHost");
-        if(jm_get_remote_js("jobwebshowpos") && window.location.host == host){
-            var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
-            itemnode && itemnode.append(h);  
-
-            // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-            console.log(new Date().getTime() + '----' + isLogin + '----baidu');
-            jm_tools.getMessageFromBackground({
-                operate: "getLocalStorage",
-                data: {"key": 'gotourl'}
-            }, function(data) {
-                var gotourl = data ? data.value : '';
-                window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
-                if(isLogin.toString() == "true" && !gotourl){
-                    //已登录
-                    KISSY.use("jmPopup", 
-                    function(a, b) {
-                        jm_global_popup_obj = new b;
-                    });
-                }else if(!gotourl){
-                    //未登录
-                    window.jmLogin.logout();
-                }else{
-                    if(gotourl.indexOf('wapbasic_iframe') > -1){
-                        KISSY.one(".jm-register iframe").attr("height",'480px');
-                    }
-                    KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
-                    KISSY.all('.jm-register,#jm-logo').show();
-                    // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
-                    //     isLock: "true"
-                    // });
-                    window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
-                        isLock: "false"
-                    });
-                    KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
-                }
-            });
-        } 
-    }
-    }
-    
-    function u() {}
-    return a.augment(u, {
-        init: function() {
-            e()
-        }
-    }),
-    u
-},
-{
-    requires: ["menubutton", "mu", "overlay", "switchable"]
-}),
-
-KISSY.add("4399Function", 
-function(a,b,c,d) {
-    function e(){
-        var g = {};
-       
-       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-        if (isLogin.toString() == "true") {
-        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
-        var host = jm_get_remote_js("matchHost");
-        if(jm_get_remote_js("jobwebshowpos") && window.location.host == host){
-            var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
-            itemnode && itemnode.append(h);  
-
-            // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-            console.log(new Date().getTime() + '----' + isLogin + '----baidu');
-            jm_tools.getMessageFromBackground({
-                operate: "getLocalStorage",
-                data: {"key": 'gotourl'}
-            }, function(data) {
-                var gotourl = data ? data.value : '';
-                window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
-                if(isLogin.toString() == "true" && !gotourl){
-                    //已登录
-                    KISSY.use("jmPopup", 
-                    function(a, b) {
-                        jm_global_popup_obj = new b;
-                    });
-                }else if(!gotourl){
-                    //未登录
-                    window.jmLogin.logout();
-                }else{
-                    if(gotourl.indexOf('wapbasic_iframe') > -1){
-                        KISSY.one(".jm-register iframe").attr("height",'480px');
-                    }
-                    KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
-                    KISSY.all('.jm-register,#jm-logo').show();
-                    // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
-                    //     isLock: "true"
-                    // });
-                    window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
-                        isLock: "false"
-                    });
-                    KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
-                }
-            });
-        } 
-    }
-    }
-    
-    function u() {}
-    return a.augment(u, {
-        init: function() {
-            e()
-        }
-    }),
-    u
-},
-{
-    requires: ["menubutton", "mu", "overlay", "switchable"]
-}),
-
-
-KISSY.add("zhaopinFunction", 
-function(a,b,c,d) {
-    function e(){
-        var g = {};
-       
-       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-        if (isLogin.toString() == "true") {
-        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
-        var host = jm_get_remote_js("matchHost");
-
-        var hostarray = host.split(",");
-        var nums = [];
-        for (var i = 0 ; i<hostarray.length ; i++) {
-            nums.push(parseInt(hostarray[i]));
-
-
-            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
-                var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
-                itemnode && itemnode.append(h);  
-
-                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-                console.log(new Date().getTime() + '----' + isLogin + '----baidu');
-                jm_tools.getMessageFromBackground({
-                    operate: "getLocalStorage",
-                    data: {"key": 'gotourl'}
-                }, function(data) {
-                    var gotourl = data ? data.value : '';
-                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
-                    if(isLogin.toString() == "true" && !gotourl){
-                        //已登录
-                        KISSY.use("jmPopup", 
-                        function(a, b) {
-                            jm_global_popup_obj = new b;
-                        });
-                    }else if(!gotourl){
-                        //未登录
-                        window.jmLogin.logout();
-                    }else{
-                        if(gotourl.indexOf('wapbasic_iframe') > -1){
-                            KISSY.one(".jm-register iframe").attr("height",'480px');
-                        }
-                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
-                        KISSY.all('.jm-register,#jm-logo').show();
-                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
-                    //     isLock: "true"
-                    // });
-                    window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
-                        isLock: "false"
-                    });
-                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
-                    }
-                });
+                } 
             }
         } 
-    }
-    }
-    
-    function u() {}
-    return a.augment(u, {
-        init: function() {
-            e()
-        }
-    }),
-    u
-},
-{
-    requires: ["menubutton", "mu", "overlay", "switchable"]
-}),
-
-
-KISSY.add("hundsunFunction", 
-function(a,b,c,d) {
-    function e(){
-        var g = {};
-       
-       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-        if (isLogin.toString() == "true") {
-        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
-        var host = jm_get_remote_js("matchHost");
-        if(jm_get_remote_js("jobwebshowpos") && window.location.host == host){
-            var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
-            itemnode && itemnode.append(h);  
-
-            // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-            console.log(new Date().getTime() + '----' + isLogin + '----vankejob');
-            jm_tools.getMessageFromBackground({
-                operate: "getLocalStorage",
-                data: {"key": 'gotourl'}
-            }, function(data) {
-                var gotourl = data ? data.value : '';
-                window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
-                if(isLogin.toString() == "true" && !gotourl){
-                    //已登录
-                    KISSY.use("jmPopup", 
-                    function(a, b) {
-                        jm_global_popup_obj = new b;
-                    });
-                }else if(!gotourl){
-                    //未登录
-                    window.jmLogin.logout();
-                }else{
-                    if(gotourl.indexOf('wapbasic_iframe') > -1){
-                        KISSY.one(".jm-register iframe").attr("height",'480px');
-                    }
-                    KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
-                    KISSY.all('.jm-register,#jm-logo').show();
-                    // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
-                    //     isLock: "true"
-                    // });
-                    window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
-                        isLock: "false"
-                    });
-                    KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
-                }
-            });
-        } 
-    }
-    }
-    
-    function u() {}
-    return a.augment(u, {
-        init: function() {
-            e()
-        }
-    }),
-    u
-},
-{
-    requires: ["menubutton", "mu", "overlay", "switchable"]
-}),
-
-
-KISSY.add("realsilFunction", 
-function(a,b,c,d) {
-    function e(){
-        var g = {};
-       
-       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-        if (isLogin.toString() == "true") {
-        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
-        var host = jm_get_remote_js("matchHost");
-        if(jm_get_remote_js("jobwebshowpos") && window.location.host == host){
-            var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
-            itemnode && itemnode.append(h);  
-
-            // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-            console.log(new Date().getTime() + '----' + isLogin + '----vankejob');
-            jm_tools.getMessageFromBackground({
-                operate: "getLocalStorage",
-                data: {"key": 'gotourl'}
-            }, function(data) {
-                var gotourl = data ? data.value : '';
-                window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
-                if(isLogin.toString() == "true" && !gotourl){
-                    //已登录
-                    KISSY.use("jmPopup", 
-                    function(a, b) {
-                        jm_global_popup_obj = new b;
-                    });
-                }else if(!gotourl){
-                    //未登录
-                    window.jmLogin.logout();
-                }else{
-                    if(gotourl.indexOf('wapbasic_iframe') > -1){
-                        KISSY.one(".jm-register iframe").attr("height",'480px');
-                    }
-                    KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
-                    KISSY.all('.jm-register,#jm-logo').show();
-                    // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
-                    //     isLock: "true"
-                    // });
-                    window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
-                        isLock: "false"
-                    });
-                    KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
-                }
-            });
-        } 
-    }
-    }
-    
-    function u() {}
-    return a.augment(u, {
-        init: function() {
-            e()
-        }
-    }),
-    u
-},
-{
-    requires: ["menubutton", "mu", "overlay", "switchable"]
-}),
-
-KISSY.add("arcsoftFunction", 
-function(a,b,c,d) {
-    function e(){
-        var g = {};
-       
-       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-        if (isLogin.toString() == "true") {
-        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
-        var host = jm_get_remote_js("matchHost");
-        if(jm_get_remote_js("jobwebshowpos") && window.location.host == host){
-            var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
-            itemnode && itemnode.append(h);  
-
-            // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-            console.log(new Date().getTime() + '----' + isLogin + '----vankejob');
-            jm_tools.getMessageFromBackground({
-                operate: "getLocalStorage",
-                data: {"key": 'gotourl'}
-            }, function(data) {
-                var gotourl = data ? data.value : '';
-                window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
-                if(isLogin.toString() == "true" && !gotourl){
-                    //已登录
-                    KISSY.use("jmPopup", 
-                    function(a, b) {
-                        jm_global_popup_obj = new b;
-                    });
-                }else if(!gotourl){
-                    //未登录
-                    window.jmLogin.logout();
-                }else{
-                    if(gotourl.indexOf('wapbasic_iframe') > -1){
-                        KISSY.one(".jm-register iframe").attr("height",'480px');
-                    }
-                    KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
-                    KISSY.all('.jm-register,#jm-logo').show();
-                    // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
-                    //     isLock: "true"
-                    // });
-                    window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
-                        isLock: "false"
-                    });
-                    KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
-                }
-            });
-        } 
-    }
-    }
-    
-    function u() {}
-    return a.augment(u, {
-        init: function() {
-            e()
-        }
-    }),
-    u
-},
-{
-    requires: ["menubutton", "mu", "overlay", "switchable"]
-}),
-
-KISSY.add("actions-semiFunction", 
-function(a,b,c,d) {
-    function e(){
-        var g = {};
-       
-       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-        if (isLogin.toString() == "true") {
-        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
-        var host = jm_get_remote_js("matchHost");
-        if(jm_get_remote_js("jobwebshowpos") && window.location.host == host){
-            var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
-            itemnode && itemnode.append(h);  
-
-            // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-            console.log(new Date().getTime() + '----' + isLogin + '----vankejob');
-            jm_tools.getMessageFromBackground({
-                operate: "getLocalStorage",
-                data: {"key": 'gotourl'}
-            }, function(data) {
-                var gotourl = data ? data.value : '';
-                window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
-                if(isLogin.toString() == "true" && !gotourl){
-                    //已登录
-                    KISSY.use("jmPopup", 
-                    function(a, b) {
-                        jm_global_popup_obj = new b;
-                    });
-                }else if(!gotourl){
-                    //未登录
-                    window.jmLogin.logout();
-                }else{
-                    if(gotourl.indexOf('wapbasic_iframe') > -1){
-                        KISSY.one(".jm-register iframe").attr("height",'480px');
-                    }
-                    KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
-                    KISSY.all('.jm-register,#jm-logo').show();
-                   // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
-                    //     isLock: "true"
-                    // });
-                    window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
-                        isLock: "false"
-                    });
-                    KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
-                }
-            });
-        } 
-    }
-    }
-    
-    function u() {}
-    return a.augment(u, {
-        init: function() {
-            e()
-        }
-    }),
-    u
-},
-{
-    requires: ["menubutton", "mu", "overlay", "switchable"]
-}),
-
-KISSY.add("inspurFunction", 
-function(a,b,c,d) {
-    function e(){
-        var g = {};
-       
-       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-        if (isLogin.toString() == "true") {
-        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
-        var host = jm_get_remote_js("matchHost");
-        if(jm_get_remote_js("jobwebshowpos") && window.location.host == host){
-            var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
-            itemnode && itemnode.append(h);  
-
-            // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-            console.log(new Date().getTime() + '----' + isLogin + '----vankejob');
-            jm_tools.getMessageFromBackground({
-                operate: "getLocalStorage",
-                data: {"key": 'gotourl'}
-            }, function(data) {
-                var gotourl = data ? data.value : '';
-                window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
-                if(isLogin.toString() == "true" && !gotourl){
-                    //已登录
-                    KISSY.use("jmPopup", 
-                    function(a, b) {
-                        jm_global_popup_obj = new b;
-                    });
-                }else if(!gotourl){
-                    //未登录
-                    window.jmLogin.logout();
-                }else{
-                    if(gotourl.indexOf('wapbasic_iframe') > -1){
-                        KISSY.one(".jm-register iframe").attr("height",'480px');
-                    }
-                    KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
-                    KISSY.all('.jm-register,#jm-logo').show();
-                    // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
-                    //     isLock: "true"
-                    // });
-                    window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
-                        isLock: "false"
-                    });
-                    KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
-                }
-            });
-        } 
-    }
-    }
-    
-    function u() {}
-    return a.augment(u, {
-        init: function() {
-            e()
-        }
-    }),
-    u
-},
-{
-    requires: ["menubutton", "mu", "overlay", "switchable"]
-}),
-
-KISSY.add("dajieFunction", 
-function(a,b,c,d) {
-    function e(){
-        var g = {};
-       
-       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-        if (isLogin.toString() == "true") {
-        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
-        var host = jm_get_remote_js("matchHost");
-        if(jm_get_remote_js("jobwebshowpos") && window.location.host == host){
-            var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
-            itemnode && itemnode.append(h);  
-
-            // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-            console.log(new Date().getTime() + '----' + isLogin + '----vankejob');
-            jm_tools.getMessageFromBackground({
-                operate: "getLocalStorage",
-                data: {"key": 'gotourl'}
-            }, function(data) {
-                var gotourl = data ? data.value : '';
-                window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
-                if(isLogin.toString() == "true" && !gotourl){
-                    //已登录
-                    KISSY.use("jmPopup", 
-                    function(a, b) {
-                        jm_global_popup_obj = new b;
-                    });
-                }else if(!gotourl){
-                    //未登录
-                    window.jmLogin.logout();
-                }else{
-                    if(gotourl.indexOf('wapbasic_iframe') > -1){
-                        KISSY.one(".jm-register iframe").attr("height",'480px');
-                    }
-                    KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
-                    KISSY.all('.jm-register,#jm-logo').show();
-                    // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
-                    //     isLock: "true"
-                    // });
-                    window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
-                        isLock: "false"
-                    });
-                    KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
-                }
-            });
-        } 
-    }
-    }
-    
-    function u() {}
-    return a.augment(u, {
-        init: function() {
-            e()
-        }
-    }),
-    u
-},
-{
-    requires: ["menubutton", "mu", "overlay", "switchable"]
-}),
-
-KISSY.add("longforFunction", 
-function(a,b,c,d) {
-    function e(){
-        var g = {};
-       
-       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-        if (isLogin.toString() == "true") {
-        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
-        var host = jm_get_remote_js("matchHost");
-        if(jm_get_remote_js("jobwebshowpos") && window.location.host == host){
-            var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
-            itemnode && itemnode.append(h);  
-
-            // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-            console.log(new Date().getTime() + '----' + isLogin + '----vankejob');
-            jm_tools.getMessageFromBackground({
-                operate: "getLocalStorage",
-                data: {"key": 'gotourl'}
-            }, function(data) {
-                var gotourl = data ? data.value : '';
-                window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
-                if(isLogin.toString() == "true" && !gotourl){
-                    //已登录
-                    KISSY.use("jmPopup", 
-                    function(a, b) {
-                        jm_global_popup_obj = new b;
-                    });
-                }else if(!gotourl){
-                    //未登录
-                    window.jmLogin.logout();
-                }else{
-                    if(gotourl.indexOf('wapbasic_iframe') > -1){
-                        KISSY.one(".jm-register iframe").attr("height",'480px');
-                    }
-                    KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
-                    KISSY.all('.jm-register,#jm-logo').show();
-                    // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
-                    //     isLock: "true"
-                    // });
-                    window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
-                        isLock: "false"
-                    });
-                    KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
-                }
-            });
-        } 
-    }
-    }
-    
-    function u() {}
-    return a.augment(u, {
-        init: function() {
-            e()
-        }
-    }),
-    u
-},
-{
-    requires: ["menubutton", "mu", "overlay", "switchable"]
-}),
-
-KISSY.add("zteFunction", 
-function(a,b,c,d) {
-    function e(){
-        var g = {};
-       
-       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-        if (isLogin.toString() == "true") {
-        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
-        var host = jm_get_remote_js("matchHost");
-        if(jm_get_remote_js("jobwebshowpos") && window.location.host == host){
-            var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
-            itemnode && itemnode.append(h);  
-
-            // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-            console.log(new Date().getTime() + '----' + isLogin + '----vankejob');
-            jm_tools.getMessageFromBackground({
-                operate: "getLocalStorage",
-                data: {"key": 'gotourl'}
-            }, function(data) {
-                var gotourl = data ? data.value : '';
-                window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
-                if(isLogin.toString() == "true" && !gotourl){
-                    //已登录
-                    KISSY.use("jmPopup", 
-                    function(a, b) {
-                        jm_global_popup_obj = new b;
-                    });
-                }else if(!gotourl){
-                    //未登录
-                    window.jmLogin.logout();
-                }else{
-                    if(gotourl.indexOf('wapbasic_iframe') > -1){
-                        KISSY.one(".jm-register iframe").attr("height",'480px');
-                    }
-                    KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
-                    KISSY.all('.jm-register,#jm-logo').show();
-                    // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
-                    //     isLock: "true"
-                    // });
-                    window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
-                        isLock: "false"
-                    });
-                    KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
-                }
-            });
-        } 
-    }
-    }
-    
-    function u() {}
-    return a.augment(u, {
-        init: function() {
-            e()
-        }
-    }),
-    u
-},
-{
-    requires: ["menubutton", "mu", "overlay", "switchable"]
-}), 
-
-KISSY.add("taleoFunction", 
-function(a,b,c,d) {
-    function e(){
-        var g = {};
-       
-       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-        if (isLogin.toString() == "true") {
-        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
-        var host = jm_get_remote_js("matchHost");
-
-        var hostarray = host.split(",");
-        var nums = [];
-        for (var i = 0 ; i<hostarray.length ; i++) {
-            nums.push(parseInt(hostarray[i]));
-
-            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
-                var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
-                itemnode && itemnode.append(h);  
-
-                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-                console.log(new Date().getTime() + '----' + isLogin);
-                jm_tools.getMessageFromBackground({
-                    operate: "getLocalStorage",
-                    data: {"key": 'gotourl'}
-                }, function(data) {
-                    var gotourl = data ? data.value : '';
-                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new object(),window.jm_jminer.login.gotourl = gotourl;
-                    if(isLogin.toString() == "true" && !gotourl){
-                        //已登录
-                        KISSY.use("jmPopup", 
-                        function(a, b) {
-                            jm_global_popup_obj = new b;
-                        });
-                    }else if(!gotourl){
-                        //未登录
-                        window.jmLogin.logout();
-                    }else{
-                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
-                        KISSY.all('.jm-register,#jm-logo').show();
-                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
-                    //     isLock: "true"
-                    // });
-                    window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
-                        isLock: "false"
-                    });
-                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
-                    }
-                });  
-            } 
-        }
-    }
-    }
-    
-    function u() {}
-    return a.augment(u, {
-        init: function() {
-            e()
-        }
-    }),
-    u
-},
-{
-    requires: ["menubutton", "mu", "overlay", "switchable"]
-}),
-
-KISSY.add("htscFunction", 
-function(a,b,c,d) {
-    function e(){
-        var g = {};
-       
-       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-        if (isLogin.toString() == "true") {
-        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
-        var host = jm_get_remote_js("matchHost");
-        if(jm_get_remote_js("jobwebshowpos") && window.location.host == host){
-            var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
-            itemnode && itemnode.append(h);  
-
-            // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-            console.log(new Date().getTime() + '----' + isLogin);
-            jm_tools.getMessageFromBackground({
-                operate: "getLocalStorage",
-                data: {"key": 'gotourl'}
-            }, function(data) {
-                var gotourl = data ? data.value : '';
-                window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new object(),window.jm_jminer.login.gotourl = gotourl;
-                if(isLogin.toString() == "true" && !gotourl){
-                    //已登录
-                    KISSY.use("jmPopup", 
-                    function(a, b) {
-                        jm_global_popup_obj = new b;
-                    });
-                }else if(!gotourl){
-                    //未登录
-                    window.jmLogin.logout();
-                }else{
-                    KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
-                    KISSY.all('.jm-register,#jm-logo').show();
-                    // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
-                    //     isLock: "true"
-                    // });
-                    window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
-                        isLock: "false"
-                    });
-                    KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
-                }
-            });
-            
-            
-        } 
-    }
-    }
-    
-    function u() {}
-    return a.augment(u, {
-        init: function() {
-            e()
-        }
-    }),
-    u
-},
-{
-    requires: ["menubutton", "mu", "overlay", "switchable"]
-}),
-
-KISSY.add("foxconnFunction", 
-function(a,b,c,d) {
-    function e(){
-        var g = {};
-       
-       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-        if (isLogin.toString() == "true") {
-        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
-        var host = jm_get_remote_js("matchHost");
-        if(jm_get_remote_js("jobwebshowpos") && window.location.host == host){
-            var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
-            itemnode && itemnode.append(h);  
-
-            // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-            console.log(new Date().getTime() + '----' + isLogin);
-            jm_tools.getMessageFromBackground({
-                operate: "getLocalStorage",
-                data: {"key": 'gotourl'}
-            }, function(data) {
-                var gotourl = data ? data.value : '';
-                window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new object(),window.jm_jminer.login.gotourl = gotourl;
-                if(isLogin.toString() == "true" && !gotourl){
-                    //已登录
-                    KISSY.use("jmPopup", 
-                    function(a, b) {
-                        jm_global_popup_obj = new b;
-                    });
-                }else if(!gotourl){
-                    //未登录
-                    window.jmLogin.logout();
-                }else{
-                    KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
-                    KISSY.all('.jm-register,#jm-logo').show();
-                    // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
-                    //     isLock: "true"
-                    // });
-                    window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
-                        isLock: "false"
-                    });
-                    KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
-                }
-            });
-            
-            }
-        } 
-    }
-    
-    function u() {}
-    return a.augment(u, {
-        init: function() {
-            e()
-        }
-    }),
-    u
-},
-{
-    requires: ["menubutton", "mu", "overlay", "switchable"]
-}), 
-
-KISSY.add("skyallhereFunction", 
-function(a,b,c,d) {
-    function e(){
-        var g = {};
-       
-       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-        if (isLogin.toString() == "true") {
-        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
-        var host = jm_get_remote_js("matchHost");
-        if(jm_get_remote_js("jobwebshowpos") && window.location.host == host){
-            var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
-            itemnode && itemnode.append(h);  
-
-            // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-            console.log(new Date().getTime() + '----' + isLogin);
-            jm_tools.getMessageFromBackground({
-                operate: "getLocalStorage",
-                data: {"key": 'gotourl'}
-            }, function(data) {
-                var gotourl = data ? data.value : '';
-                window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new object(),window.jm_jminer.login.gotourl = gotourl;
-                if(isLogin.toString() == "true" && !gotourl){
-                    //已登录
-                    KISSY.use("jmPopup", 
-                    function(a, b) {
-                        jm_global_popup_obj = new b;
-                    });
-                }else if(!gotourl){
-                    //未登录
-                    window.jmLogin.logout();
-                }else{
-                    KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
-                    KISSY.all('.jm-register,#jm-logo').show();
-                    // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
-                    //     isLock: "true"
-                    // });
-                    window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
-                        isLock: "false"
-                    });
-                    KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
-                }
-            });
-            }
-            
-        } 
-    }
-    
-    function u() {}
-    return a.augment(u, {
-        init: function() {
-            e()
-        }
-    }),
-    u
-},
-{
-    requires: ["menubutton", "mu", "overlay", "switchable"]
-}), 
-
-KISSY.add("kpmgFunction", 
-function(a,b,c,d) {
-    function e(){
-        var g = {};
-       
-       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-        if (isLogin.toString() == "true") {
-        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
-        var host = jm_get_remote_js("matchHost");
-        if(jm_get_remote_js("jobwebshowpos") && window.location.host == host){
-            var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
-            itemnode && itemnode.append(h);  
-
-            // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-            console.log(new Date().getTime() + '----' + isLogin);
-            jm_tools.getMessageFromBackground({
-                operate: "getLocalStorage",
-                data: {"key": 'gotourl'}
-            }, function(data) {
-                var gotourl = data ? data.value : '';
-                window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new object(),window.jm_jminer.login.gotourl = gotourl;
-                if(isLogin.toString() == "true" && !gotourl){
-                    //已登录
-                    KISSY.use("jmPopup", 
-                    function(a, b) {
-                        jm_global_popup_obj = new b;
-                    });
-                }else if(!gotourl){
-                    //未登录
-                    window.jmLogin.logout();
-                }else{
-                    KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
-                    KISSY.all('.jm-register,#jm-logo').show();
-                    // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
-                    //     isLock: "true"
-                    // });
-                    window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
-                        isLock: "false"
-                    });
-                    KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
-                }
-            });
-            
-            }
-            
-        } 
-    }
-    
-    function u() {}
-    return a.augment(u, {
-        init: function() {
-            e()
-        }
-    }),
-    u
-},
-{
-    requires: ["menubutton", "mu", "overlay", "switchable"]
-}),
-
-KISSY.add("sctaleoFunction", 
-function(a,b,c,d) {
-    function e(){
-        var g = {};
-       
-       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-        if (isLogin.toString() == "true") {
-        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
-        var host = jm_get_remote_js("matchHost");
-        if(jm_get_remote_js("jobwebshowpos") && window.location.host == host){
-            var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
-            itemnode && itemnode.append(h);  
-
-            // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-            console.log(new Date().getTime() + '----' + isLogin);
-            jm_tools.getMessageFromBackground({
-                operate: "getLocalStorage",
-                data: {"key": 'gotourl'}
-            }, function(data) {
-                var gotourl = data ? data.value : '';
-                window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new object(),window.jm_jminer.login.gotourl = gotourl;
-                if(isLogin.toString() == "true" && !gotourl){
-                    //已登录
-                    KISSY.use("jmPopup", 
-                    function(a, b) {
-                        jm_global_popup_obj = new b;
-                    });
-                }else if(!gotourl){
-                    //未登录
-                    window.jmLogin.logout();
-                }else{
-                    KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
-                    KISSY.all('.jm-register,#jm-logo').show();
-                    // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
-                    //     isLock: "true"
-                    // });
-                    window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
-                        isLock: "false"
-                    });
-                    KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
-                }
-            });
-            
-           } 
-        } 
-    }
-    
-    function u() {}
-    return a.augment(u, {
-        init: function() {
-            e()
-        }
-    }),
-    u
-},
-{
-    requires: ["menubutton", "mu", "overlay", "switchable"]
-}), 
-
-KISSY.add("gdtelFunction", 
-function(a,b,c,d) {
-    function e(){
-        var g = {};
-       
-       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-        if (isLogin.toString() == "true") {
-        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
-        var host = jm_get_remote_js("matchHost");
-        if(jm_get_remote_js("jobwebshowpos") && window.location.host == host){
-            var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
-            itemnode && itemnode.append(h);  
-
-            // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-            console.log(new Date().getTime() + '----' + isLogin);
-            jm_tools.getMessageFromBackground({
-                operate: "getLocalStorage",
-                data: {"key": 'gotourl'}
-            }, function(data) {
-                var gotourl = data ? data.value : '';
-                window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new object(),window.jm_jminer.login.gotourl = gotourl;
-                if(isLogin.toString() == "true" && !gotourl){
-                    //已登录
-                    KISSY.use("jmPopup", 
-                    function(a, b) {
-                        jm_global_popup_obj = new b;
-                    });
-                }else if(!gotourl){
-                    //未登录
-                    window.jmLogin.logout();
-                }else{
-                    KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
-                    KISSY.all('.jm-register,#jm-logo').show();
-                    // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
-                    //     isLock: "true"
-                    // });
-                    window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
-                        isLock: "false"
-                    });
-                    KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
-                }
-            });
-            
-            }
-        } 
-    }
-    
-    function u() {}
-    return a.augment(u, {
-        init: function() {
-            e()
-        }
-    }),
-    u
-},
-{
-    requires: ["menubutton", "mu", "overlay", "switchable"]
-}), 
-
-KISSY.add("talFunction", 
-function(a,b,c,d) {
-    function e(){
-        var g = {};
-       
-       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-        if (isLogin.toString() == "true") {
-        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
-        var host = jm_get_remote_js("matchHost");
-        if(jm_get_remote_js("jobwebshowpos") && window.location.host == host){
-            var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
-            itemnode && itemnode.append(h);  
-
-            // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-            console.log(new Date().getTime() + '----' + isLogin);
-            jm_tools.getMessageFromBackground({
-                operate: "getLocalStorage",
-                data: {"key": 'gotourl'}
-            }, function(data) {
-                var gotourl = data ? data.value : '';
-                window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new object(),window.jm_jminer.login.gotourl = gotourl;
-                if(isLogin.toString() == "true" && !gotourl){
-                    //已登录
-                    KISSY.use("jmPopup", 
-                    function(a, b) {
-                        jm_global_popup_obj = new b;
-                    });
-                }else if(!gotourl){
-                    //未登录
-                    window.jmLogin.logout();
-                }else{
-                    KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
-                    KISSY.all('.jm-register,#jm-logo').show();
-                    // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
-                    //     isLock: "true"
-                    // });
-                    window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
-                        isLock: "false"
-                    });
-                    KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
-                }
-            });
-            
-            }
-        } 
-    }
-    
-    function u() {}
-    return a.augment(u, {
-        init: function() {
-            e()
-        }
-    }),
-    u
-},
-{
-    requires: ["menubutton", "mu", "overlay", "switchable"]
-}),  
-
-KISSY.add("jobsminerFunction", 
-function(a,b,c,d) {
-    function e(){
-        function getCookie(name){
-            return (document.cookie.match(new RegExp("(^"+name+"| "+name+")=([^;]*)"))==null)?"":RegExp.$2;
-        }
-        var isLogin = getCookie("ot_home_login");
-        var homeUid = getCookie("ot_home_uid");
-        var ezHomeUid = getCookie("ot_home_ez_uid");
-        var a = {"ot_home_ez_uid":homeUid,"ot_home_uid":homeUid,"ot_home_login":isLogin,"login":"true"};
-        if(isLogin == 1){
-            jm_tools.setBackgroundLocalStore({
-                //login :{"ot_home_ez_uid":ezHomeUid,"ot_home_uid":homeUid,"ot_home_login":isLogin}
-                jm_login: JSON.stringify(a)
-            });
-            jm_tools.getMessageFromBackground({
-                operate: "getLocalStorage",
-                data: {"key": 'jm_login'}
-            }, function(data) {
-                console.log('jobsminer------' + data);
-            
-            });
-        } 
-        
-    }
-    
-    function u() {}
-    return a.augment(u, {
-        init: function() {
-            e()
-        }
-    }),
-    u
-},
-{
-    requires: ["menubutton", "mu", "overlay", "switchable"]
-}),
-
-KISSY.add("boeFunction", 
-function(a,b,c,d) {
-    function e(){
-        var g = {};
-        
-        var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-        if (isLogin.toString() == "true") {
-        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
-        var host = jm_get_remote_js("matchHost");
-
-        var hostarray = host.split(",");
-        var nums = [];
-        for (var i = 0 ; i<hostarray.length ; i++) {
-            nums.push(parseInt(hostarray[i]));
-
-            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
-                var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
-                itemnode && itemnode.append(h);  
-
-                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-                console.log(new Date().getTime() + '----' + isLogin + '----vankejob');
-                jm_tools.getMessageFromBackground({
-                    operate: "getLocalStorage",
-                    data: {"key": 'gotourl'}
-                }, function(data) {
-                    var gotourl = data ? data.value : '';
-                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
-                    if(isLogin.toString() == "true" && !gotourl){
-                        //已登录
-                        KISSY.use("jmPopup", 
-                        function(a, b) {
-                            jm_global_popup_obj = new b;
-                        });
-                    }else if(!gotourl){
-                        //未登录
-                        window.jmLogin.logout();
-                    }else{
-                        if(gotourl.indexOf('wapbasic_iframe') > -1){
-                            KISSY.one(".jm-register iframe").attr("height",'480px');
-                        }
-                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
-                        KISSY.all('.jm-register,#jm-logo').show();
-                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
-                        //     isLock: "true"
-                        // });
-                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
-                            isLock: "false"
-                        });
-                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
-                    }
-                });
-            }
-        } 
-    }
-    }
-    
-    function u() {}
-    return a.augment(u, {
-        init: function() {
-            e()
-        }
-    }),
-    u
-},
-{
-    requires: ["menubutton", "mu", "overlay", "switchable"]
-}),
-
-
-KISSY.add("ccbFunction", 
-function(a,b,c,d) {
-    function e(){
-        var g = {};
-       
-       var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-        if (isLogin.toString() == "true") {
-        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
-        var host = jm_get_remote_js("matchHost");
-        if(jm_get_remote_js("jobwebshowpos") && window.location.host == host){
-            var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
-            itemnode && itemnode.append(h);  
-
-            // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-            console.log(new Date().getTime() + '----' + isLogin);
-            jm_tools.getMessageFromBackground({
-                operate: "getLocalStorage",
-                data: {"key": 'gotourl'}
-            }, function(data) {
-                var gotourl = data ? data.value : '';
-                window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new object(),window.jm_jminer.login.gotourl = gotourl;
-                if(isLogin.toString() == "true" && !gotourl){
-                    //已登录
-                    KISSY.use("jmPopup", 
-                    function(a, b) {
-                        jm_global_popup_obj = new b;
-                    });
-                }else if(!gotourl){
-                    //未登录
-                    window.jmLogin.logout();
-                }else{
-                    KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
-                    KISSY.all('.jm-register,#jm-logo').show();
-                    // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
-                    //     isLock: "true"
-                    // });
-                    window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
-                        isLock: "false"
-                    });
-                    KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
-                }
-            });
-            
-            }
-        } 
-    }
-    
-    function u() {}
-    return a.augment(u, {
-        init: function() {
-            e()
-        }
-    }),
-    u
-},
-{
-    requires: ["menubutton", "mu", "overlay", "switchable"]
-}), 
-
-KISSY.add("hxbFunction", 
-function(a,b,c,d) {
-    function e(){
-        var g = {};
-        
-        var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-        if (isLogin.toString() == "true") {
-        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
-        var host = jm_get_remote_js("matchHost");
-
-        var hostarray = host.split(",");
-        var nums = [];
-        for (var i = 0 ; i<hostarray.length ; i++) {
-            nums.push(parseInt(hostarray[i]));
-
-            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
-                var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
-                itemnode && itemnode.append(h);  
-
-                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-                console.log(new Date().getTime() + '----' + isLogin + '----vankejob');
-                jm_tools.getMessageFromBackground({
-                    operate: "getLocalStorage",
-                    data: {"key": 'gotourl'}
-                }, function(data) {
-                    var gotourl = data ? data.value : '';
-                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
-                    if(isLogin.toString() == "true" && !gotourl){
-                        //已登录
-                        KISSY.use("jmPopup", 
-                        function(a, b) {
-                            jm_global_popup_obj = new b;
-                        });
-                    }else if(!gotourl){
-                        //未登录
-                        window.jmLogin.logout();
-                    }else{
-                        if(gotourl.indexOf('wapbasic_iframe') > -1){
-                            KISSY.one(".jm-register iframe").attr("height",'480px');
-                        }
-                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
-                        KISSY.all('.jm-register,#jm-logo').show();
-                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
-                        //     isLock: "true"
-                        // });
-                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
-                            isLock: "false"
-                        });
-                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
-                    }
-                });
-            }
-        } 
-    }
-    }
-    
-    function u() {}
-    return a.augment(u, {
-        init: function() {
-            e()
-        }
-    }),
-    u
-},
-{
-    requires: ["menubutton", "mu", "overlay", "switchable"]
-}),
-
-
-KISSY.add("chinalifeFunction", 
-function(a,b,c,d) {
-    function e(){
-        var g = {};
-        
-        var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-        if (isLogin.toString() == "true") {
-        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
-        var host = jm_get_remote_js("matchHost");
-
-        var hostarray = host.split(",");
-        var nums = [];
-        for (var i = 0 ; i<hostarray.length ; i++) {
-            nums.push(parseInt(hostarray[i]));
-
-            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
-                var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
-                itemnode && itemnode.append(h);  
-
-                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-                console.log(new Date().getTime() + '----' + isLogin + '----vankejob');
-                jm_tools.getMessageFromBackground({
-                    operate: "getLocalStorage",
-                    data: {"key": 'gotourl'}
-                }, function(data) {
-                    var gotourl = data ? data.value : '';
-                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
-                    if(isLogin.toString() == "true" && !gotourl){
-                        //已登录
-                        KISSY.use("jmPopup", 
-                        function(a, b) {
-                            jm_global_popup_obj = new b;
-                        });
-                    }else if(!gotourl){
-                        //未登录
-                        window.jmLogin.logout();
-                    }else{
-                        if(gotourl.indexOf('wapbasic_iframe') > -1){
-                            KISSY.one(".jm-register iframe").attr("height",'480px');
-                        }
-                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
-                        KISSY.all('.jm-register,#jm-logo').show();
-                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
-                        //     isLock: "true"
-                        // });
-                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
-                            isLock: "false"
-                        });
-                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
-                    }
-                });
-            }
-        } 
-    }
-    }
-    
-    function u() {}
-    return a.augment(u, {
-        init: function() {
-            e()
-        }
-    }),
-    u
-},
-{
-    requires: ["menubutton", "mu", "overlay", "switchable"]
-}),
-
-KISSY.add("cvteFunction", 
-function(a,b,c,d) {
-    function e(){
-        var g = {};
-        
-        var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-        if (isLogin.toString() == "true") {
-        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
-        var host = jm_get_remote_js("matchHost");
-
-        var hostarray = host.split(",");
-        var nums = [];
-        for (var i = 0 ; i<hostarray.length ; i++) {
-            nums.push(parseInt(hostarray[i]));
-
-            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
-                var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
-                itemnode && itemnode.append(h);  
-
-                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-                console.log(new Date().getTime() + '----' + isLogin + '----cvte');
-                jm_tools.getMessageFromBackground({
-                    operate: "getLocalStorage",
-                    data: {"key": 'gotourl'}
-                }, function(data) {
-                    var gotourl = data ? data.value : '';
-                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
-                    if(isLogin.toString() == "true" && !gotourl){
-                        //已登录
-                        KISSY.use("jmPopup", 
-                        function(a, b) {
-                            jm_global_popup_obj = new b;
-                        });
-                    }else if(!gotourl){
-                        //未登录
-                        window.jmLogin.logout();
-                    }else{
-                        if(gotourl.indexOf('wapbasic_iframe') > -1){
-                            KISSY.one(".jm-register iframe").attr("height",'480px');
-                        }
-                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
-                        KISSY.all('.jm-register,#jm-logo').show();
-                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
-                        //     isLock: "true"
-                        // });
-                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
-                            isLock: "false"
-                        });
-                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
-                    }
-                });
-            }
-        } 
-    }
-    }
-    
-    function u() {}
-    return a.augment(u, {
-        init: function() {
-            e()
-        }
-    }),
-    u
-},
-{
-    requires: ["menubutton", "mu", "overlay", "switchable"]
-}),
-
-KISSY.add("haierFunction", 
-function(a,b,c,d) {
-    function e(){
-        var g = {};
-        
-        var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-        if (isLogin.toString() == "true") {
-        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
-        var host = jm_get_remote_js("matchHost");
-
-        var hostarray = host.split(",");
-        var nums = [];
-        for (var i = 0 ; i<hostarray.length ; i++) {
-            nums.push(parseInt(hostarray[i]));
-
-            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
-                var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
-                itemnode && itemnode.append(h);  
-
-                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-                console.log(new Date().getTime() + '----' + isLogin + '----cvte');
-                jm_tools.getMessageFromBackground({
-                    operate: "getLocalStorage",
-                    data: {"key": 'gotourl'}
-                }, function(data) {
-                    var gotourl = data ? data.value : '';
-                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
-                    if(isLogin.toString() == "true" && !gotourl){
-                        //已登录
-                        KISSY.use("jmPopup", 
-                        function(a, b) {
-                            jm_global_popup_obj = new b;
-                        });
-                    }else if(!gotourl){
-                        //未登录
-                        window.jmLogin.logout();
-                    }else{
-                        if(gotourl.indexOf('wapbasic_iframe') > -1){
-                            KISSY.one(".jm-register iframe").attr("height",'480px');
-                        }
-                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
-                        KISSY.all('.jm-register,#jm-logo').show();
-                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
-                        //     isLock: "true"
-                        // });
-                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
-                            isLock: "false"
-                        });
-                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
-                    }
-                });
-            }
-        } 
-    }
-    }
-    
-    function u() {}
-    return a.augment(u, {
-        init: function() {
-            e()
-        }
-    }),
-    u
-},
-{
-    requires: ["menubutton", "mu", "overlay", "switchable"]
-}),
-
-
-
-KISSY.add("comFunction", 
-function(a,b,c,d) {
-    function e(){
-        var g = {};
-        
-        var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-        if (isLogin.toString() == "true") {
-        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
-        var host = jm_get_remote_js("matchHost");
-
-        var hostarray = host.split(",");
-        var nums = [];
-        for (var i = 0 ; i<hostarray.length ; i++) {
-            nums.push(parseInt(hostarray[i]));
-
-            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
-                var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
-                itemnode && itemnode.append(h);  
-
-                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-                console.log(new Date().getTime() + '----' + isLogin + '----cvte');
-                jm_tools.getMessageFromBackground({
-                    operate: "getLocalStorage",
-                    data: {"key": 'gotourl'}
-                }, function(data) {
-                    var gotourl = data ? data.value : '';
-                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
-                    if(isLogin.toString() == "true" && !gotourl){
-                        //已登录
-                        KISSY.use("jmPopup", 
-                        function(a, b) {
-                            jm_global_popup_obj = new b;
-                        });
-                    }else if(!gotourl){
-                        //未登录
-                        window.jmLogin.logout();
-                    }else{
-                        if(gotourl.indexOf('wapbasic_iframe') > -1){
-                            KISSY.one(".jm-register iframe").attr("height",'480px');
-                        }
-                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
-                        KISSY.all('.jm-register,#jm-logo').show();
-                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
-                        //     isLock: "true"
-                        // });
-                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
-                            isLock: "false"
-                        });
-                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
-                    }
-                });
-            }
-        } 
-    }
-    }
-    
-    function u() {}
-    return a.augment(u, {
-        init: function() {
-            e()
-        }
-    }),
-    u
-},
-{
-    requires: ["menubutton", "mu", "overlay", "switchable"]
-}),
-
-KISSY.add("cgnpcFunction", 
-function(a,b,c,d) {
-    function e(){
-        var g = {};
-        
-        var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-        if (isLogin.toString() == "true") {
-        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
-        var host = jm_get_remote_js("matchHost");
-
-        var hostarray = host.split(",");
-        var nums = [];
-        for (var i = 0 ; i<hostarray.length ; i++) {
-            nums.push(parseInt(hostarray[i]));
-
-            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
-                var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
-                itemnode && itemnode.append(h);  
-
-                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-                console.log(new Date().getTime() + '----' + isLogin + '----cvte');
-                jm_tools.getMessageFromBackground({
-                    operate: "getLocalStorage",
-                    data: {"key": 'gotourl'}
-                }, function(data) {
-                    var gotourl = data ? data.value : '';
-                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
-                    if(isLogin.toString() == "true" && !gotourl){
-                        //已登录
-                        KISSY.use("jmPopup", 
-                        function(a, b) {
-                            jm_global_popup_obj = new b;
-                        });
-                    }else if(!gotourl){
-                        //未登录
-                        window.jmLogin.logout();
-                    }else{
-                        if(gotourl.indexOf('wapbasic_iframe') > -1){
-                            KISSY.one(".jm-register iframe").attr("height",'480px');
-                        }
-                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
-                        KISSY.all('.jm-register,#jm-logo').show();
-                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
-                        //     isLock: "true"
-                        // });
-                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
-                            isLock: "false"
-                        });
-                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
-                    }
-                });
-            }
-        } 
-    }
-    }
-    
-    function u() {}
-    return a.augment(u, {
-        init: function() {
-            e()
-        }
-    }),
-    u
-},
-{
-    requires: ["menubutton", "mu", "overlay", "switchable"]
-}),
-
-KISSY.add("nhrdcFunction", 
-function(a,b,c,d) {
-    function e(){
-        var g = {};
-        
-        var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-        if (isLogin.toString() == "true") {
-        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
-        var host = jm_get_remote_js("matchHost");
-        console.log(host);
-        console.log(window.location.host);
-        var hostarray = host.split(",");
-        var nums = [];
-        for (var i = 0 ; i<hostarray.length ; i++) {
-            nums.push(parseInt(hostarray[i]));
-
-            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
-                var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
-                itemnode && itemnode.append(h);  
-
-                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-                console.log(new Date().getTime() + '----' + isLogin + '----cvte');
-                jm_tools.getMessageFromBackground({
-                    operate: "getLocalStorage",
-                    data: {"key": 'gotourl'}
-                }, function(data) {
-                    var gotourl = data ? data.value : '';
-                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
-                    if(isLogin.toString() == "true" && !gotourl){
-                        //已登录
-                        KISSY.use("jmPopup", 
-                        function(a, b) {
-                            jm_global_popup_obj = new b;
-                        });
-                    }else if(!gotourl){
-                        //未登录
-                        window.jmLogin.logout();
-                    }else{
-                        if(gotourl.indexOf('wapbasic_iframe') > -1){
-                            KISSY.one(".jm-register iframe").attr("height",'480px');
-                        }
-                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
-                        KISSY.all('.jm-register,#jm-logo').show();
-                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
-                        //     isLock: "true"
-                        // });
-                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
-                            isLock: "false"
-                        });
-                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
-                    }
-                });
-            }
-        } 
-    }
+    //}
     }
     
     function u() {}
@@ -5009,7 +8320,7 @@ window.jm_tools = {
     }
 };
 
-var allowWebSite = ["qq.com","jd.com","douban.com","cmcm.com","pingan.com","oppo.com","163.com","zhiye.com","10086.cn","hotjob.cn","cmbc.com.cn","baidu.com","alibaba.com","sohu-inc.com","51job.com","100tal.com","chinahr.com","hirede.com","chuangxin.com","xunlei.com","huawei.com","wintalent.cn","brassring.com.cn","cmbchina.com","dearsamsung.com.cn","coolpad.com","peopleclick.com","apply2jobs.com","force.com","fang.com","4399.com","zhaopin.com","hundsun.com","arcsoft.com.cn","actions-semi.com","inspur.com","dajie.com","longfor.com","zte.com.cn","taleo.net","htsc.com.cn","hr.foxconn.com","skyallhere.com","kpmg.com.cn","gdtel.com.cn","tal.net","jobsminer.cc","icebear.me","boe.com.cn","hxb.com.cn","chinalife.com.cn","cvte.com","haier.net","cgnpc.com.cn","nhrdc.cn:8088","com.cn"];
+var allowWebSite = ["qq.com","jd.com","douban.com","cmcm.com","pingan.com","oppo.com","163.com","zhiye.com","10086.cn","hotjob.cn","cmbc.com.cn","baidu.com","alibaba.com","sohu-inc.com","51job.com","100tal.com","chinahr.com","hirede.com","chuangxin.com","xunlei.com","huawei.com","wintalent.cn","brassring.com.cn","cmbchina.com","dearsamsung.com.cn","coolpad.com","peopleclick.com","apply2jobs.com","force.com","fang.com","4399.com","zhaopin.com","hundsun.com","arcsoft.com.cn","actions-semi.com","inspur.com","dajie.com","longfor.com","zte.com.cn","taleo.net","htsc.com.cn","hr.foxconn.com","skyallhere.com","kpmg.com.cn","gdtel.com.cn","tal.net","jobsminer.cc","icebear.me","boe.com.cn","hxb.com.cn","chinalife.com.cn","cvte.com","haier.net","cgnpc.com.cn","nhrdc.cn:8088","com.cn","changyou.com","ihrscloud.com","suning.cn","xiaomi.com","pactera.com","renren.com","ajinga.com","yhd.com","hnagroup.com","zhenai.com","brassring.com","sohu.com"];
 var allowWebSiteFinder = null;
 var homeWebSite = ["lagou.com"];
 var homeWebSiteFinder = null;

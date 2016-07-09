@@ -1,4 +1,4 @@
-#jm_pop_tab #qw-notifications {
+#icebear_plugin #qw-notifications {
 	/*float: left;
 	width: 100%;
 	overflow: hidden;
@@ -13,7 +13,7 @@
     z-index: 100;
 }
 
-#jm_pop_tab #qw-notifications-bottom-right {
+#icebear_plugin #qw-notifications-bottom-right {
 	position: absolute;
 	width: 200px;
 	right: 20px;
@@ -21,7 +21,7 @@
 	top:50%;
 	margin-top: -55px;
 }
-#jm_pop_tab #qw-notifications-bottom-right-tab{
+#icebear_plugin #qw-notifications-bottom-right-tab{
 	background-color: #ffd733;
 	float: left;
 	height: 110px;
@@ -30,7 +30,7 @@
 	font-size: 14px;
 	line-height: 26px;
 }
-#jm_pop_tab #qw-notifications-bottom-right-tab-close{
+#icebear_plugin #qw-notifications-bottom-right-tab-close{
 	height: 20px;
 	width: 20px;
 	position: absolute;
@@ -46,24 +46,24 @@
 	-o-transition: all 0.5s;
 	transition: all 0.5s;
 }
-#jm_pop_tab #qw-notifications-bottom-right-tab-close:hover {
+#icebear_plugin #qw-notifications-bottom-right-tab-close:hover {
 	color: rgba(102,102,102,1);
 	cursor: pointer;
 }
 
-#jm_pop_tab #qw-notifications-bottom-right-tab-right{
+#icebear_plugin #qw-notifications-bottom-right-tab-right{
 	float: left;
 	width: 160px;
 	height: 80px;
 	margin-left: 20px;
 	margin-top: 29px;
 }
-#jm_pop_tab #qw-notifications-bottom-right-tab-right-title{
+#icebear_plugin #qw-notifications-bottom-right-tab-right-title{
 	float: left;
 	width: 100%;
 	color: #252525;
 	font-weight: 600;
 }
-#jm_pop_tab #qw-notifications-bottom-right-tab-right-title span{
+#icebear_plugin #qw-notifications-bottom-right-tab-right-title span{
 	color: #e91e63;
 }
