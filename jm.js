@@ -535,22 +535,19 @@ function(a,b,c,d) {
     requires: ["menubutton", "mu", "overlay", "switchable"]
 }),
 
-//normal
+
 KISSY.add("normalFunction", 
 function(a,b,c,d) {
     function e(){
         var g = {};
-        
+      
         var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-          jm_tools.getMessageFromBackground({
-                operate: "getLocalStorage",
-                data: {"key": 'jm_login'}
-            }, function(data) { 
-                console.log('jdFunction------' + data);
-            });
-       // if (isLogin.toString() == "true") {
-            var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
-         var host = jm_get_remote_js("matchHost");
+
+        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
+        var host = jm_get_remote_js("matchHost");
+
+        var hostarray = host.split(",");
+        var nums = [];
         var pathname = jm_get_remote_js("matchPathname");
         var pathnamearray = pathname.split(',');
         var hash = jm_get_remote_js("matchHash");
@@ -566,14 +563,17 @@ function(a,b,c,d) {
                 }
             }   
         }
+        for (var i = 0 ; i<hostarray.length ; i++) {
 
-        if(jm_get_remote_js("jobwebshowpos") && window.location.host == host ){
-            if (checkdomin == 1) {
-            var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+            nums.push(parseInt(hostarray[i]));
+        
+            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
+                if (checkdomin == 1) {
+                 var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
                 itemnode && itemnode.append(h);  
 
                 // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
-               // console.log(new Date().getTime() + '----' + isLogin + '----jd');
+                console.log(new Date().getTime() + '----' + isLogin + '----51job');
                  jm_tools.getMessageFromBackground({
                     operate: "getLocalStorage",
                     data: {"key": 'gotourl'}
@@ -623,9 +623,9 @@ function(a,b,c,d) {
                         KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
                     }
                 });
-             }
+            } 
         }
-        //} 
+        }
     }
     
     function u() {}
@@ -638,7 +638,7 @@ function(a,b,c,d) {
 },
 {
     requires: ["menubutton", "mu", "overlay", "switchable"]
-}),
+}), 
 
 KISSY.add("qqFunction", 
 function(a,b,c,d) {
