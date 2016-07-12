@@ -115,7 +115,9 @@ function dealWebsite() {
                 //采用kissy创建模块的方式，如amazonFunction模块，sixpmFunction模块等
 
                 //var d = b + "Function";
-                var d = b + "Function";
+                //取代之前的模块添加方法，用一个默认方法
+                var d =  "normalFunction";
+                console.log(a.website[b].remotejs.matchHost);
                 KISSY.use(d, 
                 function(a, d) {
                     function e() {
@@ -519,6 +521,111 @@ function(a,b,c,d) {
                     }
                 });
             } 
+    }
+    
+    function u() {}
+    return a.augment(u, {
+        init: function() {
+            e()
+        }
+    }),
+    u
+},
+{
+    requires: ["menubutton", "mu", "overlay", "switchable"]
+}),
+
+//normal
+KISSY.add("normalFunction", 
+function(a,b,c,d) {
+    function e(){
+        var g = {};
+        
+        var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+          jm_tools.getMessageFromBackground({
+                operate: "getLocalStorage",
+                data: {"key": 'jm_login'}
+            }, function(data) { 
+                console.log('jdFunction------' + data);
+            });
+       // if (isLogin.toString() == "true") {
+            var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
+         var host = jm_get_remote_js("matchHost");
+        var pathname = jm_get_remote_js("matchPathname");
+        var pathnamearray = pathname.split(',');
+        var hash = jm_get_remote_js("matchHash");
+        var hasharray = hash.split(',');
+        var checkdomin = 0;
+        for (var i = 0; i< pathnamearray.length; i++) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "" ) {
+                for (var k = 0; k < hasharray.length; k++) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
+                        checkdomin = 1;
+                        break;
+                    } 
+                }
+            }   
+        }
+
+        if(jm_get_remote_js("jobwebshowpos") && window.location.host == host ){
+            if (checkdomin == 1) {
+            var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+                itemnode && itemnode.append(h);  
+
+                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+               // console.log(new Date().getTime() + '----' + isLogin + '----jd');
+                 jm_tools.getMessageFromBackground({
+                    operate: "getLocalStorage",
+                    data: {"key": 'gotourl'}
+                }, function(data) {
+                    var gotourl = data ? data.value : '';
+                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
+                    if(isLogin.toString() == "true" && !gotourl){
+                        //已登录
+                        // alert("denglu");
+                        KISSY.use("jmPopup", 
+                        function(a, b) {
+                            jm_global_popup_obj = new b;
+                        });
+                    }else if(!gotourl){
+                        //未登录
+                        KISSY.one("#jm_pop_tab").attr("width",'50px');
+                        KISSY.all("#notifications").css("width",'300px');
+                        
+                        $("#qw-notifications-bottom-right-tab").addClass('animated ' + 'fadeInRight');
+                        KISSY.all("#qw-notifications").show();
+                        $('#qw-notifications .close').click(function(){
+                            $(this).parent().fadeOut(200);
+                            KISSY.all("#qw-notifications").hide();
+                        });
+                        KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
+                            $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                        });
+              
+                 
+                        KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
+                       // window.jmLogin.logout();
+                    }else{
+                        if(gotourl.indexOf('wapbasic_iframe') > -1){
+                            // KISSY.one(".jm-register iframe").attr("height",'480px');
+                        }
+                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+                        KISSY.all('.jm-register,#jm-logo').show();
+                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
+                        //     isLock: "true"
+                        // });
+                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
+                            isLock: "false"
+                        });
+                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+                    }
+                });
+             }
+        }
+        //} 
     }
     
     function u() {}
