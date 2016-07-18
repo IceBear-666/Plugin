@@ -116,7 +116,12 @@ function dealWebsite() {
 
                 //var d = b + "Function";
                 //取代之前的模块添加方法，用一个默认方法
-                var d =  "normalFunction";
+                
+                if (a.website[b].remotejs.loadingjs == "1") {
+                    var d =  "loadingjsFunction";
+                }else{
+                    var d =  "normalFunction";
+                }
                 console.log(a.website[b].remotejs.matchHost);
                 KISSY.use(d, 
                 function(a, d) {
@@ -535,7 +540,6 @@ function(a,b,c,d) {
     requires: ["menubutton", "mu", "overlay", "switchable"]
 }),
 
-
 KISSY.add("normalFunction", 
 function(a,b,c,d) {
     function e(){
@@ -581,6 +585,115 @@ function(a,b,c,d) {
                     var gotourl = data ? data.value : '';
                     window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
                     if(isLogin.toString() == "true" && !gotourl){
+                        //已登录
+                        // alert("denglu");
+                        KISSY.use("jmPopup", 
+                        function(a, b) {
+                            jm_global_popup_obj = new b;
+                        });
+                    }else if(!gotourl){
+                        //未登录
+                        KISSY.one("#jm_pop_tab").attr("width",'50px');
+                        KISSY.all("#notifications").css("width",'300px');
+                        
+                        $("#qw-notifications-bottom-right-tab").addClass('animated ' + 'fadeInRight');
+                        KISSY.all("#qw-notifications").show();
+                        $('#qw-notifications .close').click(function(){
+                            $(this).parent().fadeOut(200);
+                            KISSY.all("#qw-notifications").hide();
+                        });
+                        KISSY.one("#qw_login #notLogin .message_list").on("click",function(e){
+                            $('#qw-notifications').show();
+                            $('#jm_notlogin_notice_right').show(); 
+                            $('#qw-notifications #qw-notifications-bottom-right-tab').show();
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                        });
+              
+                 
+                        KISSY.one('#jm_pop_tab').addClass('.jm_pop_tab_min');
+                       // window.jmLogin.logout();
+                    }else{
+                        if(gotourl.indexOf('wapbasic_iframe') > -1){
+                            // KISSY.one(".jm-register iframe").attr("height",'480px');
+                        }
+                        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+                        KISSY.all('.jm-register,#jm-logo').show();
+                        // window.jm_jminer.isLock = "true", jm_tools.setBackgroundLocalStore({
+                        //     isLock: "true"
+                        // });
+                        window.jm_jminer.isLock = "false", jm_tools.setBackgroundLocalStore({
+                            isLock: "false"
+                        });
+                        KISSY.one('#jm_pop_tab').removeClass('.jm_pop_tab_min');
+                    }
+                });
+            } 
+        }
+        }
+    }
+    
+    function u() {}
+    return a.augment(u, {
+        init: function() {
+            e()
+        }
+    }),
+    u
+},
+{
+    requires: ["menubutton", "mu", "overlay", "switchable"]
+}), 
+
+KISSY.add("loadingjsFunction", 
+function(a,b,c,d) {
+    function e(){
+        var g = {};
+      
+        var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+
+        var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
+        var host = jm_get_remote_js("matchHost");
+
+        var hostarray = host.split(",");
+        var nums = [];
+        var pathname = jm_get_remote_js("matchPathname");
+        var pathnamearray = pathname.split(',');
+        var hash = jm_get_remote_js("matchHash");
+        var hasharray = hash.split(',');
+        var checkdomin = 0;
+        for (var i = 0; i< pathnamearray.length; i++) {
+            if (window.location.pathname == pathnamearray[i] || pathnamearray == "" ) {
+                for (var k = 0; k < hasharray.length; k++) {
+                    if (window.location.hash == hasharray[k] || hasharray == "") {
+                        checkdomin = 1;
+                        break;
+                    } 
+                }
+            }   
+        }
+        for (var i = 0 ; i<hostarray.length ; i++) {
+
+            nums.push(parseInt(hostarray[i]));
+        
+            if(jm_get_remote_js("jobwebshowpos") && window.location.host == hostarray[i]){
+                if (checkdomin == 1) {
+                 var itemnode = eval(jm_get_remote_js("jobwebshowpos"));
+                itemnode && itemnode.append(h);  
+
+                // var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
+                console.log(new Date().getTime() + '----' + isLogin + '----51job');
+                 jm_tools.getMessageFromBackground({
+                    operate: "getLocalStorage",
+                    data: {"key": 'gotourl'}
+                }, function(data) {
+                    var gotourl = data ? data.value : '';
+                    window.jm_jminer.login ? window.jm_jminer.login.gotourl = gotourl : window.jm_jminer.login = new Object(),window.jm_jminer.login.gotourl = gotourl;
+                    if(isLogin.toString() == "true" && !gotourl){
+                       
+                        $('.errorNotice ').html('<i class="jm_errorclose"></i><p>由于网申页面的限制，白熊无法为你自动填写简历项。如果看到地址栏有个小盾牌，请点击它，并允许白熊网申助手插件加载脚本。</p><p><img style="height:150px" src="http://icebear.me/Public/static/client.jobsminer.cc/godimage/version2/loading-js.gif"></p>');
+                        KISSY.one(".errorNotice").css("display","block");
+                        $('.jm_errorclose').click(function(){$(this).parent().css('display','none')});
+                        
                         //已登录
                         // alert("denglu");
                         KISSY.use("jmPopup", 

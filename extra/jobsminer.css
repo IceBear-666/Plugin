@@ -1447,3 +1447,36 @@ content:"...";
   height: 1px;
   width: 1px;
 }
+#icebear_plugin .errorNotice {
+    position: fixed;
+    right: 50px;
+    bottom: 100px;
+    z-index: 99999;
+    width: 324px;
+    height: auto;
+    line-height: 32px;
+    margin-top: -65px;
+    font-size: 14px;
+    color: #ffd733;
+    text-align: left;
+    background: #482929;
+    -moz-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    -ms-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out; 
+}
+#icebear_plugin .errorNotice i.jm_errorclose{
+  position: absolute;
+  top:10px;
+  right:15px;
+  height: 25px;
+  width: 25px;
+  display: block;
+  cursor: pointer;
+  background: url(http://www.icebear.me/Public/static/client.jobsminer.cc/godimage/ot/ot-closey.png) no-repeat center;
+}
+#icebear_plugin .errorNotice p{
+    padding: 15px 40px;
+    font-size: 13px;
+    line-height: 22px;
+}
