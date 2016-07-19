@@ -117,7 +117,7 @@ function dealWebsite() {
                 //var d = b + "Function";
                 //取代之前的模块添加方法，用一个默认方法
                 
-                if (a.website[b].remotejs.loadingjs == "1") {
+                if (a.website[b].remotejs.loadingjs === "1") {
                     var d =  "loadingjsFunction";
                 }else{
                     var d =  "normalFunction";
@@ -544,7 +544,8 @@ KISSY.add("normalFunction",
 function(a,b,c,d) {
     function e(){
         var g = {};
-      
+        
+
         var isLogin = window.jm_jminer.login ? window.jm_jminer.login.login : false; 
 
         var h = c.to_html(window.jm_jminer.template.jobWeb, g); 
