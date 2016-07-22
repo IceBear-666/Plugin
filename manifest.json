@@ -8,7 +8,7 @@
       "default_title": "Icebear白熊求职助手, 闪填简历, 轻松网申"
    },
    "content_scripts": [ {
-	  "js": [ "common/kissy-1.2.0-min.js", "common/kissy-component.js", "common/md5.js" , "common/jquery.js","common/jquery.Jcrop.min.js", "js/drag.js", "js/supportsite.js", "js/34taologin.js", "js/web-init.js", "jm.js"],
+	  "js": [ "common/kissy-1.2.0-min.js", "common/kissy-component.js", "common/md5.js" , "common/jquery.js","common/jquery.Jcrop.min.js", "js/drag.js", "js/supportsite.js", "js/34taologin.js", "js/web-init.js", "jm.js", "js/cookies.js"],
       "css":["extra/animated-notifications.css","extra/animate.css","extra/jobsminer.css"],
       "matches": [ "http://*/*", "https://*/*" ]
    } ],
@@ -24,6 +24,6 @@
    "name": "Icebear白熊求职助手",
    "permissions": [ "management", "proxy", "idle", "tabs", "cookies", "notifications", "webRequest", "webRequestBlocking", "http://*/*", "https://*/*",   "unlimitedStorage" ],
    "homepage_url":"http://www.icebear.me",
-   "version": "1.0.1.5",
+   "version": "1.0.1.6",
    "web_accessible_resources": [ "/extra/jobsminer.css", "/extra/popup.css", "popup.html" ]
 }

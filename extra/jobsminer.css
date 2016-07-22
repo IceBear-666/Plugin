@@ -1,6 +1,7 @@
 /* My minified css file */
+#icebear_plugin{font-family: "Microsoft YaHei"!important;}
 #jm_pop_tab *,#jm_pop_tab *:after, #jm_pop_tab *:before{box-sizing: content-box}
-
+#icebear_plugin #jm_pop_tab ul li#notLogin a:hover{background: none !important;}
 .jm_hidden{display:none!important}
 .jm-clearfix{*zoom:1}
 .jm-clearfix:after,
@@ -9,7 +10,7 @@
 .jm_link{text-decoration:underline;color:#999}
 /*.icon{background:transparent url(http://js.client.walatao.com/godimage/wl_tl_500_200.png) 0 0 no-repeat;display:inline-block}ul{list-style:none;padding:0;margin:0}ul li{padding:0}#jm_popup{height:300px}#jm_pop_tab .hidden{display:none}#jm_pop_tab .jm_more{text-align:right;color:#666;margin-top:-17px}#jm_pop_tab #jm_cuxiao .jm_more{margin-right:5px}#jm_pop_tab .jm_more a{vertical-align:top;line-height:16px;text-decoration:none;color:#18b4f0}#jm_pop_tab .jm_more a i{display:inline-block;width:16px;height:16px;margin-left:2px;background:url(http://client.walatao.com/godimage/wl_tl_840_480.png) no-repeat -386px -72px}#jm_pop_tab .jm_more a:hover{color:#ff8400}#jm_pop_tab .jm_more a:hover i{background-position:-356px -97px}
 */
-#jm_pop_tab{  font-family: "Microsoft YaHei"!important; }
+
 select {
   font-family: "Microsoft YaHei"!important;
 
@@ -708,6 +709,8 @@ content:"...";
   font-size: 12px;
   text-align: center;
 }
+
+
 .plugin_login ul li .span {
   padding-top: 45px;
 }
@@ -872,6 +875,14 @@ content:"...";
     border-bottom: 6px solid transparent;   
     border-left: 6px solid #482929;;
    
+}
+.plugin_quickwrite ul.bottom-btn li a.qw-jstips-img{
+  background: url(http://www.icebear.me/Public/static/client.jobsminer.cc/godimage/ot/plugin-light.png) no-repeat center;
+  background-position: 7px 8px;
+}
+.plugin_quickwrite ul.bottom-btn li a.qw-jstips-newimg{
+  background: url(http://www.icebear.me/Public/static/client.jobsminer.cc/godimage/ot/plugin-light-new.png) no-repeat center;
+  background-position: 7px 0;
 }
 .plugin_quickwrite ul.bottom-btn li a.qw-feedback {
   background: url(http://www.icebear.me/Public/static/client.jobsminer.cc/godimage/ot/plugin-fb.png) no-repeat center;

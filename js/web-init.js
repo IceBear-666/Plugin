@@ -232,6 +232,12 @@ function(a, b, c, d, e, f) {
         KISSY.all('.plugin_quickwrite').fadeIn();
         KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
 
+        KISSY.one('.qw-jstips').fadeIn();
+        KISSY.one(".errorNotice").html() !=null && KISSY.one("#jm_pop_tab .qw-jstips").on("click", 
+        function() {
+            KISSY.one(".errorNotice").css('display','block');
+            //$('.qw-jstips').removeClass('qw-jstips-newimg').addClass('qw-jstips-img');
+        });
         //right-bar 分享
          $(".plugin_quickwrite ul.bottom-btn li a.qw-share").hover(function(){
                 KISSY.one('.plugin_quickwrite ul.bottom-btn li .sharetowx').css('display','block');
@@ -438,6 +444,7 @@ function(a, b, c, d, e, f) {
                 KISSY.use('jmPopCertificate', function (a, b) {new b});
                 KISSY.use('jmPopTraining', function (a, b) {new b});
                 KISSY.use('jmPopOtherInfo', function (a, b) {new b});
+                KISSY.use('jmPopGetScript', function (a, b) {new b});
                // KISSY.use('jmPopOpenQuestion', function (a, b) {new b});
                 
             }
@@ -476,6 +483,10 @@ function(a, b, c, d, e, f) {
             }
             
             if(b == 12){
+                KISSY.use('jmPopGetScript', function (a, b) {new b});
+            }
+            
+            if(b == 13){
                 KISSY.one("#jm_pop_tab").removeClass("show_tools_Change");
                 //localStorage.jmToolsNotify = "false";
             }
@@ -713,7 +724,7 @@ KISSY.add('jmPopBase', function(S, Node, Base, IO) {
             data.content.birth_day,KISSY.all('.mt_birday').val(shuffle(data.content.birth_day).split('-')[2] || '');
             if(data.content.birth_day || (data.content.birth_day == '',data.content.birth_day='--')){
                 var html = '';
-                html += '<select name="mt_endYear" id="mt_endYear" class="ed_name valid mt_endYear mt_biryear" tip="tip3" validate="required"><option value="">请选择</option>';
+                html += '<select name="mt_endYear" id="mt_endYear" class="ed_name valid mt_endYear mt_biryear" tip="tip3" ><option value="">请选择</option>';
                 for (var j = 2000; j >=  1980; j--) {
                     html += '<option value="'+j+'" ' + (parseInt(shuffle(data.content.birth_day).split('-')[0]) == j ? "selected=\"selected\"" : "") + '>&nbsp;'+j+'</option>';
                 };
@@ -721,7 +732,7 @@ KISSY.add('jmPopBase', function(S, Node, Base, IO) {
                 KISSY.all('.mt_biryear_div').html(html);
                 
                 var html = '';
-                html += '<select name="mt_birmonth" id="mt_birmonth" class="ed_name valid mt_birmonth " tip="tip3" validate="required"><option value="">请选择</option>';
+                html += '<select name="mt_birmonth" id="mt_birmonth" class="ed_name valid mt_birmonth " tip="tip3" ><option value="">请选择</option>';
                 for (var j = 1; j < 13; j++) {
                     html += '<option value="'+j+'" ' + (parseInt(shuffle(data.content.birth_day).split('-')[1]) == j ? "selected=\"selected\"" : "") + '>&nbsp;'+j+'</option>';
                 };
@@ -731,7 +742,7 @@ KISSY.add('jmPopBase', function(S, Node, Base, IO) {
                     jm_tools.changeDays(this);
                 });
                 var html = '';
-                html += '<select name="mt_birday" id="mt_birday" class="ed_name valid mt_birday" tip="tip3" validate="required"><option value="">请选择</option>';
+                html += '<select name="mt_birday" id="mt_birday" class="ed_name valid mt_birday" tip="tip3" ><option value="">请选择</option>';
                 var days = jm_tools.getDays(parseInt(data.content.birth_day.split('-')[0]),parseInt(data.content.birth_day.split('-')[1])) || 31;
                 for (var j = 1; j <  days; j++) {
                     html += '<option value="'+j+'" ' + (parseInt(shuffle(data.content.birth_day).split('-')[2]) == j ? "selected=\"selected\"" : "") + '>&nbsp;'+j+'</option>';
@@ -1032,7 +1043,7 @@ KISSY.add('jmPopEdu', function(S, Node, Base, IO) {
                 ordering++;
                 //编辑edit
                 // html += '<div class="infopl infopl-edit" data-id="' + eList[i].id + '">  <table width="100%" border="0" cellspacing="0" cellpadding="0"> <tbody>  <tr> <td width="76" class="col999">学历</td><td><select id="mt_education" name="mt_education" class="ed_name mt_education"><option value="大专" ' + ((eList[i].education) == "大专" ? "selected=\"selected\"" : "") + '>大专</option><option value="本科" ' + ((eList[i].education) == "本科" ? "selected=\"selected\"" : "") + '>本科</option><option value="硕士" ' + ((eList[i].education) == "硕士" ? "selected=\"selected\"" : "") + '>硕士</option><option value="博士" ' + ((eList[i].education) == "博士" ? "selected=\"selected\"" : "") + '>博士</option><option value="其他" ' + ((eList[i].education) == "其他" ? "selected=\"selected\"" : "") + '>其他</option></select></td>  </tr> <tr style="display: none; "><td><span for="mr_name" generated="true" class="error">必填</span></td></tr> <tr> <td width="76" class="col999">毕业学校</td> <td><input type="text" id="schoolName" name="schoolName" class="ed_name valid schoolName" autocomplete="off" value="' + eList[i].schoolName + '" placeholder="请输入毕业学校"> </tr> <tr style="display: none; "><td><span for="mr_name" generated="true" class="error">必填</span></td></tr> <tr> <td width="76" class="col999">毕业年份</td> <td><div class="mt_eduyear_div">';
-                // html += '<select name="mt_endYear" id="mt_endYear" class="ed_name valid mt_endYear mt_eduyear" tip="tip3" validate="required"><option value="">请选择</option>';
+                // html += '<select name="mt_endYear" id="mt_endYear" class="ed_name valid mt_endYear mt_eduyear" tip="tip3" ><option value="">请选择</option>';
                 // for (var j = 2017; j >= 2000; j--) {
                 //     html += '<option value="'+j+'" ' + (parseInt(eList[i].endDate) == j ? "selected=\"selected\"" : "") + '>&nbsp;'+j+'</option>';
                 // };
@@ -1112,7 +1123,7 @@ KISSY.add('jmPopEdu', function(S, Node, Base, IO) {
         
         $("#edu-list .mt-edit-add").unbind("click").bind("click",function(e){
             var html = '<div class="infopl infopl-edit infopl-add" data-id="">  <table width="100%" border="0" cellspacing="0" cellpadding="0"> <tbody> <tr> <td width="76" class="col999">学历</td> <td><select id="mt_education" name="mt_education" class="ed_name mt_education"><option value="大专" >大专</option><option value="本科" >本科</option><option value="硕士" >硕士</option><option value="博士" >博士</option><option value="其他" >其他</option></select></td> </tr> <tr style="display: none; "><td><span for="mr_name" generated="true" class="error">必填</span></td></tr> <tr> <td width="76" class="col999">毕业学校</td> <td><input type="text" id="schoolName" name="schoolName" class="ed_name valid schoolName" autocomplete="off" value="" placeholder="请输入毕业学校"> </tr> <tr style="display: none; "><td><span for="mr_name" generated="true" class="error">必填</span></td></tr> <tr> <td width="76" class="col999">毕业年份</td> <td><div class="mt_eduyear_div">';
-            html += '<select name="mt_endYear" id="mt_endYear" class="ed_name valid mt_endYear mt_eduyear" tip="tip3" validate="required"><option value="">请选择</option>';
+            html += '<select name="mt_endYear" id="mt_endYear" class="ed_name valid mt_endYear mt_eduyear" tip="tip3" ><option value="">请选择</option>';
                  for (var j = 2017; j >= 2000; j--) {
                     html += '<option value="'+j+'" >&nbsp;'+j+'</option>';
                 };
@@ -1278,7 +1289,7 @@ KISSY.add('jmPopExp', function(S, Node, Base, IO) {
                 ordering++;
                 // html += '<div class="infopl infopl-edit" data-id="' + eList[i].id + '">  <table width="100%" border="0" cellspacing="0" cellpadding="0"> <tbody> <tr> <td width="76" class="col999">公司</td> <td><input type="text" id="mt_companyName" name="mt_companyName" class="ed_name mt_companyName" autocomplete="off" value="' + eList[i].companyName + '" placeholder="请输入公司"></td> </tr> <tr style="display: none; "><td><span for="mr_name" generated="true" class="error">必填</span></td></tr> <tr> <td width="76" class="col999">职位</td> <td><input type="text" id="mt_positionName" name="mt_positionName" class="ed_name valid mt_positionName" autocomplete="off" value="' + eList[i].positionName + '" placeholder="请输入职位"> </tr> <tr style="display: none; "><td><span for="mr_name" generated="true" class="error">必填</span></td></tr> <tr> <td width="76" class="col999">在职时间</td> <td>';
                 // var html1 = '<div class="mt_eduyear_div">';
-                // html1 += '<select name="mt_startDate" id="mt_startDate" class="ed_name valid mt_startDate mt_biryear mt_startDate_year" tip="tip3" validate="required"><option value="">请选择</option>';
+                // html1 += '<select name="mt_startDate" id="mt_startDate" class="ed_name valid mt_startDate mt_biryear mt_startDate_year" tip="tip3" ><option value="">请选择</option>';
                 // for (var j = new Date().getFullYear(); j >=  2000; j--) {
                 //     html1 += '<option value="'+j+'" ' + (parseInt(eList[i].startDate.split(".")[0]) == j ? "selected=\"selected\"" : "") + '>&nbsp;'+j+'</option>';
                 // };
@@ -1287,7 +1298,7 @@ KISSY.add('jmPopExp', function(S, Node, Base, IO) {
                 // html += html1;
 
                 // var html2 = '<div class="mt_edumonth_div">';
-                // html2 += '<select name="mt_startDate" id="mt_startDate" class="ed_name valid mt_startDate mt_startDate_month mt_edumonth" tip="tip3" validate="required"><option value="">请选择</option>';
+                // html2 += '<select name="mt_startDate" id="mt_startDate" class="ed_name valid mt_startDate mt_startDate_month mt_edumonth" tip="tip3" ><option value="">请选择</option>';
                 // for (var j = 1; j <  13; j++) {
                 //     html2 += '<option value="'+j+'" ' + ( eList[i].startDate.split(".")[1] ? parseInt(eList[i].startDate.split(".")[1]) == j ? "selected=\"selected\"" : "" : "" )  + '>&nbsp;'+j+'</option>';
                 // };
@@ -1297,7 +1308,7 @@ KISSY.add('jmPopExp', function(S, Node, Base, IO) {
 
 
                 // var html1 = '<div class="mt_eduyear_div">';
-                // html1 += '<select name="mt_endDate" id="mt_endDate" class="ed_name valid mt_endDate mt_eduyear mt_endDate_year" tip="tip3" validate="required"><option value="">请选择</option>';
+                // html1 += '<select name="mt_endDate" id="mt_endDate" class="ed_name valid mt_endDate mt_eduyear mt_endDate_year" tip="tip3" ><option value="">请选择</option>';
                 // for (var j = new Date().getFullYear(); j >=  2000; j--) {
                 //     html1 += '<option value="'+j+'" ' + (parseInt(eList[i].endDate.split(".")[0]) == j ? "selected=\"selected\"" : "") + '>&nbsp;'+j+'</option>';
                 // };
@@ -1306,7 +1317,7 @@ KISSY.add('jmPopExp', function(S, Node, Base, IO) {
                 // html += html1;
 
                 // var html2 = '<div class="mt_edumonth_div">';
-                // html2 += '<select name="mt_endDate" id="mt_endDate" class="ed_name valid mt_endDate mt_endDate_month mt_edumonth" tip="tip3" validate="required"><option value="">请选择</option>';
+                // html2 += '<select name="mt_endDate" id="mt_endDate" class="ed_name valid mt_endDate mt_endDate_month mt_edumonth" tip="tip3" ><option value="">请选择</option>';
                 // for (var j = 1; j <  13; j++) {
                 //     html2 += '<option value="'+j+'" ' + ( eList[i].endDate.split(".")[1] ? parseInt(eList[i].endDate.split(".")[1]) == j ? "selected=\"selected\"" : "" : "" ) + '>&nbsp;'+j+'</option>';
                 // };
@@ -1389,7 +1400,7 @@ KISSY.add('jmPopExp', function(S, Node, Base, IO) {
             var html = '<div class="infopl infopl-edit infopl-add" data-id="">  <table width="100%" border="0" cellspacing="0" cellpadding="0"> <tbody> <tr> <td width="76" class="col999">公司</td> <td><input type="text" id="mt_companyName" name="mt_companyName" class="ed_name mt_companyName" autocomplete="off" value="" placeholder="请输入公司"></td> </tr> <tr style="display: none; "><td><span for="mr_name" generated="true" class="error">必填</span></td></tr> <tr> <td width="76" class="col999">职位</td> <td><input type="text" id="mt_positionName" name="mt_positionName" class="ed_name valid mt_positionName" autocomplete="off" value="" placeholder="请输入职位"> </tr> <tr style="display: none; "><td><span for="mr_name" generated="true" class="error">必填</span></td></tr> <tr> <td width="76" class="col999">在职时间</td> <td>';
 
             var html1 = '<div class="mt_eduyear_div">';
-            html1 += '<select name="mt_startDate" id="mt_startDate" class="ed_name valid mt_startDate mt_eduyear mt_startDate_year" tip="tip3" validate="required"><option value="">请选择</option>';
+            html1 += '<select name="mt_startDate" id="mt_startDate" class="ed_name valid mt_startDate mt_eduyear mt_startDate_year" tip="tip3" ><option value="">请选择</option>';
             for (var j = new Date().getFullYear(); j >=  2000; j--) {
                 html1 += '<option value="'+j+'">&nbsp;'+j+'</option>';
             };
@@ -1398,7 +1409,7 @@ KISSY.add('jmPopExp', function(S, Node, Base, IO) {
             html += html1;
 
             var html2 = '<div class="mt_edumonth_div">';
-            html2 += '<select name="mt_startDate" id="mt_startDate" class="ed_name valid mt_startDate mt_startDate_month mt_edumonth" tip="tip3" validate="required"><option value="">请选择</option>';
+            html2 += '<select name="mt_startDate" id="mt_startDate" class="ed_name valid mt_startDate mt_startDate_month mt_edumonth" tip="tip3" ><option value="">请选择</option>';
             for (var j = 1; j <  13; j++) {
                 html2 += '<option value="'+j+'">&nbsp;'+j+'</option>';
             };
@@ -1408,7 +1419,7 @@ KISSY.add('jmPopExp', function(S, Node, Base, IO) {
             html += html2 +' </td> </tr> <tr style="display: none; "><td><span for="mr_name" generated="true" class="error">必填</span></td></tr>   <tr> <td width="76" class="col999">至</td> <td>';
 
             var html1 = '<div class="mt_eduyear_div">';
-            html1 += '<select name="mt_endDate" id="mt_endDate" class="ed_name valid mt_endDate mt_eduyear mt_endDate_year" tip="tip3" validate="required"><option value="">请选择</option>';
+            html1 += '<select name="mt_endDate" id="mt_endDate" class="ed_name valid mt_endDate mt_eduyear mt_endDate_year" tip="tip3" ><option value="">请选择</option>';
             for (var j = new Date().getFullYear(); j >=  2000; j--) {
                 html1 += '<option value="'+j+'">&nbsp;'+j+'</option>';
             };
@@ -1417,7 +1428,7 @@ KISSY.add('jmPopExp', function(S, Node, Base, IO) {
             html += html1;
 
             var html2 = '<div class="mt_edumonth_div">';
-            html2 += '<select name="mt_endDate" id="mt_endDate" class="ed_name valid mt_endDate mt_endDate_month mt_edumonth" tip="tip3" validate="required"><option value="">请选择</option>';
+            html2 += '<select name="mt_endDate" id="mt_endDate" class="ed_name valid mt_endDate mt_endDate_month mt_edumonth" tip="tip3" ><option value="">请选择</option>';
             for (var j = 1; j <  13; j++) {
                 html2 += '<option value="'+j+'">&nbsp;'+j+'</option>';
             };
@@ -1592,7 +1603,7 @@ KISSY.add('jmPopPro', function(S, Node, Base, IO) {
                 ordering++;
                 // html += '<div class="infopl infopl-edit" data-id="' + eList[i].id + '">  <table width="100%" border="0" cellspacing="0" cellpadding="0"> <tbody> <tr> <td width="76" class="col999">项目名称</td> <td><input type="text" id="mt_projectName" name="mt_projectName" class="ed_name mt_projectName" autocomplete="off" value="' + eList[i].projectName + '" placeholder="请输入项目名称"></td> </tr> <tr style="display: none; "><td><span for="mr_name" generated="true" class="error">必填</span></td></tr> <tr> <td width="76" class="col999">开始时间</td> <td>';
                 // var html1 = '<div class="mt_eduyear_div">';
-                // html1 += '<select name="mt_startDate" id="mt_startDate" class="ed_name valid mt_startDate mt_eduyear mt_startDate_year" tip="tip3" validate="required"><option value="">请选择</option>';
+                // html1 += '<select name="mt_startDate" id="mt_startDate" class="ed_name valid mt_startDate mt_eduyear mt_startDate_year" tip="tip3" ><option value="">请选择</option>';
                 // for (var j = new Date().getFullYear(); j >= 2000 ; j--) {
                 //     html1 += '<option value="'+j+'" ' + (parseInt(eList[i].startDate.split(".")[0]) == j ? "selected=\"selected\"" : "") + '>&nbsp;'+j+'</option>';
                 // };
@@ -1601,7 +1612,7 @@ KISSY.add('jmPopPro', function(S, Node, Base, IO) {
                 // html += html1;
 
                 // var html2 = '<div class="mt_edumonth_div">';
-                // html2 += '<select name="mt_startDate" id="mt_startDate" class="ed_name valid mt_startDate mt_startDate_month mt_edumonth" tip="tip3" validate="required"><option value="">请选择</option>';
+                // html2 += '<select name="mt_startDate" id="mt_startDate" class="ed_name valid mt_startDate mt_startDate_month mt_edumonth" tip="tip3" ><option value="">请选择</option>';
                 // for (var j = 1; j <  13; j++) {
                 //     html2 += '<option value="'+j+'" ' + ( eList[i].startDate.split(".")[1] ? parseInt(eList[i].startDate.split(".")[1]) == j ? "selected=\"selected\"" : "" : "" ) + '>&nbsp;'+j+'</option>';
                 // };
@@ -1610,7 +1621,7 @@ KISSY.add('jmPopPro', function(S, Node, Base, IO) {
                 // html += html2 + ' </td> </tr> <tr style="display: none; "><td><span for="mr_name" generated="true" class="error">必填</span></td></tr>   <tr> <td width="76" class="col999">结束时间</td> <td>';
 
                 // var html1 = '<div class="mt_eduyear_div">';
-                // html1 += '<select name="mt_endDate" id="mt_endDate" class="ed_name valid mt_endDate mt_eduyear mt_endDate_year" tip="tip3" validate="required"><option value="">请选择</option>';
+                // html1 += '<select name="mt_endDate" id="mt_endDate" class="ed_name valid mt_endDate mt_eduyear mt_endDate_year" tip="tip3" ><option value="">请选择</option>';
                 // for (var j = new Date().getFullYear(); j >=  2000; j--) {
                 //     html1 += '<option value="'+j+'" ' + (parseInt(eList[i].endDate.split(".")[0]) == j ? "selected=\"selected\"" : "") + '>&nbsp;'+j+'</option>';
                 // };
@@ -1619,7 +1630,7 @@ KISSY.add('jmPopPro', function(S, Node, Base, IO) {
                 // html += html1;
 
                 // var html2 = '<div class="mt_edumonth_div">';
-                // html2 += '<select name="mt_endDate" id="mt_endDate" class="ed_name valid mt_endDate mt_endDate_month mt_edumonth" tip="tip3" validate="required"><option value="">请选择</option>';
+                // html2 += '<select name="mt_endDate" id="mt_endDate" class="ed_name valid mt_endDate mt_endDate_month mt_edumonth" tip="tip3" ><option value="">请选择</option>';
                 // for (var j = 1; j <  13; j++) {
                 //     html2 += '<option value="'+j+'" ' + ( eList[i].endDate.split(".")[1] ? parseInt(eList[i].endDate.split(".")[1]) == j ? "selected=\"selected\"" : "" : "" ) + '>&nbsp;'+j+'</option>';
                 // };
@@ -1700,7 +1711,7 @@ KISSY.add('jmPopPro', function(S, Node, Base, IO) {
         $("#pro-list .mt-edit-add").unbind("click").bind("click",function(e){
             var html = '<div class="infopl infopl-edit infopl-add" data-id="">  <table width="100%" border="0" cellspacing="0" cellpadding="0"> <tbody> <tr> <td width="76" class="col999">项目名称</td> <td><input type="text" id="mt_projectName" name="mt_projectName" class="ed_name mt_projectName" autocomplete="off" value="" placeholder="请输入项目名称"></td> </tr> <tr style="display: none; "><td><span for="mr_name" generated="true" class="error">必填</span></td></tr> <tr> <td width="76" class="col999">开始时间</td> <td>';
             var html1 = '<div class="mt_eduyear_div">';
-            html1 += '<select name="mt_startDate" id="mt_startDate" class="ed_name valid mt_startDate mt_eduyear mt_startDate_year" tip="tip3" validate="required"><option value="">请选择</option>';
+            html1 += '<select name="mt_startDate" id="mt_startDate" class="ed_name valid mt_startDate mt_eduyear mt_startDate_year" tip="tip3" ><option value="">请选择</option>';
             for (var j = new Date().getFullYear(); j >=2000; j--) {
                 html1 += '<option value="'+j+'">&nbsp;'+j+'</option>';
             };
@@ -1709,7 +1720,7 @@ KISSY.add('jmPopPro', function(S, Node, Base, IO) {
             html += html1;
 
             var html2 = '<div class="mt_edumonth_div">';
-            html2 += '<select name="mt_startDate" id="mt_startDate" class="ed_name valid mt_startDate mt_startDate_month mt_edumonth" tip="tip3" validate="required"><option value="">请选择</option>';
+            html2 += '<select name="mt_startDate" id="mt_startDate" class="ed_name valid mt_startDate mt_startDate_month mt_edumonth" tip="tip3" ><option value="">请选择</option>';
             for (var j = 1; j <  13; j++) {
                 html2 += '<option value="'+j+'">&nbsp;'+j+'</option>';
             };
@@ -1719,7 +1730,7 @@ KISSY.add('jmPopPro', function(S, Node, Base, IO) {
             html += html2 +'</td> </tr> <tr style="display: none; "><td><span for="mr_name" generated="true" class="error">必填</span></td></tr>   <tr> <td width="76" class="col999">结束时间</td> <td>';
 
             var html1 = '<div class="mt_eduyear_div">';
-            html1 += '<select name="mt_endDate" id="mt_endDate" class="ed_name valid mt_endDate mt_eduyear mt_endDate_year" tip="tip3" validate="required"><option value="">请选择</option>';
+            html1 += '<select name="mt_endDate" id="mt_endDate" class="ed_name valid mt_endDate mt_eduyear mt_endDate_year" tip="tip3" ><option value="">请选择</option>';
             for (var j = new Date().getFullYear(); j >=2000; j--) {
                 html1 += '<option value="'+j+'">&nbsp;'+j+'</option>';
             };
@@ -1728,7 +1739,7 @@ KISSY.add('jmPopPro', function(S, Node, Base, IO) {
             html += html1;
 
             var html2 = '<div class="mt_edumonth_div">';
-            html2 += '<select name="mt_endDate" id="mt_endDate" class="ed_name valid mt_endDate mt_endDate_month mt_edumonth" tip="tip3" validate="required"><option value="">请选择</option>';
+            html2 += '<select name="mt_endDate" id="mt_endDate" class="ed_name valid mt_endDate mt_endDate_month mt_edumonth" tip="tip3" ><option value="">请选择</option>';
             for (var j = 1; j <  13; j++) {
                 html2 += '<option value="'+j+'" >&nbsp;'+j+'</option>';
             };
@@ -1899,7 +1910,7 @@ KISSY.add('jmPopSchPra', function(S, Node, Base, IO) {
  
                 ordering++;
                 // html += '<div class="infopl infopl-edit" data-id="' + eList[i].id + '">  <table width="100%" border="0" cellspacing="0" cellpadding="0"> <tbody>  <tr> <td width="76" class="col999">学历</td><td><select id="mt_education" name="mt_education" class="ed_name mt_education"><option value="大专" ' + ((eList[i].education) == "大专" ? "selected=\"selected\"" : "") + '>大专</option><option value="本科" ' + ((eList[i].education) == "本科" ? "selected=\"selected\"" : "") + '>本科</option><option value="硕士" ' + ((eList[i].education) == "硕士" ? "selected=\"selected\"" : "") + '>硕士</option><option value="博士" ' + ((eList[i].education) == "博士" ? "selected=\"selected\"" : "") + '>博士</option><option value="其他" ' + ((eList[i].education) == "其他" ? "selected=\"selected\"" : "") + '>其他</option></select></td>  </tr> <tr style="display: none; "><td><span for="mr_name" generated="true" class="error">必填</span></td></tr> <tr> <td width="76" class="col999">毕业学校</td> <td><input type="text" id="schoolName" name="schoolName" class="ed_name valid schoolName" autocomplete="off" value="' + eList[i].schoolName + '" placeholder="请输入毕业学校"> </tr> <tr style="display: none; "><td><span for="mr_name" generated="true" class="error">必填</span></td></tr> <tr> <td width="76" class="col999">毕业年份</td> <td><div class="mt_eduyear_div">';
-                // html += '<select name="mt_endYear" id="mt_endYear" class="ed_name valid mt_endYear mt_eduyear" tip="tip3" validate="required"><option value="">请选择</option>';
+                // html += '<select name="mt_endYear" id="mt_endYear" class="ed_name valid mt_endYear mt_eduyear" tip="tip3" ><option value="">请选择</option>';
                 // for (var j = 2017; j >= 2000; j--) {
                 //     html += '<option value="'+j+'" ' + (parseInt(eList[i].endDate) == j ? "selected=\"selected\"" : "") + '>&nbsp;'+j+'</option>';
                 // };
@@ -1985,7 +1996,7 @@ KISSY.add('jmPopSchClub', function(S, Node, Base, IO) {
                 html += '<div class="infoschoolclub"><div class="mt-title"><div class="metil mt10">社团经历' + (ordering+1) + '</div><div class="mt-edit"><i></i>编辑</div></div><div class="infopl"data-id="' + eList[i].id + '"><table width="100%"border="0"cellspacing="0"cellpadding="0"><tbody><tr><td width="76"class="col999">社团名称</td><td class="mt_base mt_schClubName">' + eList[i].schClubName + '</td></tr><tr><td width="76"class="col999">社团等级</td><td class="mt_base mt_schClubLevel">' + eList[i].schClubLevel + '</td></tr><tr><td width="76"class="col999">担任职务</td><td class="mt_base mt_positionName">' + eList[i].positionName + '</td></tr><tr><td width="76"class="col999">工作职责</td><td class="mt_base mt_workDes">' + eList[i].workDes + '</td></tr><tr><td width="76"class="col999">开始时间</td><td class="mt_base mt_startDate">' + eList[i].startDate + '</td></tr><tr><td width="76"class="col999">结束时间</td><td class="mt_base mt_endDate">' + eList[i].endDate + '</td></tr><tr><td width="76"class="col999">开始时间</td><td class="mt_base mt_startDateDot">' + mt_startDateDot + '</td></tr><tr><td width="76"class="col999">结束时间</td><td class="mt_base mt_endDateDot">' + mt_endDateDot + '</td></tr><tr><td width="76"class="col999">社团经历</td><td class="mt_base mt_schClubList">社团名称：' + eList[i].schClubName + '担任职务：'+ eList[i].positionName + '时间：'+ eList[i].startDate +'-'+ eList[i].startDate + '</td></tr></tbody></table></div>';
                 ordering++;
                 // html += '<div class="infopl infopl-edit" data-id="' + eList[i].id + '">  <table width="100%" border="0" cellspacing="0" cellpadding="0"> <tbody>  <tr> <td width="76" class="col999">学历</td><td><select id="mt_education" name="mt_education" class="ed_name mt_education"><option value="大专" ' + ((eList[i].education) == "大专" ? "selected=\"selected\"" : "") + '>大专</option><option value="本科" ' + ((eList[i].education) == "本科" ? "selected=\"selected\"" : "") + '>本科</option><option value="硕士" ' + ((eList[i].education) == "硕士" ? "selected=\"selected\"" : "") + '>硕士</option><option value="博士" ' + ((eList[i].education) == "博士" ? "selected=\"selected\"" : "") + '>博士</option><option value="其他" ' + ((eList[i].education) == "其他" ? "selected=\"selected\"" : "") + '>其他</option></select></td>  </tr> <tr style="display: none; "><td><span for="mr_name" generated="true" class="error">必填</span></td></tr> <tr> <td width="76" class="col999">毕业学校</td> <td><input type="text" id="schoolName" name="schoolName" class="ed_name valid schoolName" autocomplete="off" value="' + eList[i].schoolName + '" placeholder="请输入毕业学校"> </tr> <tr style="display: none; "><td><span for="mr_name" generated="true" class="error">必填</span></td></tr> <tr> <td width="76" class="col999">毕业年份</td> <td><div class="mt_eduyear_div">';
-                // html += '<select name="mt_endYear" id="mt_endYear" class="ed_name valid mt_endYear mt_eduyear" tip="tip3" validate="required"><option value="">请选择</option>';
+                // html += '<select name="mt_endYear" id="mt_endYear" class="ed_name valid mt_endYear mt_eduyear" tip="tip3" ><option value="">请选择</option>';
                 // for (var j = 2017; j >= 2000; j--) {
                 //     html += '<option value="'+j+'" ' + (parseInt(eList[i].endDate) == j ? "selected=\"selected\"" : "") + '>&nbsp;'+j+'</option>';
                 // };
@@ -2070,7 +2081,7 @@ KISSY.add('jmPopSchAwards', function(S, Node, Base, IO) {
                 html += '<div class="infoschaward"><div class="mt-title"><div class="metil mt10">获奖经历' + (ordering+1) + '</div><div class="mt-edit"><i></i>编辑</div></div><div class="infopl"data-id="' + eList[i].id + '"><table width="100%"border="0"cellspacing="0"cellpadding="0"><tbody><tr><td width="76"class="col999">获奖名称</td><td class="mt_base mt_awardsName">' + eList[i].awardsName + '</td></tr><tr><td width="76"class="col999">获奖类型</td><td class="mt_base mt_awardsType">' + eList[i].awardsType + '</td></tr><tr><td width="76"class="col999">担任职务</td><td class="mt_base mt_awardsLevel">' + eList[i].awardsLevel + '</td></tr><tr><td width="76"class="col999">获奖时间</td><td class="mt_base mt_awardsDate">' + eList[i].awardsDate + '</td></tr><tr><td width="76"class="col999">获奖时间年月</td><td class="mt_base mt_awardsDatedot">' + awardsDate + '</td></tr><tr><td width="76"class="col999">获奖描述</td><td class="mt_base mt_awardsDes">' + eList[i].awardsDes + '</td></tr><tr><td width="76"class="col999">获奖经历</td></tr><tr><td class="mt_base"><pre rows="8"cols="40"class="mt_schawradList">'+'获奖名称：'+eList[i].awardsName +'获奖时间：'+eList[i].awardsDate+'获奖类型：'+eList[i].awardsType+'获奖描述：'+eList[i].awardsDes + '</pre></td></tr></tbody></table></div>';
                 ordering++;
                 // html += '<div class="infopl infopl-edit" data-id="' + eList[i].id + '">  <table width="100%" border="0" cellspacing="0" cellpadding="0"> <tbody>  <tr> <td width="76" class="col999">学历</td><td><select id="mt_education" name="mt_education" class="ed_name mt_education"><option value="大专" ' + ((eList[i].education) == "大专" ? "selected=\"selected\"" : "") + '>大专</option><option value="本科" ' + ((eList[i].education) == "本科" ? "selected=\"selected\"" : "") + '>本科</option><option value="硕士" ' + ((eList[i].education) == "硕士" ? "selected=\"selected\"" : "") + '>硕士</option><option value="博士" ' + ((eList[i].education) == "博士" ? "selected=\"selected\"" : "") + '>博士</option><option value="其他" ' + ((eList[i].education) == "其他" ? "selected=\"selected\"" : "") + '>其他</option></select></td>  </tr> <tr style="display: none; "><td><span for="mr_name" generated="true" class="error">必填</span></td></tr> <tr> <td width="76" class="col999">毕业学校</td> <td><input type="text" id="schoolName" name="schoolName" class="ed_name valid schoolName" autocomplete="off" value="' + eList[i].schoolName + '" placeholder="请输入毕业学校"> </tr> <tr style="display: none; "><td><span for="mr_name" generated="true" class="error">必填</span></td></tr> <tr> <td width="76" class="col999">毕业年份</td> <td><div class="mt_eduyear_div">';
-                // html += '<select name="mt_endYear" id="mt_endYear" class="ed_name valid mt_endYear mt_eduyear" tip="tip3" validate="required"><option value="">请选择</option>';
+                // html += '<select name="mt_endYear" id="mt_endYear" class="ed_name valid mt_endYear mt_eduyear" tip="tip3" ><option value="">请选择</option>';
                 // for (var j = 2017; j >= 2000; j--) {
                 //     html += '<option value="'+j+'" ' + (parseInt(eList[i].endDate) == j ? "selected=\"selected\"" : "") + '>&nbsp;'+j+'</option>';
                 // };
@@ -2257,7 +2268,7 @@ KISSY.add('jmPopCertificate', function(S, Node, Base, IO) {
                 html += '<div class="infoplcerti"><div class="mt-title"><div class="metil mt10">证书' + (ordering+1) + '</div><div class="mt-edit"><i></i>编辑</div></div><div class="infopl"data-id="' + eList[i].id + '"><table width="100%"border="0"cellspacing="0"cellpadding="0"><tbody><tr><td width="76"class="col999">证书名称</td><td class="mt_base mt_certificateName">' + eList[i].certificateName + '</td></tr><tr><td width="76"class="col999">获得时间</td><td class="mt_base mt_getDate">' + eList[i].getDate + '</td></tr><tr><td width="76"class="col999">获得时间-点</td><td class="mt_base mt_getDateDot">' + getDateDot + '</td></tr><tr><td width="76"class="col999">证书描述</td><td class="mt_base mt_certificateDes">' + eList[i].certificateDes + '</td></tr><tr><td width="76"class="col999">颁发机构</td><td class="mt_base mt_issuing">' + eList[i].issuing + '</td></tr></tbody></table></div>';
                 ordering++;
                 // html += '<div class="infopl infopl-edit" data-id="' + eList[i].id + '">  <table width="100%" border="0" cellspacing="0" cellpadding="0"> <tbody>  <tr> <td width="76" class="col999">学历</td><td><select id="mt_education" name="mt_education" class="ed_name mt_education"><option value="大专" ' + ((eList[i].education) == "大专" ? "selected=\"selected\"" : "") + '>大专</option><option value="本科" ' + ((eList[i].education) == "本科" ? "selected=\"selected\"" : "") + '>本科</option><option value="硕士" ' + ((eList[i].education) == "硕士" ? "selected=\"selected\"" : "") + '>硕士</option><option value="博士" ' + ((eList[i].education) == "博士" ? "selected=\"selected\"" : "") + '>博士</option><option value="其他" ' + ((eList[i].education) == "其他" ? "selected=\"selected\"" : "") + '>其他</option></select></td>  </tr> <tr style="display: none; "><td><span for="mr_name" generated="true" class="error">必填</span></td></tr> <tr> <td width="76" class="col999">毕业学校</td> <td><input type="text" id="schoolName" name="schoolName" class="ed_name valid schoolName" autocomplete="off" value="' + eList[i].schoolName + '" placeholder="请输入毕业学校"> </tr> <tr style="display: none; "><td><span for="mr_name" generated="true" class="error">必填</span></td></tr> <tr> <td width="76" class="col999">毕业年份</td> <td><div class="mt_eduyear_div">';
-                // html += '<select name="mt_endYear" id="mt_endYear" class="ed_name valid mt_endYear mt_eduyear" tip="tip3" validate="required"><option value="">请选择</option>';
+                // html += '<select name="mt_endYear" id="mt_endYear" class="ed_name valid mt_endYear mt_eduyear" tip="tip3" ><option value="">请选择</option>';
                 // for (var j = 2017; j >= 2000; j--) {
                 //     html += '<option value="'+j+'" ' + (parseInt(eList[i].endDate) == j ? "selected=\"selected\"" : "") + '>&nbsp;'+j+'</option>';
                 // };
@@ -2344,7 +2355,7 @@ KISSY.add('jmPopTraining', function(S, Node, Base, IO) {
                             
                 ordering++;
                 // html += '<div class="infopl infopl-edit" data-id="' + eList[i].id + '">  <table width="100%" border="0" cellspacing="0" cellpadding="0"> <tbody>  <tr> <td width="76" class="col999">学历</td><td><select id="mt_education" name="mt_education" class="ed_name mt_education"><option value="大专" ' + ((eList[i].education) == "大专" ? "selected=\"selected\"" : "") + '>大专</option><option value="本科" ' + ((eList[i].education) == "本科" ? "selected=\"selected\"" : "") + '>本科</option><option value="硕士" ' + ((eList[i].education) == "硕士" ? "selected=\"selected\"" : "") + '>硕士</option><option value="博士" ' + ((eList[i].education) == "博士" ? "selected=\"selected\"" : "") + '>博士</option><option value="其他" ' + ((eList[i].education) == "其他" ? "selected=\"selected\"" : "") + '>其他</option></select></td>  </tr> <tr style="display: none; "><td><span for="mr_name" generated="true" class="error">必填</span></td></tr> <tr> <td width="76" class="col999">毕业学校</td> <td><input type="text" id="schoolName" name="schoolName" class="ed_name valid schoolName" autocomplete="off" value="' + eList[i].schoolName + '" placeholder="请输入毕业学校"> </tr> <tr style="display: none; "><td><span for="mr_name" generated="true" class="error">必填</span></td></tr> <tr> <td width="76" class="col999">毕业年份</td> <td><div class="mt_eduyear_div">';
-                // html += '<select name="mt_endYear" id="mt_endYear" class="ed_name valid mt_endYear mt_eduyear" tip="tip3" validate="required"><option value="">请选择</option>';
+                // html += '<select name="mt_endYear" id="mt_endYear" class="ed_name valid mt_endYear mt_eduyear" tip="tip3" ><option value="">请选择</option>';
                 // for (var j = 2017; j >= 2000; j--) {
                 //     html += '<option value="'+j+'" ' + (parseInt(eList[i].endDate) == j ? "selected=\"selected\"" : "") + '>&nbsp;'+j+'</option>';
                 // };
@@ -2428,7 +2439,7 @@ KISSY.add('jmPopOtherInfo', function(S, Node, Base, IO) {
                 
                 ordering++;
                 // html += '<div class="infopl infopl-edit" data-id="' + eList[i].id + '">  <table width="100%" border="0" cellspacing="0" cellpadding="0"> <tbody>  <tr> <td width="76" class="col999">学历</td><td><select id="mt_education" name="mt_education" class="ed_name mt_education"><option value="大专" ' + ((eList[i].education) == "大专" ? "selected=\"selected\"" : "") + '>大专</option><option value="本科" ' + ((eList[i].education) == "本科" ? "selected=\"selected\"" : "") + '>本科</option><option value="硕士" ' + ((eList[i].education) == "硕士" ? "selected=\"selected\"" : "") + '>硕士</option><option value="博士" ' + ((eList[i].education) == "博士" ? "selected=\"selected\"" : "") + '>博士</option><option value="其他" ' + ((eList[i].education) == "其他" ? "selected=\"selected\"" : "") + '>其他</option></select></td>  </tr> <tr style="display: none; "><td><span for="mr_name" generated="true" class="error">必填</span></td></tr> <tr> <td width="76" class="col999">毕业学校</td> <td><input type="text" id="schoolName" name="schoolName" class="ed_name valid schoolName" autocomplete="off" value="' + eList[i].schoolName + '" placeholder="请输入毕业学校"> </tr> <tr style="display: none; "><td><span for="mr_name" generated="true" class="error">必填</span></td></tr> <tr> <td width="76" class="col999">毕业年份</td> <td><div class="mt_eduyear_div">';
-                // html += '<select name="mt_endYear" id="mt_endYear" class="ed_name valid mt_endYear mt_eduyear" tip="tip3" validate="required"><option value="">请选择</option>';
+                // html += '<select name="mt_endYear" id="mt_endYear" class="ed_name valid mt_endYear mt_eduyear" tip="tip3" ><option value="">请选择</option>';
                 // for (var j = 2017; j >= 2000; j--) {
                 //     html += '<option value="'+j+'" ' + (parseInt(eList[i].endDate) == j ? "selected=\"selected\"" : "") + '>&nbsp;'+j+'</option>';
                 // };
@@ -2467,6 +2478,85 @@ KISSY.add('jmPopOtherInfo', function(S, Node, Base, IO) {
     requires: ["node", "base", "ajax"]
 });
 
+
+KISSY.add('jmPopGetScript', function(S, Node, Base, IO) {
+        
+    var init = function(_config) {
+        requestBaseData();
+    };
+
+    var requestBaseData = function() {
+        getCode({type: 'edu'});
+        //getHistoryPrice({type: 'amazon'});
+    };
+
+    var getCode = function(_config) {
+        var type = _config.type,
+            url = 'http://icebear.me/User/getWebScript';
+        //var matchHost = window.location.host.split('.')[1];
+        var matchHost = window.location.host.split('.');
+        switch(matchHost.length){
+            case 2: 
+                matchHost = matchHost[0];
+                break;
+            case 3: 
+                matchHost = matchHost[1];
+                break;
+        }
+   
+        new IO({
+            url: url,
+            data: { webHost: matchHost },    
+            type: 'get',
+            dataType: 'json',
+            success: function(data) {
+                console.log('request code getWebScript data is success!');
+                processCodeBaseData(data);
+            },
+            error: function() {
+                console.log('request code getWebScript data is error!');
+            }
+        });
+    };
+
+    var processCodeBaseData = function(data) {
+        console.log(data.content.getScript[0].plugin_status);
+        switch(data.content.getScript[0].plugin_status){
+            case "0": break;
+            case "1": 
+                $('.errorNotice').html('<i class="jm_errorclose"></i><p>由于网申页面的限制，白熊无法为你自动填写简历项。如果看到地址栏有个小盾牌，请点击它，并允许白熊网申助手插件加载脚本。</p><p><img style="width: 100%;" src="http://icebear.me/Public/static/client.jobsminer.cc/godimage/version2/loading-js.gif"></p>');
+                $('#jm_plugin_tips').css('display','block');
+                $('.jm_errorclose').click(function(){$(this).parent().css('display','none')});
+                if ($.cookie('pluginCustomTips')== null || localStorage.getItem('pluginCustomTips')== null) {
+                    $('.errorNotice').css("display","block");
+                    $.cookie("pluginCustomTips", "pluginCustomTips",{ expires: 10000 });
+                    localStorage.setItem("pluginCustomTips", 'pluginCustomTips');
+                  }else{
+
+                  }
+               
+                break;
+            case "2": 
+                $('#jm_plugin_tips').css('display','block');
+                $('.errorNotice').html('<i class="jm_errorclose"></i><p>'+data.content.getScript[0].tips+'</p>');
+                //$('.jm_errorclose').click(function(){$(this).parent().css('display','none'); $('.qw-jstips').removeClass('qw-jstips-img').addClass('qw-jstips-newimg') });
+                $('.jm_errorclose').click(function(){$(this).parent().css('display','none');  });
+                if (data.content.getScript[0].tips != null && $.cookie('pluginCustomTips')== null || localStorage.getItem('pluginCustomTips')== null) {
+                    $('.errorNotice').css("display","block");
+                    $.cookie("pluginCustomTips", "pluginCustomTips",{ expires: 10000 });
+                    localStorage.setItem("pluginCustomTips", 'pluginCustomTips');
+                  }
+                  //var changeTipsImg = $('.errorNotice').css('display');
+                  //changeTipsImg == "block" ? $('.qw-jstips').removeClass('qw-jstips-newimg').addClass('qw-jstips-img') : $('.qw-jstips').removeClass('qw-jstips-img').addClass('qw-jstips-newimg');
+
+                break;
+        }
+    };
+    return init;
+},
+{
+    requires: ["node", "base", "ajax"]
+});
 
 
 KISSY.add('jmPopCor', function(S, Node, Base, IO) {
@@ -2882,7 +2972,7 @@ KISSY.add('jmPopOpenQuestion', function(S, Node, Base, IO) {
     
 
     var processCodeBaseData = function(data) {
-        var resume_count = '网申简历 '+data.content.counter[1]+'/'+data.content.counter[0];
+        var resume_count = '我的简历 '+data.content.counter[1]+'/'+data.content.counter[0];
         var userstatu = data.content.userstatu;
       //  console.log("userstatu"+userstatu);
         if (userstatu == "0") {
@@ -3171,7 +3261,7 @@ KISSY.add('jmPopUserStatu', function(S, Node, Base, IO) {
                 
                 ordering++;
                 html += '<div class="infopl infopl-edit" data-id="' + eList[i].id + '">  <table width="100%" border="0" cellspacing="0" cellpadding="0"> <tbody>  <tr> <td width="76" class="col999">学历</td><td><select id="mt_education" name="mt_education" class="ed_name mt_education"><option value="大专" ' + ((eList[i].education) == "大专" ? "selected=\"selected\"" : "") + '>大专</option><option value="本科" ' + ((eList[i].education) == "本科" ? "selected=\"selected\"" : "") + '>本科</option><option value="硕士" ' + ((eList[i].education) == "硕士" ? "selected=\"selected\"" : "") + '>硕士</option><option value="博士" ' + ((eList[i].education) == "博士" ? "selected=\"selected\"" : "") + '>博士</option><option value="其他" ' + ((eList[i].education) == "其他" ? "selected=\"selected\"" : "") + '>其他</option></select></td>  </tr> <tr style="display: none; "><td><span for="mr_name" generated="true" class="error">必填</span></td></tr> <tr> <td width="76" class="col999">毕业学校</td> <td><input type="text" id="schoolName" name="schoolName" class="ed_name valid schoolName" autocomplete="off" value="' + eList[i].schoolName + '" placeholder="请输入毕业学校"> </tr> <tr style="display: none; "><td><span for="mr_name" generated="true" class="error">必填</span></td></tr> <tr> <td width="76" class="col999">毕业年份</td> <td><div class="mt_eduyear_div">';
-                html += '<select name="mt_endYear" id="mt_endYear" class="ed_name valid mt_endYear mt_eduyear" tip="tip3" validate="required"><option value="">请选择</option>';
+                html += '<select name="mt_endYear" id="mt_endYear" class="ed_name valid mt_endYear mt_eduyear" tip="tip3" ><option value="">请选择</option>';
                 for (var j = 2017; j >= 2000; j--) {
                     html += '<option value="'+j+'" ' + (parseInt(eList[i].endDate) == j ? "selected=\"selected\"" : "") + '>&nbsp;'+j+'</option>';
                 };
