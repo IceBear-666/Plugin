@@ -691,6 +691,8 @@ content:"...";
   background-color: #482929;
 }
 .plugin_login ul,.plugin_login ul li{
+  margin:0;
+  padding: 0;
   height: 86px;
   width: 38px;
   display: block;
@@ -832,6 +834,8 @@ content:"...";
 .plugin_quickwrite ul.qw-nav li ,
 .plugin_quickwrite ul.bottom-btn li{
   position: relative;
+    padding: 0;
+    margin: 0;
 }
 .plugin_quickwrite ul.qw-nav li a span,
 .plugin_quickwrite ul.bottom-btn li a span{
@@ -1491,3 +1495,4 @@ content:"...";
     font-size: 13px;
     line-height: 22px;
 }
+#jm_pop_tab #course{display: none}
