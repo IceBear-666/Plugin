@@ -1170,7 +1170,7 @@ content:"...";
   position: fixed;
   bottom: 0;
   left: 0;
-  z-index: 9999;
+  z-index: 99999999;
 }
 #jm_homebar .jm_homebar_contrainer{
   height: 50px;
@@ -1201,6 +1201,7 @@ content:"...";
     float: right;
     background-color: #f6ebd6;
     border-radius: 0 4px 4px 0;
+    cursor: pointer;
     position: relative;
 }
 #jm_homebar .jm_hbcontent{
@@ -1223,6 +1224,10 @@ content:"...";
   height: 47px;
   line-height: 47px;
   border-bottom: 3px solid #ffd733;
+  transition: width 1s;
+    -moz-transition: width 1s; /* Firefox 4 */
+    -webkit-transition: width 1s; /* Safari 和 Chrome */
+    -o-transition: width 1s; /* Opera */
 }
 #jm_homebar ul.jm_hbul li a{
   height: 47px;
@@ -1238,8 +1243,13 @@ content:"...";
 #jm_homebar ul.jm_hbul li:first-child{
   width: 125px;
 }
+#jm_homebar ul.jm_hbul li:first-child ul,
+#jm_homebar ul.jm_hbul li:first-child ul li{
+  width: 125px !important;
+}
 #jm_homebar ul.jm_hbul li> ul li{
-  width: 129px !important;
+    text-align: center;  
+    width: 100px !important;
 }
 #jm_homebar ul.jm_hbul li:first-child img{
   padding: 9px 12px;
@@ -1247,7 +1257,7 @@ content:"...";
 #jm_homebar ul.jm_hbul li span{
   font-size: 12px;
   color: #482929;
-  padding-left: 60px;
+  padding-left: 40px;
 }
 #jm_homebar ul.jm_hbul li:hover ul {
   display: block;
@@ -1260,7 +1270,7 @@ content:"...";
   position: absolute;
   left: 0;
   top: -98px;
-  width: 129px;
+  /*width: 129px;*/
   padding: 0;
   margin: 0;
   list-style: none;
@@ -1276,18 +1286,66 @@ content:"...";
   border-bottom:1px solid #e5e5e5;
 }
 #jm_homebar ul.jm_hbul li> ul li span{
-  padding-left: 50px;
+  padding-left: 0;
 }
   #jm_homebar ul.jm_hbul li> ul li.current{
     border: none;
   }
-  #jm_homebar ul.jm_hbul li> ul li.current:first-child{
-  border-bottom: 1px solid #e5e5e5;;
+#jm_homebar ul.jm_hbul li> ul li.current:first-child{
+  border-bottom: 1px solid #e5e5e5;
 }
-#jm_homebar .jm_pluginicon ,#jm_homebar .jm_baikeicon,#jm_homebar .jm_collecticon{
+#jm_homebar ul.jm_hbul li> ul li,
+#jm_homebar ul.jm_hbul li> ul li.current{
+border-bottom: 1px solid #e5e5e5 !important;
+}
+#jm_homebar ul.jm_hbul li> ul li:last-child,
+#jm_homebar ul.jm_hbul li> ul li.current:last-child{
+  border-bottom:none;
+}
+#jm_homebar ul.jm_hbul li:nth-child(3) > ul{
+  top:-145px;
+}
+#jm_homebar ul.jm_hbul li:nth-child(4) > ul,
+#jm_homebar ul.jm_hbul li:nth-child(4) > ul li{
+    width: 160px !important;
+ /* top:-145px;*/
+}
+#jm_homebar ul.jm_hbul li:nth-child(5) > ul{
+    top:-239px;
+}
+#jm_homebar ul.jm_hbul li:nth-child(5) > ul,
+#jm_homebar ul.jm_hbul li:nth-child(5) > ul li{
+    width: 160px !important;
+}
+#jm_homebar ul.jm_hbul li:nth-child(6)> ul{
+    left: -118px;
+    top: -315px;
+    background: none;
+    border: none;
+    box-shadow: none;
+}
+#jm_homebar ul.jm_hbul li:nth-child(6)> ul li img{
+    display: block;
+    margin: 0;
+    padding: 0;
+    width:100%;
+    /*box-shadow: 0 0 4px 0 rgba(74, 73, 74, 0.3);*/
+     
+}
+#jm_homebar ul.jm_hbul li:nth-child(6)> ul li .img-box{
+    width: 240px;
+    /*-webkit-box-shadow:0 0 3px  0 rgba(74, 73, 74, 0.3);  
+    -moz-box-shadow:0 0 3px 0 rgba(74, 73, 74, 0.3);  
+    box-shadow:0 0 3px 0 rgba(74, 73, 74, 0.3); */
+}
+
+
+#jm_homebar .jm_pluginicon ,#jm_homebar .jm_baikeicon,#jm_homebar .jm_collecticon,
+#jm_homebar .jm_xiaozhaoriliicon,#jm_homebar .jm_jinnangicon ,
+#jm_homebar .jm_kechengicon{
   position: absolute;
   top: 12px;
-  left: 20px;
+  left: 10px;
   width: 24px;
   height: 24px;
   display: inline-block;
@@ -1301,11 +1359,26 @@ content:"...";
   height: 16px;
   display: inline-block;
 }
+
+#jm_homebar .jm_xiaozhaoriliicon {
+ background: url(http://www.icebear.me/Public/static/client.jobsminer.cc/godimage/ot/rili@2.png) no-repeat center;
+ background-size: 24px 24px;
+}
+#jm_homebar .jm_jinnangicon {
+ background: url(http://www.icebear.me/Public/static/client.jobsminer.cc/godimage/ot/jinnang@2.png) no-repeat center;
+ background-size: 24px 24px;
+}
+#jm_homebar .jm_kechengicon {
+ background: url(http://www.icebear.me/Public/static/client.jobsminer.cc/godimage/ot/plugin-education@2.png) no-repeat center;
+ background-size: 24px 24px;
+}
 #jm_homebar .jm_pluginicon {
- background: url(http://www.icebear.me/Public/static/client.jobsminer.cc/godimage/ot/wangshen.png) no-repeat center;
+ background: url(http://www.icebear.me/Public/static/client.jobsminer.cc/godimage/ot/wangshen@2.png) no-repeat center;
+ background-size: 24px 24px;
 }
 #jm_homebar .jm_baikeicon {
- background: url(http://www.icebear.me/Public/static/client.jobsminer.cc/godimage/ot/baike.png) no-repeat center;
+ background: url(http://www.icebear.me/Public/static/client.jobsminer.cc/godimage/ot/baike@2.png) no-repeat center;
+ background-size: 24px 24px;
 }
 #jm_homebar .jm_collecticon {
  background: url(http://www.icebear.me/Public/static/client.jobsminer.cc/godimage/ot/collect.png) no-repeat center;
@@ -1350,7 +1423,7 @@ content:"...";
   width: 25px;
   display: inline-block;
   position: absolute;
-  top: 13px;
+  top: 35px;
   left: 20px;
   background: url(http://www.icebear.me/Public/static/client.jobsminer.cc/godimage/ot/plugin-icon.png) no-repeat center;
 }
