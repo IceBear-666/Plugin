@@ -81,7 +81,7 @@ function(a, b, c, d, e, f) {
         
         // });
 
-        KISSY.all('#jm_pop_tab').hide();
+        //KISSY.all('#jm_pop_tab').hide();
         //KISSY.all('#jm_hblogin').show();
         KISSY.all("#jm_homebar #jm_hblogin .jm_hbtrigger").on("click", 
         function(event) {
@@ -117,9 +117,9 @@ function(a, b, c, d, e, f) {
        
         //去掉登录框
         KISSY.all('#jm_homebar').removeClass('hb_hidden');
-        KISSY.all('.jm-register,#jm-logo').hide();
-        KISSY.all('.plugin_quickwrite').hide();
-        KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
+        // KISSY.all('.jm-register,#jm-logo').hide();
+        // KISSY.all('.plugin_quickwrite').hide();
+        // KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
 
 
         //避免出现背景問題

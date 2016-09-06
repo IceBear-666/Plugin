@@ -49,7 +49,7 @@ function dealWebsite() {
         if (a && a.website) {
             //console.log(a.website);
              //在进入icebear时 检测登录
-            
+       
            // console.log(host);
             if (host == "icebear.me") {
                 //KISSY.use('icebearFunction', function (a,b,c,d) {});
@@ -78,7 +78,7 @@ function dealWebsite() {
                     });
                 });
             }
-
+    
             var b = getMatchedWebSiteDomain();
             if ("null" == b) return;
             var c = a.website[b];
@@ -220,15 +220,16 @@ function isMatchedHomeWebSite() {
       return !1;
 }
 
-
 function getMatchedWebSiteDomain() {
     for (var a = window.location.host, b = 0; b < allowWebSite.length; b++)
-    	if ( - 1 != a.indexOf("." + allowWebSite[b])) return allowWebSite[b].replace(".com", "").replace(".de","").replace("6pm", "sixpm").replace("us-dc2-order.store.yahoo.net", "albeebaby").replace("order.store.yahoo.net", "albeebaby").replace(".co.jp","").replace(".com.cn", "").replace(".cn:8088","").replace(".cn", "").replace(".cc", "").replace(".me", "").replace(".net", "").replace(".com.hk","").replace(".hk","");
+        //加入域名为xx.com 时的判断 原先为xx.xx.com
+    	if ( - 1 != a.indexOf("." + allowWebSite[b]) || - 1 != a.indexOf( allowWebSite[b]) ) return allowWebSite[b].replace(".com", "").replace(".de","").replace("6pm", "sixpm").replace("us-dc2-order.store.yahoo.net", "albeebaby").replace("order.store.yahoo.net", "albeebaby").replace(".co.jp","").replace(".com.cn", "").replace(".cn:8088","").replace(".cn", "").replace(".cc", "").replace(".me", "").replace(".net", "").replace(".com.hk","").replace(".hk","");
     return "null"
 }
 function getMatchedHomeWebSiteDomain() {
     for (var a = window.location.host, b = 0; b < homeSupportWebSite.length; b++)
-        if ( - 1 != a.indexOf("." + homeSupportWebSite[b])) return homeSupportWebSite[b].replace(".com", "").replace(".de","").replace("6pm", "sixpm").replace("us-dc2-order.store.yahoo.net", "albeebaby").replace("order.store.yahoo.net", "albeebaby").replace(".co.jp","").replace(".com.cn", "").replace(".cn:8088","").replace(".cn", "").replace(".cc", "").replace(".me", "").replace(".net", "").replace(".com.hk","").replace(".hk","");
+        //加入域名为xx.com 时的判断
+        if ( - 1 != a.indexOf("." + homeSupportWebSite[b]) || - 1 != a.indexOf( homeSupportWebSite[b])) return homeSupportWebSite[b].replace(".com", "").replace(".de","").replace("6pm", "sixpm").replace("us-dc2-order.store.yahoo.net", "albeebaby").replace("order.store.yahoo.net", "albeebaby").replace(".co.jp","").replace(".com.cn", "").replace(".cn:8088","").replace(".cn", "").replace(".cc", "").replace(".me", "").replace(".net", "").replace(".com.hk","").replace(".hk","");
     return "null"
 }
 function startRun() {
@@ -486,7 +487,7 @@ function(a,b,c,d) {
                         KISSY.all('#jm_homebar').show();
                         KISSY.all('#jm_hbnotlogin').show();
                         KISSY.all('#jm_hblogin').hide();
-                        KISSY.all('#jm_pop_tab').hide();
+                       // KISSY.all('#jm_pop_tab').hide();
                         KISSY.all("#jm_homebar #jm_hbnotlogin .jm_hbtrigger").on("click", 
                             function(event) {
                                 $('#jm_homebar').animate({left:-100},200);
@@ -597,6 +598,7 @@ function(a,b,c,d) {
         var host = jm_get_remote_js("matchHost");
 
         var hostarray = host.split(",");
+
         var nums = [];
         var pathname = jm_get_remote_js("matchPathname");
         var pathnamearray = pathname.split(',');
@@ -613,6 +615,8 @@ function(a,b,c,d) {
                 }
             }   
         }
+        console.log(hostarray);
+        console.log(window.location.host);
         for (var i = 0 ; i<hostarray.length ; i++) {
 
             nums.push(parseInt(hostarray[i]));
