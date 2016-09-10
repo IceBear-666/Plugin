@@ -1303,7 +1303,7 @@ border-bottom: 1px solid #e5e5e5 !important;
   border-bottom:none;
 }
 #jm_homebar ul.jm_hbul li:nth-child(3) > ul{
-  top:-145px;
+  top:-195px;
 }
 #jm_homebar ul.jm_hbul li:nth-child(4) > ul,
 #jm_homebar ul.jm_hbul li:nth-child(4) > ul li{
@@ -1568,4 +1568,4 @@ border-bottom: 1px solid #e5e5e5 !important;
     font-size: 13px;
     line-height: 22px;
 }
-#jm_pop_tab #course{display: none}
+#jm_pop_tab #course{display: none !important;}

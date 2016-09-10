@@ -2213,26 +2213,29 @@ KISSY.add('jmPopSkill', function(S, Node, Base, IO) {
         if(data.content && data.content.engskill_list[0]){
             var eList = data.content.engskill_list;
             var ordering = 0;
+            
             // for(var i = eList.length-1; i >= 0 ; i--){ //倒叙
             for(var i = 0; i < eList.length ; i++){
-                html += '<div class="infoEnglishSkill"><div class="mt-title"><div class="metil mt10">英语能力' + (ordering+1) + '</div><div class="mt-edit"><i></i>编辑</div></div><div class="infopl"data-id="' + eList[i].id + '"><table width="100%"border="0"cellspacing="0"cellpadding="0"><tbody><tr><td width="76"class="col999">大学英语等级</td><td class="mt_base mt_skillEngLevel">' + eList[i].skillEngLevel + '</td></tr><tr><td width="76"class="col999">大学英语等级-成绩</td><td class="mt_base mt_skillEngSorce">' + eList[i].skillEngSorce + '</td></tr></tbody></table></div>';
+                
+                html += '<div class="infoEnglishSkill"><div class="mt-title"><div class="metil mt10">英语能力' + (ordering+1) + '</div><div class="mt-edit"><i></i>编辑</div></div><div class="infopl"data-id="' + eList[i].id + '"><table width="100%"border="0"cellspacing="0"cellpadding="0"><tbody><tr><td width="76"class="col999">大学英语等级</td><td class="mt_base mt_skillEngLevel">' + eList[i].skillEngLevel + '</td></tr><tr><td width="76"class="col999">大学英语等级-成绩</td><td class="mt_base mt_skillEngSorce">' + eList[i].skillEngSorce + '</td></tr></tbody></table></div></div>';
                 ordering++;
             }
-           
+          
             //html += '<div class="mt-edit-add">添加<i></i></div>';
         }else{
-            html += '<div class="infoEnglishSkill"><div class="mt-title"><div class="metil mt10">英语能力</div><div class="mt-edit"><i></i>编辑</div></div><div class="infopl"data-id=""><table width="100%"border="0"cellspacing="0"cellpadding="0"><tbody><tr><td width="76"class="col999">大学英语等级</td><td class="mt_base mt_skillEngLevel"></td></tr><tr><td width="76"class="col999">大学英语等级-成绩</td><td class="mt_base mt_skillEngSorce"></td></tr></tbody></table></div>';
+            html += '<div class="infoEnglishSkill"><div class="mt-title"><div class="metil mt10">英语能力</div><div class="mt-edit"><i></i>编辑</div></div><div class="infopl"data-id=""><table width="100%"border="0"cellspacing="0"cellpadding="0"><tbody><tr><td width="76"class="col999">大学英语等级</td><td class="mt_base mt_skillEngLevel"></td></tr><tr><td width="76"class="col999">大学英语等级-成绩</td><td class="mt_base mt_skillEngSorce"></td></tr></tbody></table></div></div>';
         }
 
         if(data.content && data.content.otherengskill_list[0]){
             var oeList = data.content.otherengskill_list;
             var ordering_other = 0;
             // for(var i = oeList.length-1; i >= 0 ; i--){ //倒叙
-            for(var i = 0; i < eList.length ; i++){
-                htmlot += '<div class="infoOtEnglishSkill"><div class="mt-title"><div class="metil mt10">其他英语能力' + (ordering_other+1) + '</div><div class="mt-edit"><i></i>编辑</div></div><div class="infopl"data-id="' + oeList[i].id + '"><table width="100%"border="0"cellspacing="0"cellpadding="0"><tbody><tr><td width="76"class="col999">其他英语考试</td><td class="mt_base mt_otherSkillEngLevel">' + oeList[i].otherSkillEngLevel + '</td></tr><tr><td width="76"class="col999">其他英语考试-成绩</td><td class="mt_base mt_otherSkillEngSorce">' + oeList[i].otherSkillEngSorce + '</td></tr></tbody></table></div>';
+            for(var i = 0; i < oeList.length ; i++){
+                htmlot += '<div class="infoOtEnglishSkill"><div class="mt-title"><div class="metil mt10">其他英语能力' + (ordering_other+1) + '</div><div class="mt-edit"><i></i>编辑</div></div><div class="infopl"data-id="' + oeList[i].id + '"><table width="100%"border="0"cellspacing="0"cellpadding="0"><tbody><tr><td width="76"class="col999">其他英语考试</td><td class="mt_base mt_otherSkillEngLevel">' + oeList[i].otherSkillEngLevel + '</td></tr><tr><td width="76"class="col999">其他英语考试-成绩</td><td class="mt_base mt_otherSkillEngSorce">' + oeList[i].otherSkillEngSorce + '</td></tr></tbody></table></div></div>';
+                ordering_other ++;
             }
         }else{
-            htmlot +='<div class="infoOtEnglishSkill"><div class="mt-title"><div class="metil mt10">其他英语能力</div><div class="mt-edit"><i></i>编辑</div></div><div class="infopl"data-id=""><table width="100%"border="0"cellspacing="0"cellpadding="0"><tbody><tr><td width="76"class="col999">其他英语考试</td><td class="mt_base mt_otherSkillEngLevel"></td></tr><tr><td width="76"class="col999">其他英语考试-成绩</td><td class="mt_base mt_otherSkillEngSorce"></td></tr></tbody></table></div>';
+            htmlot +='<div class="infoOtEnglishSkill"><div class="mt-title"><div class="metil mt10">其他英语能力</div><div class="mt-edit"><i></i>编辑</div></div><div class="infopl"data-id=""><table width="100%"border="0"cellspacing="0"cellpadding="0"><tbody><tr><td width="76"class="col999">其他英语考试</td><td class="mt_base mt_otherSkillEngLevel"></td></tr><tr><td width="76"class="col999">其他英语考试-成绩</td><td class="mt_base mt_otherSkillEngSorce"></td></tr></tbody></table></div></div>';
         }
         html += htmlot;
 
@@ -2240,12 +2243,12 @@ KISSY.add('jmPopSkill', function(S, Node, Base, IO) {
             var oList = data.content.otherskill_list;
             var ordering_otherl = 0;
             //for(var i = oList.length-1; i >= 0 ; i--){ //倒叙
-            for(var i = 0; i < eList.length ; i++){
-                htmlotsk += '<div class="infoOtherSkill"><div class="mt-title"><div class="metil mt10">其他语言能力' + (ordering_otherl+1) + '</div><div class="mt-edit"><i></i>编辑</div></div><div class="infopl"data-id="' + oList[i].id + '"><table width="100%"border="0"cellspacing="0"cellpadding="0"><tbody><tr><td width="76"class="col999">其他外语</td><td class="mt_base mt_skillOtherLang">' + oList[i].otherLang + '</td></tr><tr><td width="76"class="col999">掌握程度</td><td class="mt_base mt_skillGraspLevel">' + oList[i].graspLevel + '</td></tr><tr><td width="76"class="col999">听说能力</td><td class="mt_base mt_skillListenLevel">' + oList[i].listenLevel + '</td></tr><tr><td width="76"class="col999">读写能力</td><td class="mt_base mt_skillWriteLevel">' + oList[i].writeLevel + '</td></tr></tbody></table></div>';
-                ordering++;
+            for(var i = 0; i < oList.length ; i++){
+                htmlotsk += '<div class="infoOtherSkill"><div class="mt-title"><div class="metil mt10">其他语言能力' + (ordering_otherl+1) + '</div><div class="mt-edit"><i></i>编辑</div></div><div class="infopl"data-id="' + oList[i].id + '"><table width="100%"border="0"cellspacing="0"cellpadding="0"><tbody><tr><td width="76"class="col999">其他外语</td><td class="mt_base mt_skillOtherLang">' + oList[i].otherLang + '</td></tr><tr><td width="76"class="col999">掌握程度</td><td class="mt_base mt_skillGraspLevel">' + oList[i].graspLevel + '</td></tr><tr><td width="76"class="col999">听说能力</td><td class="mt_base mt_skillListenLevel">' + oList[i].listenLevel + '</td></tr><tr><td width="76"class="col999">读写能力</td><td class="mt_base mt_skillWriteLevel">' + oList[i].writeLevel + '</td></tr></tbody></table></div></div>';
+                ordering_otherl++;
             }
         }else{
-            htmlotsk +='<div class="infoOtherSkill"><div class="mt-title"><div class="metil mt10">其他语言能力</div><div class="mt-edit"><i></i>编辑</div></div><div class="infopl"data-id=""><table width="100%"border="0"cellspacing="0"cellpadding="0"><tbody><tr><td width="76"class="col999">其他外语</td><td class="mt_base mt_skillOtherLang"></td></tr><tr><td width="76"class="col999">掌握程度</td><td class="mt_base mt_skillGraspLevel"></td></tr><tr><td width="76"class="col999">听说能力</td><td class="mt_base mt_skillListenLevel"></td></tr><tr><td width="76"class="col999">读写能力</td><td class="mt_base mt_skillWriteLevel"></td></tr></tbody></table></div>';
+            htmlotsk +='<div class="infoOtherSkill"><div class="mt-title"><div class="metil mt10">其他语言能力</div><div class="mt-edit"><i></i>编辑</div></div><div class="infopl"data-id=""><table width="100%"border="0"cellspacing="0"cellpadding="0"><tbody><tr><td width="76"class="col999">其他外语</td><td class="mt_base mt_skillOtherLang"></td></tr><tr><td width="76"class="col999">掌握程度</td><td class="mt_base mt_skillGraspLevel"></td></tr><tr><td width="76"class="col999">听说能力</td><td class="mt_base mt_skillListenLevel"></td></tr><tr><td width="76"class="col999">读写能力</td><td class="mt_base mt_skillWriteLevel"></td></tr></tbody></table></div></div>';
         }    
         html += htmlotsk;
         $('#skill-list').html(html);

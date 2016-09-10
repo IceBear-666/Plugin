@@ -96,7 +96,7 @@ function _backgrountInit() {
     if(!localStorage["newVersionTips" + jm_VERSION]){
             setTimeout(function(){
                 jm_tools.setPopupBadgeText(1);
-                notification.create("notify_proxy_status", "Icebear白熊求职助手1.0.2.1 版本上线啦! ", "支持最新最热的企业网申, 为你带来前所未有的方便体验.求职路上, 有我陪伴. 详情请猛击…",
+                notification.create("notify_proxy_status", "Icebear白熊求职助手1.0.2.3 版本上线啦! ", "支持最新最热的企业网申, 为你带来前所未有的方便体验.求职路上, 有我陪伴. 详情请猛击…",
                 function() {
                 chrome.tabs.create({
                     url: "http://icebear.me/"
