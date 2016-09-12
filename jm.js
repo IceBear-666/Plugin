@@ -8,20 +8,20 @@
 var preferenialFlag = false;
 
 function jm_get_remote_js(remote_js_key){
-	var a = window.jm_jminer.config;
-	if (a && a.website) {
-		var b = getMatchedWebSiteDomain();	
-		var c = KISSY.replace_all(window.location.host, ".","_");
-		if(a.website[b]  && a.website[b]["remotejs"]){
-			var d = null;
+    var a = window.jm_jminer.config;
+    if (a && a.website) {
+        var b = getMatchedWebSiteDomain();  
+        var c = KISSY.replace_all(window.location.host, ".","_");
+        if(a.website[b]  && a.website[b]["remotejs"]){
+            var d = null;
             //console.log(a.website[b]["remotejs"]);
-			if( a.website[b]["remotejs"][c]){
-				d = a.website[b]["remotejs"][c][remote_js_key];
-			}
-			return  d ||  a.website[b]["remotejs"][remote_js_key];
-		}
-	}
-	return undefined;
+            if( a.website[b]["remotejs"][c]){
+                d = a.website[b]["remotejs"][c][remote_js_key];
+            }
+            return  d ||  a.website[b]["remotejs"][remote_js_key];
+        }
+    }
+    return undefined;
 }
 function jm_get_remote_js_home(remote_js_key){
     var a = window.jm_jminer.config;
@@ -166,7 +166,6 @@ function dealHomeWebsite() {
        
         function waitForCss(){
 
-
              var d = "homeWebFunction";
                 KISSY.use(d, 
                 function(a, d) {
@@ -224,7 +223,7 @@ function isMatchedHomeWebSite() {
 function getMatchedWebSiteDomain() {
     for (var a = window.location.host, b = 0; b < allowWebSite.length; b++)
         //加入域名为xx.com 时的判断 原先为xx.xx.com
-    	if ( - 1 != a.indexOf("." + allowWebSite[b])  ) return allowWebSite[b].replace(".com", "").replace(".de","").replace("6pm", "sixpm").replace("us-dc2-order.store.yahoo.net", "albeebaby").replace("order.store.yahoo.net", "albeebaby").replace(".co.jp","").replace(".com.cn", "").replace(".cn:8088","").replace(".cn", "").replace(".cc", "").replace(".me", "").replace(".net", "").replace(".com.hk","").replace(".hk","");
+        if ( - 1 != a.indexOf("." + allowWebSite[b])  ) return allowWebSite[b].replace(".com", "").replace(".de","").replace("6pm", "sixpm").replace("us-dc2-order.store.yahoo.net", "albeebaby").replace("order.store.yahoo.net", "albeebaby").replace(".co.jp","").replace(".com.cn", "").replace(".cn:8088","").replace(".cn", "").replace(".cc", "").replace(".me", "").replace(".net", "").replace(".com.hk","").replace(".hk","");
     return "null"
 }
 function getMatchedHomeWebSiteDomain() {
@@ -237,7 +236,7 @@ function startRun() {
 
     console.timeEnd("startrun");
     
-	//KISSY.Event.delegate(document, "DOMNodeInsertedIntoDocument", ".jm_tips", closeBind());
+    //KISSY.Event.delegate(document, "DOMNodeInsertedIntoDocument", ".jm_tips", closeBind());
     function generator_host_json_str(arr){
         console.time("generator_host_json_str");
          var e,  r,  t, n, i,u, a,l,p,h,c,f,d,g,m,x,v,y,b,D, N;
@@ -254,9 +253,9 @@ function startRun() {
           return h;
     }
 
-	function startRuncb(a) {
+    function startRuncb(a) {
        // console.log(window.jm_jminer);
-		console.log("startRun get config call back..");
+        console.log("startRun get config call back..");
         window.jm_jminer.isLoadRemoteRes = JSON.parse(a.isLoadRemoteRes),
       //  console.log(window.jm_jminer.isLoadRemoteRes );
         window.jm_jminer.config = JSON.parse(a.config),
@@ -267,12 +266,12 @@ function startRun() {
         window.jm_jminer.isNormalLock = a.isNormalLock,
         window.jm_jminer.isShowTips = a.isShowTips,
         window.jm_jminer.isShowPushNotify = a.isShowPushNotify,
-		window.jm_jminer.isShowDownBar = a.isShowDownBar,
+        window.jm_jminer.isShowDownBar = a.isShowDownBar,
         window.jm_jminer.transTimeStat = a.transTimeStat,
         window.jm_jminer.login = JSON.parse(a.login),
         window.jm_jminer.wltal_kuaigenzong = JSON.parse(a.wltal_kuaigenzong);
         window.jm_jminer.wltal_shipphone = JSON.parse(a.wltal_shipphone);
-		KISSY.jm_peerid = a.jm_peerid;
+        KISSY.jm_peerid = a.jm_peerid;
         //console.log(window.jm_jminer.login);
         if(window.jm_jminer.config && window.jm_jminer.config.supportWebSite){
             allowWebSite = window.jm_jminer.config.supportWebSite;
@@ -303,7 +302,7 @@ function startRun() {
             var aaa = KISSY.replace_all(window.location.host, ".","_");
             if(window.jm_jminer.config.bgremotejs && window.jm_jminer.config.bgremotejs[aaa]){
                 var tmpurl = window.jm_jminer.config.bgremotejs[aaa].plugpagejs;
-				//alert(tmpurl);
+                //alert(tmpurl);
                        
             } 
         }        
@@ -317,16 +316,16 @@ function startRun() {
             }else{
                 var urlHeader = 'https://';
             }
-			KISSY.io.get(urlHeader + "www.jobsminer.cc/Public/static/client.jobsminer.cc/chrome/plugin/web-init.js", function(a){
+            KISSY.io.get(urlHeader + "www.jobsminer.cc/Public/static/client.jobsminer.cc/chrome/plugin/web-init.js", function(a){
                 try{
                     eval(a);
                 }catch(err){
 
                 }
             })*/
-		}
+        }
         
-		console.log("config is:" + window.jm_jminer.config + "");
+        console.log("config is:" + window.jm_jminer.config + "");
     };
     ( jm_tools.getMessageFromBackground({
         operate: "getConfig",
@@ -356,26 +355,26 @@ function AliStatistics() {
 }
 
 function getHover ( ky, selector  ) {
-	if( ky.children(selector).length ){
-		return ky;
-	}else{
-		return getHover( ky.parent() );
-	}
+    if( ky.children(selector).length ){
+        return ky;
+    }else{
+        return getHover( ky.parent() );
+    }
 }
 
 function closeBind(){
-	var  c = (KISSY.Event, KISSY.all); 
+    var  c = (KISSY.Event, KISSY.all); 
     c("body").undelegate("click", ".jm_tips_title_close");
-	KISSY.all('.jm_tips_title_close').remove();
-	KISSY.all('.jm_tips_title').append("<a class='jm_tips_title_close'></a>");
-	KISSY.use("node",function(S,Node){ 
-	    var $=Node.all;       
-	   	$(".jm_tips_title").on("mouseenter mouseleave", function(event){
-	        $(this).children('.jm_tips_title_close').toggleClass("enter");
-	         e.halt();
-	    });
-	});
-	c("body").delegate("click", ".jm_tips_title_close", 
+    KISSY.all('.jm_tips_title_close').remove();
+    KISSY.all('.jm_tips_title').append("<a class='jm_tips_title_close'></a>");
+    KISSY.use("node",function(S,Node){ 
+        var $=Node.all;       
+        $(".jm_tips_title").on("mouseenter mouseleave", function(event){
+            $(this).children('.jm_tips_title_close').toggleClass("enter");
+             e.halt();
+        });
+    });
+    c("body").delegate("click", ".jm_tips_title_close", 
     function(c) {
        KISSY.one(c.target).parent().parent().fadeOut(0.3);
     })
@@ -388,7 +387,7 @@ RUNTIME_MODE = RUNTIME_MODE_PROD,
 chrome.extension.onMessage.addListener(function(a) {
 //    alert(1);
     "postRemoteDataCallback" == a.operate ? jm_tools.postRemoteDataCallback(a.data) : "translateCallback" == a.operate ? jm_tools.translateCallback(a.data) : "translateInputCallback" == a.operate ? (window.jm_jminer.translateInputData = a.data, KISSY.one("body").fire("jmTranslateInputCallback")) : "onTabActivated" == a.operate ? (jm_tools.getLoginStatus(), KISSY.one("body").fire("jmOnTabActivated")) : "getShipAddressCallback" == a.operate ? (jm_tools.getShipAddressCallback(a.data), window.jm_jminer.shipAddress = a.data, KISSY.one("body").fire("jmGetShipAddress")) : "getTranslateCallback" == a.operate ? (jm_tools.getTranslateCallback(a.data) ) : "needLogin" == a.operate ? jm_tools.popupLogin() : "neverRemindAddrNotify" == a.operate ? jm_tools.neverRemindAddrNotify() : "toolsSettingCallback" == a.operate ? jm_tools.toolsSettingCallback(a.data)  : "translateAllText" == a.operate && jm_tools.translateAllText(a.data)  
-	}),
+    }),
 
 KISSY.add("jmGuideDialog", 
 function(a, b, c) {
@@ -658,7 +657,7 @@ function(a,b,c,d) {
                             $('#qw-notifications').show();
                             $('#jm_notlogin_notice_right').show(); 
                             $('#qw-notifications #qw-notifications-bottom-right-tab').show();
-                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面<br/><p class="tip-notlogin" ><i>?</i><a href="http://icebear.me/install/install/#plugin-login-error?utm_source=faq&utm_medium=plugin&utm_campaign=plugin-cant-login" target="_blank">无法登录?</a></p></div>');
                         });
               
                  
@@ -769,7 +768,7 @@ function(a,b,c,d) {
                             $('#qw-notifications').show();
                             $('#jm_notlogin_notice_right').show(); 
                             $('#qw-notifications #qw-notifications-bottom-right-tab').show();
-                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面</div>');
+                            KISSY.one('#qw-notifications #qw-notifications-bottom-right-tab-right').html('<div style="padding-top:20px;font-size: 13px;">如已经登录请 <a style="text-decoration: underline;" href="#" onclick="window.location.reload()">刷新</a> 本页面<br/><p class="tip-notlogin" ><i>?</i><a href="http://icebear.me/install/install/#plugin-login-error?utm_source=faq&utm_medium=plugin&utm_campaign=plugin-cant-login" target="_blank">无法登录?</a></p></div>');
                         });
               
                  
@@ -822,7 +821,7 @@ window.jm_jminer = {
         priceDetail: '<div class="jm_tips jm_tips_permanent jm_tips_price jm_font jm_triangle jm_triangle_{{website}} jm_tips {{triangle}}" style="left:{{left}}px;top:{{top}}px;"><div class="close_btn">X</div><div class="jm_tips_title"><span class="jm_tips_left">到手价约<span class="jm_yellow">￥{{price}}</span></span><span class="jm_tips_right">明细<em></em></span></div>',
         sizeTips2: '<div id="{{id}}" class="jm_font jm_tips jm_triangle jm_triangle_{{website}} {{triangle}} {{foldStatus}}" style="left:{{left}}px; top:{{top}}px;"><div class="close_btn">X</div><div class="jm_tips_title"><a href="javascript:void(0);" class="jm_tips_center jm_size_convert"><i></i>{{text}}</a></div></div>',
         sizeTips: '<div id="{{id}}" class="jm_font jm_tips jm_triangle jm_triangle_{{website}} {{triangle}} {{foldStatus}}" style="left:{{left}}px; top:{{top}}px;"><div class="close_btn">X</div><div class="jm_tips_title jm_size_convert jm-stat" data-stat="web.size.size"><span class="jm_tips_left"><i></i>{{text}}</span><span class="jm_tips_right">l<em></em></span></div></div>',
-		fullNameTips: '<div id="{{id}}" class="jm_font jm_tips jm_triangle jm_triangle_{{website}} {{triangle}} {{foldStatus}}" style="left:{{left}}px; top:{{top}}px;"><div class="close_btn">X</div><div class="jm_tips_title jm-stat" data-stat="web.full.name"><span class="jm_tips_left">{{text}}</span><span class="jm_tips_right"><a style="font-size:10px;line-height:32px;color:#fff;TEXT-DECORATION:underline" href="{{url}}" target="_blank">{{urltext}}</a></span></div></div>',
+        fullNameTips: '<div id="{{id}}" class="jm_font jm_tips jm_triangle jm_triangle_{{website}} {{triangle}} {{foldStatus}}" style="left:{{left}}px; top:{{top}}px;"><div class="close_btn">X</div><div class="jm_tips_title jm-stat" data-stat="web.full.name"><span class="jm_tips_left">{{text}}</span><span class="jm_tips_right"><a style="font-size:10px;line-height:32px;color:#fff;TEXT-DECORATION:underline" href="{{url}}" target="_blank">{{urltext}}</a></span></div></div>',
         otherTips: '<div id="{{id}}" class="jm_font jm_tips jm_tips_option jm_triangle jm_triangle_{{website}} {{triangle}} {{class}}" style="{{posAlign}}:{{left}}px; top:{{top}}px;{{style}}"><div class="close_btn">X</div><div class="jm_tips_title"><span class="jm_tips_center"><i></i>{{text}}<span class="jm_font jm_yellow {{jm_sbTip}}">{{textHtml}}</span>{{aftertext}}</span></div></div>',
         shipAddrNotLoginTips: '<div id="{{id}}" class="jm_font jm_tips jm_tips_option jm_triangle jm_triangle_{{website}} {{triangle}}" style="{{posAlign}}:{{left}}px; top:{{top}}px;{{style}};"><div class="close_btn">X</div><div class="jm_tips_title jm-stat" data-stat="web.address.signin"><span class="jm_tips_center"><i></i>{{text}}<span class="jm_font jm_yellow">{{textHtml}}</span>{{aftertext}}</span></div></div>',
         shipAddrTips: '<div id="{{id}}" class="jm_font jm_triangle jm_triangle_{{website}} jm_tips {{triangle}}" style="{{posAlign}}:{{left}}px; top:{{top}}px;{{style}}"><div class="close_btn">X</div><div class="jm_tips_title"><span class="jm_tips_center"><i></i>{{text}}<div class="jm_sel_transComp"></div><div class="jm_sel_transChannel"></div></span></div></div>',
@@ -831,21 +830,21 @@ window.jm_jminer = {
     isLock: "true",
     isShowTips: "true",
     isShowPushNotify: "true",
-	isShowDownBar: "true",
+    isShowDownBar: "true",
     isLoadTips: "false",
     shipAddress: null,
     isTariff: 'false'
 },
 window.jm_tools = {
-	getTtransShipAddress:function(){
+    getTtransShipAddress:function(){
         jm_tools.getMessageFromBackground({operate: "getRemoteData",
                 data: {url:"http://js.client.walatao.com/global/tranship/get_trans_ship.php?fromhost=" +  KISSY.replace_all(window.location.host, ".","_")},
                 callback:"getShipAddressCallback"
             }, function(a){});
-		//KISSY.io.get("http://js.client.walatao.com/v12/svr/get_trans_ship.php", function(a){
-		//	jm_tools.getShipAddressCallback( (typeof a == "object" ? a : JSON.parse(a)).data);
-		//});
-	},	
+        //KISSY.io.get("http://js.client.walatao.com/v12/svr/get_trans_ship.php", function(a){
+        //  jm_tools.getShipAddressCallback( (typeof a == "object" ? a : JSON.parse(a)).data);
+        //});
+    },  
     setNewIcon: function() {},
     popupLogin: function() {
         window.open("http://svr.walatao.com/uc_home/login.html", "jm_login window", "height=364,width=344,top=0,left=0,toolbar=no,menubar=no,scrollbars=no, resizable=no,location=no, status=no,titlebar=no")
@@ -1016,16 +1015,16 @@ window.jm_tools = {
         }
     },
     getMessageFromBackground: function(a, b) {
-						
-	   !(typeof sogouExplorer == "object") && chrome.extension.sendMessage(a, 
+                        
+       !(typeof sogouExplorer == "object") && chrome.extension.sendMessage(a, 
         function(c) {
             return  void b(c);
         });
-		(typeof sogouExplorer == "object") && sogouExplorer.extension.sendRequest( a, 
+        (typeof sogouExplorer == "object") && sogouExplorer.extension.sendRequest( a, 
         function(c) {
             return void b(c);
         });
-		return true;
+        return true;
     },
     generateTemplateHtml: function(a, b, c) {
         b.website = getMatchedWebSiteDomain(),
@@ -1069,7 +1068,7 @@ window.jm_tools = {
             var b =  "object" == window.jm_jminer.template.shopInfo ? (window.jm_jminer.template.shopInfo[a] || {}) : (JSON.parse(window.jm_jminer.template.shopInfo)[a] || {}) ;
             b.isLock = "false" == window.jm_jminer.isLock ? !1: !0,
             b.isShowTips = "false" == window.jm_jminer.isShowTips ? !1: !0,
-			b.isShowDownBar = "false" == window.jm_jminer.isShowDownBar ? !1: !0,
+            b.isShowDownBar = "false" == window.jm_jminer.isShowDownBar ? !1: !0,
             b.isShowPushNotify = "false" == window.jm_jminer.isShowPushNotify ? !1: !0,
             console.log('config B is:' + b);
            /* jm_tools.generateTemplateHtml(window.jm_jminer.template.sidebar, b, 
@@ -1141,7 +1140,7 @@ window.jm_tools = {
         })
     },
     isVisible: function(a) {
-		//if( !a ) return false;
+        //if( !a ) return false;
         var b = a.offset();
         return "none" == a.css("display") || "hidden" == a.css("visibility") ? !1: b.left > 0 && b.top > 0 && a.width() > 0 && a.height() > 0 ? !0: !1
     },
@@ -1363,23 +1362,23 @@ window.jm_tools = {
                 }
             }
         }
-		
-		//自动绑定填写优惠码
-		(function(){
-			var tipspan = KISSY.one('#jm_others_tips_23 .jm_tips_center .jm_yellow');
-			if(tipspan){
-				jm_tools.getMessageFromBackground({
-					operate: "getLocalStorage",
-					data: {"key": 'promotionalCodes'}
-				},function(data){
-					if(data.value) {
-						tipspan.html('<p class="promotional_detail">' + data.value + '</p>');
-					} else {
-						tipspan.html('<i class="place_holder"></i>');
-					}
-				});
-			}
-		})();
+        
+        //自动绑定填写优惠码
+        (function(){
+            var tipspan = KISSY.one('#jm_others_tips_23 .jm_tips_center .jm_yellow');
+            if(tipspan){
+                jm_tools.getMessageFromBackground({
+                    operate: "getLocalStorage",
+                    data: {"key": 'promotionalCodes'}
+                },function(data){
+                    if(data.value) {
+                        tipspan.html('<p class="promotional_detail">' + data.value + '</p>');
+                    } else {
+                        tipspan.html('<i class="place_holder"></i>');
+                    }
+                });
+            }
+        })();
 
     },
     toolsSettingCallback: function(a) {
@@ -1388,7 +1387,7 @@ window.jm_tools = {
         window.jm_jminer.isLock = a.isLock,
         window.jm_jminer.isShowTips = a.isShowTips,
         window.jm_jminer.isShowPushNotify = a.isShowPushNotify,
-		window.jm_jminer.isShowDownBar = a.isShowDownBar;
+        window.jm_jminer.isShowDownBar = a.isShowDownBar;
     },
     uploadOrderCallback : function( a ){
         console.log(a);
