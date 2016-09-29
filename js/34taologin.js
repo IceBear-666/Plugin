@@ -51,7 +51,7 @@ window.jmLogin = {
         window.jmLogin.initLoginHtml();
         window.jmLogin.checkLogin();
         chrome.cookies.onChanged.addListener(function(a) {
-		    if( a.cookie.domain.indexOf(".icebear.me") > -1 )console.log(a.cookie.domain+' '+a.cookie.name); 
+            if( a.cookie.domain.indexOf(".icebear.me") > -1 )console.log(a.cookie.domain+' '+a.cookie.name); 
             if ( "ot_home_login" == a.cookie.name  && a.cookie.domain.indexOf(".icebear.me") > -1 ) {
                 chrome.cookies.get({url:"http://www.icebear.me",name:"ot_home_gotourl"},function(cookie){
                     var gotourl = cookie ? cookie.value : '';
@@ -182,15 +182,16 @@ window.jmLogin = {
         100))
     },
     checkLogin: function(a) {
+        console.log('checkLogin:'+a);
         var b = {
             login: "false",
             ot_home_uid:'',
             ot_home_login:''
         };
         //console.log("before:" + localStorage.jm_login),
-		console.log("bis:" +  JSON.stringify(b)),
+        console.log("bis:" +  JSON.stringify(b)),
         localStorage.jm_login ? b = JSON.parse(localStorage.jm_login) : localStorage.jm_login = JSON.stringify(b),
-		console.log("end:" + localStorage.jm_login),
+        console.log("end:" + localStorage.jm_login),
         chrome.cookies.getAll({
             domain: ".icebear.me"
         },
@@ -213,7 +214,7 @@ window.jmLogin = {
                 console.log(new Date().getTime() + '----0');
                 return 0;
             }
-			//
+            //
         })
     },
     checkIsLogin:function(){
@@ -224,12 +225,13 @@ window.jmLogin = {
         console.log('-----e:' + e + '------');
     },
     logout: function() {
+        console.log('logout');
         window.jm_tools.setBackgroundLocalStore && window.jm_tools.setBackgroundLocalStore({
             jm_login: ""
         });
         window.jmLogin.clearCookie();
         window.jmLogin.cookieObj = {};
-		window.localStorage.removeItem('jm_trackList_sync');
+        window.localStorage.removeItem('jm_trackList_sync');
         window.localStorage.removeItem("jm_login");
         KISSY.all('.jm-register,#jm-logo').show();
         KISSY.all('#jm-content').hide();
@@ -247,7 +249,7 @@ window.jmLogin = {
             window.jmLogin.webCheckLoginStatus();
             KISSY.all('.ks-switchable-nav,.ks-switchable-content,#jm-logo-login').hide();
         });
-		//location.reload();
+        //location.reload();
     },
     register: function (argument) {
         KISSY.use("LoginPopup", 
@@ -315,7 +317,7 @@ function(a, b, c, d) {
         checkIntervalID:null,
         show: function(a1) {
             var b = this;
-            var bPr = this,			
+            var bPr = this,         
             d = b.get("loginType"),
             e = b.get("redirect_url"),
             f = (b.get("needRefresh"), "&pre=" + escape(window.location.href));
@@ -323,12 +325,12 @@ function(a, b, c, d) {
             if(null == this.checkIntervalID && localStorage.jm_browsername && localStorage.jm_browsername == "sougou"){
                 this.checkIntervalID =  setInterval(function(){
 
-					if(KISSY.one('.jmlogin-overlay').css('visibility') != "visible"){
-						clearInterval(bPr.checkIntervalID);
-						bPr.checkIntervalID = null;
-						console.log("not set interval now!!");
-					}
-                	window.jmLogin.checkIsLogin();
+                    if(KISSY.one('.jmlogin-overlay').css('visibility') != "visible"){
+                        clearInterval(bPr.checkIntervalID);
+                        bPr.checkIntervalID = null;
+                        console.log("not set interval now!!");
+                    }
+                    window.jmLogin.checkIsLogin();
                 }, 500);
             }
 
@@ -406,10 +408,10 @@ function(a, b, c, d) {
                 l.get("el")[0].id = m,
                 i.on(".J_CloseLoginBtn", "click", 
                 function() {
-                	if(bPr.checkIntervalID != null){
-                		clearInterval(bPr.checkIntervalID);
-                		bPr.checkIntervalID = null;
-                	}
+                    if(bPr.checkIntervalID != null){
+                        clearInterval(bPr.checkIntervalID);
+                        bPr.checkIntervalID = null;
+                    }
                     l.hide(),
                     h.css(".jmlogin-overlay", {
                         top: "-9999px"

@@ -41,9 +41,9 @@ function jm_get_remote_js(url,  remote_js_key){
 function _delaybackgroundInit(){
     var z = JSON.parse(localStorage.jm_config || null);
 
-    KISSY.use("jmintervalquery", function(a, b){
-                    b(z.schedule_interval || 9e3);
-    });  
+    // KISSY.use("jmintervalquery", function(a, b){
+    //                 b(z.schedule_interval || 9e3);
+    // });  
     /*setTimeout(function(){
         KISSY.use("wlquerystockprice", function(a, b){
                 b.init(z.stockprice_interval || 9e3, z.stockprice_item_interval || 9e3);
@@ -96,7 +96,7 @@ function _backgrountInit() {
     if(!localStorage["newVersionTips" + jm_VERSION]){
             setTimeout(function(){
                 jm_tools.setPopupBadgeText(1);
-                notification.create("notify_proxy_status", "Icebear白熊求职助手1.0.2.4 版本上线啦! ", "支持最新最热的企业网申, 为你带来前所未有的方便体验.求职路上, 有我陪伴. 详情请猛击…",
+                notification.create("notify_proxy_status", "Icebear白熊求职助手1.0.2.5 版本上线啦! ", "支持最新最热的企业网申, 为你带来前所未有的方便体验.求职路上, 有我陪伴. 详情请猛击…",
                 function() {
                 chrome.tabs.create({
                     url: "http://icebear.me/"
@@ -124,7 +124,7 @@ isSougouExplorer() && sogouExplorer.extension.onRequest.addListener(function(a, 
 localStorage.isLoadRemoteRes = "true";
 var requestNewMessage = function() {
     return;
-    var url = 'http://api.walatao.com/tp/index/message/newc?uid=' + jm_tools.getUserId(),
+    var url = 'http://icebear.me/tp/index/message/newc?uid=' + jm_tools.getUserId(),
         config = JSON.parse(localStorage.jm_config),
         reuqest = function() {
             KISSY.io.get(url, function(data) {
@@ -169,7 +169,7 @@ jm_tools = {
 
     postRemoteData:  function(a, b, c, d, e) {
         chrome.cookies.getAll({
-           domain: ".icebear.me"
+           domain: "icebear.me"
         },
         function(f) {
             var h = [];
@@ -178,7 +178,7 @@ jm_tools = {
                 "ot_home_uid" == g.name && ( h["ot_home_uid"] = g.value);
             } 
             if( h["ot_home_uid"] != ''){
-                var f = "http://api.walatao.com/interface.php?action=uploadData";
+                var f = "http://icebear.me/interface.php?action=uploadData";
                 a.u = h['ot_home_uid'];
                 KISSY.io.post(f,{
                             0:JSON.stringify(a)
@@ -232,7 +232,9 @@ jm_tools = {
                 _delaybackgroundInit();
             }
         }
+        //isLoadRemoteRes ? KISSY.io.get("http://localhost/icebear/config.json?ver=" + new Date().getTime(), 
         isLoadRemoteRes ? KISSY.io.get("http://icebear.me/Public/static/client.jobsminer.cc/v15/chrome/extra/config.json?ver=" + new Date().getTime(), 
+        
         function(b, c) {
             a(b, c)
         }) : KISSY.io.get(chrome.extension.getURL("/extra/config.json"), 
@@ -240,11 +242,11 @@ jm_tools = {
             a(b, c)
         }),
 		
-		/*KISSY.io.get("http://js.client.walatao.com/v14/chrome/extra/kuaidigenzong.json", 
+		/*KISSY.io.get("http://icebear.me/v14/chrome/extra/kuaidigenzong.json", 
 			function(a,b){
 				b == "success" && ( (localStorage.wltal_kuaigenzong = JSON.stringify("object" == typeof a ? a : JSON.parse(a))),0)
 		}),
-        KISSY.io.get("http://js.client.walatao.com/v14/chrome/extra/shipphone.json", 
+        KISSY.io.get("http://icebear.me/v14/chrome/extra/shipphone.json", 
             function(a,b){
                 b == "success" && ( (localStorage.wltal_shipphone = JSON.stringify("object" == typeof a ? a : JSON.parse(a))),0)
         }),        */
@@ -329,7 +331,7 @@ jm_tools = {
         
         localStorage.jm_login ? b = JSON.parse(localStorage.jm_login) : localStorage.jm_login = JSON.stringify(b),
         chrome.cookies.getAll({
-           domain: ".icebear.me"
+           domain: "icebear.me"
         },
         function(c) {
            // console.log(c);
@@ -352,38 +354,25 @@ jm_tools = {
             console.log(b);
 
             chrome.cookies.get({
-                url:"http://.icebear.me",
+                url:"http://icebear.me",
                 name:"ot_home_login"
             },
             function(c){
                 if( !c && JSON.parse(localStorage.jm_login).ot_home_login ){
                     //保持登录态
                     chrome.cookies.set({
-                        url: "http://.icebear.me",
+                        url: "http://icebear.me",
                         name: 'ot_home_login',
                         value: b.ot_home_login
                     });
                     chrome.cookies.set({
-                        url: "http://.icebear.me",
+                        url: "http://icebear.me",
                         name: 'ot_home_uid',
                         value: b.ot_home_uid
                     });
                 }
             });
 
-            /*KISSY.io.get("http://we.walatao.com/account/ajax/login_check/", function(data){
-                console.log('login_check_suc:'+data);
-                var data = JSON.parse(data);
-                if( data.result == 0 ){
-                    b.login = "true";
-                    b.ot_home_uid = data.ot_home_uid;
-                    b.ot_home_login = data.ot_home_login;
-                    localStorage.jm_login = JSON.stringify(b);
-                    a && a();
-                }
-            });*/
-            
-            //)
         })
     },
     setLocalStorage: function(a) {
@@ -489,40 +478,6 @@ jm_tools = {
                 }
             }
         });
-
-
-        // var f = "http://fanyi.youdao.com/openapi.do?keyfrom=walatao&key=1118527875&type=data&only=diret&doctype=json&version=1.1&q=" + encodeURIComponent(a);
-        // KISSY.io.get(f, 
-        // function(a) {
-        //     var b = {
-        //         isError: 1,
-        //         top: 200,
-        //         left: 200,
-        //         title: "出错了",
-        //         desc: [{
-        //             text: "翻译失败，请稍后再试。"
-        //         }]
-        //     };
-        //     if (0 == a.errorCode) if (b.isError = 0, b.desc = [], "translateInputCallback" == e) {
-        //         if (b.title = a.translation[0], b.desc.push({
-        //             text: a.translation[0],
-        //             key: a.query
-        //         }), a.web) for (var d = a.web, f = 0; f < d.length && !(b.desc.length >= 9); f++) for (var g = d[f].value, h = d[f].key, i = 0; i < g.length; i++) g[i].toLowerCase() != a.translation[0].toLowerCase() && b.desc.push({
-        //             text: g[i],
-        //             key: h
-        //         })
-        //     } else {
-        //         b.title = a.query;
-        //         for (var g = a.translation, i = 0; i < g.length; i++) b.desc.push({
-        //             text: g[i]
-        //         })
-        //     }
-        //     chrome.tabs.sendMessage(c.tab.id, {
-        //         operate: e || "translateCallback",
-        //         data: b
-        //     },
-        //     function() {})
-        // })
     },
     getForeignShippingInfo: function() {
         return
@@ -549,20 +504,20 @@ notification = {
     init: function() {
         !isSougouExplorer() && chrome.notifications.onButtonClicked.addListener(function(a, b) {
             if ("notify_addrUpdate" == a) 0 == b ? chrome.tabs.create({
-                url: "http://wanke.walatao.com/detail/342227.html"
+                url: "http://icebear.me/detail/342227.html"
             }) : 1 == b && notification.sender && chrome.tabs.sendMessage(notification.sender.tab.id, {
                 operate: "neverRemindAddrNotify",
                 data: ""
             },
             function() {});
             else if (0 == b) {
-                var c = "http://www.walatao.com/blog?fromid=1";
+                var c = "http://icebear.me/blog?fromid=1";
                 localStorage[a] && (c = localStorage[a]),
                 chrome.tabs.create({
                     url: c
                 })
             } else if (1 == b) {
-                var c = "http://www.walatao.com/blog?fromid=2";
+                var c = "http://icebear.me/blog?fromid=2";
                 localStorage[a] && (c = localStorage[a]),
                 chrome.tabs.create({
                     url: c
@@ -593,7 +548,7 @@ notification = {
 				notification = null;
 			var havePermission = webkitNotify.checkPermission();
 
-			notification = webkitNotify.createNotification( f || "http://js.client.walatao.com/godimage/icon128.png", b || "欢迎使用瓦拉淘", c || "瓦拉淘让海淘更简单");
+			notification = webkitNotify.createNotification( f || "http://icebear.me/godimage/icon128.png", b || "欢迎使用icebear白熊网申助手", c || "白熊网申助手让网申更简单");
 
 			notification.onclick = function() { // 点击打开链接
 					d();
@@ -630,8 +585,8 @@ notification = {
         var g = {
             type: "basic",
             priority: 2,
-            title: b || "欢迎使用瓦拉淘",
-            message: c || "瓦拉淘让海淘更简单",
+            title: b || "欢迎使用icebear白熊网申助手",
+            message: c || "icebear白熊网申助手让网申更简单",
             buttons: e,
             iconUrl: f || "images/bgicon.png"
         };
@@ -652,14 +607,14 @@ notification = {
         notification.addToReminder()
     },
     noDirectReminder: function(a) {
-        notification.create("notify_noDirect", "下单成功后，您需要做：", (a || "") + "发货后，您可以在瓦拉淘“我的运单”中进行物流追踪。瓦拉淘也会随时提醒您进行包裹的后续处理。", 
+        notification.create("notify_noDirect", "提醒", (a || "") + "！", 
         function() {
             chrome.tabs.create({
                 url:  "popup.html?id=1"
             })
         },
         [{
-            title: "如何进行物流追踪？"
+            title: "提醒Tips"
         }])
     },
 	
@@ -679,7 +634,7 @@ notification = {
                 if(!b || b == "undefined")
                     return;
 
-				notification.create("notify_kd_status", "您的转运单状态更新啦", "订单[" + a + "]最新状态是:" + b, 	
+				notification.create("notify_kd_status", "提醒更新", "新的[" + a + "]提醒" + b, 	
 				function() {
 				chrome.tabs.create({
 					url: "popup.html?id=2"
@@ -689,33 +644,33 @@ notification = {
 			,20e3)
 	},
     directReminder: function(a) {
-        notification.create("notify_direct", "下单成功后，您需要做：", (a || "") + "发货后，您可以在订单详情里查看到物流信息。直邮网站的货物会直接送到中国国内，无需其他操作。", 
+        notification.create("notify_direct", "提醒1", (a || "") + "提醒2", 
         function() {
 			  chrome.tabs.create({
                 url: "popup.html"
             })
 			},
         [{
-            title: "如何进行物流追踪？"
+            title: "tips"
         }])
     },
     twoDaysReminder: function() {
-        notification.create("notify_operate", "亲，之前在海淘的商品发货了吗？", "商家发货后，您可以在瓦拉淘“我的运单”中进行物流追踪。瓦拉淘后续会提醒您对包裹的行程跟踪。", 
+        notification.create("notify_operate", "提醒1", "提醒2", 
         function() {
             chrome.tabs.create({
-                url: "http://js.client.walatao.com/v9/svr/amazon_orders.php"
+                url: "http://icebear.me/v9/svr/amazon_orders.php"
             })
         },
         [{
-            title: "如何进行物流追踪？"
+            title: "tips"
         }])
     },
     addrUpdateReminder: function() {
 		/*
-        localStorage.jm_notify_addrUpdate_showned || (notification.create("notify_addrUpdate", "瓦拉淘转运地址获取方式变更通知", "亲爱的瓦拉淘用户，为了提供更好的转运服务，我们新增了一家海淘客（12日必达），同时原来4家转运地址获取方式发生变化，点击查看详情。", 
+        localStorage.jm_notify_addrUpdate_showned || (notification.create("notify_addrUpdate", "提醒", "提醒", 
         function() {
             chrome.tabs.create({
-                url: "http://wanke.walatao.com/detail/342227.html"
+                url: "http://icebear.me/detail/342227.html"
             })
         }), localStorage.jm_notify_addrUpdate_showned = !0)
 		*/
@@ -767,7 +722,7 @@ notification = {
     },
     pushNotify: function() {
         if (1) {
-            var a = "https://js.client.walatao.com/v9/svr/feed/feed.php?num=" + (notification.num++) + "&show=" + localStorage.isShowPushNotify;
+            var a = "https://icebear.me/v9/svr/feed/feed.php?num=" + (notification.num++) + "&show=" + localStorage.isShowPushNotify;
             KISSY.io.get(a, 
             function(a, b) {
                 if ("success" == b) for (var c = "object" == typeof a ? a: JSON.parse(a), d = 0; d < c.length; d++) {
@@ -780,7 +735,7 @@ notification = {
                         localStorage["notify_jm_pushNotify" + e.feedId] = e.link,
                         notification.create("notify_jm_pushNotify" + e.feedId, e.title, e.context.substring(0, 50) + "...", 
                         function() {
-							KISSY.io.get("http://js.client.walatao.com/v9/svr/feed/feed_click.php?feedid=" +  e.feedId);
+							KISSY.io.get("http://icebear.mem/v9/svr/feed/feed_click.php?feedid=" +  e.feedId);
                             chrome.tabs.create({
                                 url: e.link
                             }),
@@ -843,3 +798,6 @@ function() {
         localStorage['version'] = currVersion;
     }
 } ();
+
+
+

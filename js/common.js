@@ -1,32 +1,19 @@
-var _tjUrl = "http://stat.walatao.com/walstat.js?bw=guge&v=1.0.0.3&t=1405672368214&plugin=false&cache=16f63b4&gmkey=jm_search&gokey=sfrom=jm&t=1369194202558&&cna=null&isbeta=7&logtype=2";
-var _walaPid = getCookie('wala_pid') || "";
+var _tjUrl = "http://icebear.me/";
+
 var _browerVersion = getBrowerVersion() || ""; 
 
 function setCookie(name,value,sec){
+	console.log('setCookie'+name,value,sec);
 	if(arguments.length>2){
 		var expireDate=new Date(new Date().getTime()+sec*1000);
-		document.cookie = name + "=" + escape(value) + "; path=/; domain=walatao.com; expires=" + expireDate.toGMTString() ;
+		document.cookie = name + "=" + escape(value) + "; path=/; domain=icebear.me; expires=" + expireDate.toGMTString() ;
 	}else
-	document.cookie = name + "=" + escape(value) + "; path=/; domain=walatao.com";
+	document.cookie = name + "=" + escape(value) + "; path=/; domain=icebear.me";
 }
 
 function getCookie(name){
+	console.log('getCookie'+name);
 	return (document.cookie.match(new RegExp("(^"+name+"| "+name+")=([^;]*)"))==null)?"":RegExp.$2;
-}
-
-function creatPid() {
-	return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-		var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
-		return v.toString(16);
-	});	
-}
-
-function getPid(){
-	if(!_walaPid){
-		_walaPid = creatPid();
-		setCookie(_walaPid);
-	}
-	return _walaPid;
 }
 
 function getBrowerVersion(){
@@ -58,14 +45,6 @@ function isMac(){
 	}else{
 		return false;
 	}
-}
-
-function pvTj(action){
-	if(!_walaPid){
-		getPid();
-	}
-	var c = "&pid=" + _walaPid + "&click=" + action + "&show_type=jm_page:" + _browerVersion;
-	KISSY.getScript(_tjUrl + c);
 }
 
 
