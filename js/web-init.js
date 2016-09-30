@@ -1210,14 +1210,29 @@ KISSY.add('ibearGetEngDataFromWeb', function(S, Node, Base, IO) {
             //for(var i = eList.length-1; i >= 0 ; i--){ //倒叙
                 for(var i = 0; i < eList.length ; i++){
                 var awardsDate = eList[i].awardsDate ? eList[i].awardsDate.split('-')[0]+'.'+eList[i].awardsDate.split('-')[1] :"";
-                var membershipDate = eList[i].membership_date ? eList[i].membership_date.split('-')[0]+'.'+eList[i].membership_date.split('-')[1] :"";
-                schAw_en_html += '<div class="infoschawardEn"><div class="mt-title"><div class="metil mt10">获奖经历' + (ordering+1) + '</div><div class="mt-edit"><i></i>编辑</div></div><div class="infopl"data-id="' + eList[i].id + '"><table width="100%"border="0"cellspacing="0"cellpadding="0"><tbody><tr><td width="76"class="col999">获奖名称</td><td class="mt_base mt_awardsNameEn">' + eList[i].awardsName_en + '</td></tr><tr><td width="76"class="col999">获奖类型</td><td class="mt_base mt_awardsTypeEn">' + eList[i].awardsType + '</td></tr><tr><td width="76"class="col999">获奖时间</td><td class="mt_base mt_awardsDate">' + eList[i].awardsDate + '</td></tr><tr><td width="76"class="col999">获奖时间年月</td><td class="mt_base mt_awardsDatedot">' + awardsDate + '</td></tr><tr><td width="76"class="col999">Membership</td><td class="mt_base mt_awardsMembershipEn">' + eList[i].membership + '</td></tr><tr><td width="76"class="col999">Membership date</td><td class="mt_base mt_awardsMembershipDate">' + eList[i].membership_date + '</td></tr><tr><td width="76"class="col999">Membership date</td><td class="mt_base mt_awardsMembershipDatedot">' + membershipDate + '</td></tr></tbody></table></div></div>';
+                schAw_en_html += '<div class="infoschawardEn"><div class="mt-title"><div class="metil mt10">获奖经历' + (ordering+1) + '</div><div class="mt-edit"><i></i>编辑</div></div><div class="infopl"data-id="' + eList[i].id + '"><table width="100%"border="0"cellspacing="0"cellpadding="0"><tbody><tr><td width="76"class="col999">获奖名称</td><td class="mt_base mt_awardsNameEn">' + eList[i].awardsName_en + '</td></tr><tr><td width="76"class="col999">获奖类型</td><td class="mt_base mt_awardsTypeEn">' + eList[i].awardsType + '</td></tr><tr><td width="76"class="col999">获奖时间</td><td class="mt_base mt_awardsDate">' + eList[i].awardsDate + '</td></tr><tr><td width="76"class="col999">获奖时间年月</td><td class="mt_base mt_awardsDatedot">' + awardsDate + '</td></tr></tbody></table></div></div>';
                 ordering++;
             }
         }else{
-            schAw_en_html += '<div class="infoschawardEn"><div class="mt-title"><div class="metil mt10">获奖经历' + (ordering+1) + '</div><div class="mt-edit"><i></i>编辑</div></div><div class="infopl"data-id="' + eList[i].id + '"><table width="100%"border="0"cellspacing="0"cellpadding="0"><tbody><tr><td width="76"class="col999">获奖名称</td><td class="mt_base mt_awardsNameEn"></td></tr><tr><td width="76"class="col999">获奖类型</td><td class="mt_base mt_awardsTypeEn"></td></tr><tr><td width="76"class="col999">获奖时间</td><td class="mt_base mt_awardsDate"></td></tr><tr><td width="76"class="col999">获奖时间年月</td><td class="mt_base mt_awardsDatedot"></td></tr><tr><td width="76"class="col999">Membership</td><td class="mt_base mt_awardsMembershipEn"></td></tr><tr><td width="76"class="col999">Membership date</td><td class="mt_base mt_awardsMembershipDate"></td></tr><tr><td width="76"class="col999">Membership date</td><td class="mt_base mt_awardsMembershipDatedot"></td></tr></tbody></table></div></div>';
+            schAw_en_html += '<div class="infoschawardEn"><div class="mt-title"><div class="metil mt10">获奖经历' + (ordering+1) + '</div><div class="mt-edit"><i></i>编辑</div></div><div class="infopl"data-id="' + eList[i].id + '"><table width="100%"border="0"cellspacing="0"cellpadding="0"><tbody><tr><td width="76"class="col999">获奖名称</td><td class="mt_base mt_awardsNameEn"></td></tr><tr><td width="76"class="col999">获奖类型</td><td class="mt_base mt_awardsTypeEn"></td></tr><tr><td width="76"class="col999">获奖时间</td><td class="mt_base mt_awardsDate"></td></tr><tr><td width="76"class="col999">获奖时间年月</td><td class="mt_base mt_awardsDatedot"></td></tr></tbody></table></div></div>';
         }
         eng_html+=schAw_en_html;
+        //$('#schawards-list').html(schAw_en_html);
+
+        var certificate_en_html = '';
+        if(data.content && data.content.certificate_en_list[0]){
+            var eList = data.content.certificate_en_list;
+            var ordering = 0;
+            //for(var i = eList.length-1; i >= 0 ; i--){ //倒叙
+                for(var i = 0; i < eList.length ; i++){
+                var membershipDate = eList[i].membership_date ? eList[i].membership_date.split('-')[0]+'.'+eList[i].membership_date.split('-')[1] :"";
+                certificate_en_html += '<div class="infoCertificateEn"><div class="mt-title"><div class="metil mt10">职业资格' + (ordering+1) + '</div><div class="mt-edit"><i></i>编辑</div></div><div class="infopl"data-id="' + eList[i].id + '"><table width="100%"border="0"cellspacing="0"cellpadding="0"><tbody><tr><td width="76"class="col999">Membership</td><td class="mt_base mt_awardsMembershipEn">' + eList[i].membership + '</td></tr><tr><td width="76"class="col999">Membership date</td><td class="mt_base mt_awardsMembershipDate">' + eList[i].membership_date + '</td></tr><tr><td width="76"class="col999">Membership date</td><td class="mt_base mt_awardsMembershipDatedot">' + membershipDate + '</td></tr></tbody></table></div></div>';
+                ordering++;
+            }
+        }else{
+            certificate_en_html += '<div class="infoCertificateEn"><div class="mt-title"><div class="metil mt10">职业资格' + (ordering+1) + '</div><div class="mt-edit"><i></i>编辑</div></div><div class="infopl"data-id="' + eList[i].id + '"><table width="100%"border="0"cellspacing="0"cellpadding="0"><tbody><tr><td width="76"class="col999">Membership</td><td class="mt_base mt_awardsMembershipEn"></td></tr><tr><td width="76"class="col999">Membership date</td><td class="mt_base mt_awardsMembershipDate"></td></tr><tr><td width="76"class="col999">Membership date</td><td class="mt_base mt_awardsMembershipDatedot"></td></tr></tbody></table></div></div>';
+        }
+        eng_html+=certificate_en_html;
         //$('#schawards-list').html(schAw_en_html);
 
         var skill_eng_html = '';
