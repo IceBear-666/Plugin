@@ -232,6 +232,12 @@ function(a, b, c, d, e, f) {
         KISSY.one('.qw-jstips').fadeIn();
         KISSY.one(".errorNotice").html() !=null && KISSY.one("#jm_pop_tab .qw-jstips").on("click", 
         function() {
+            var flagWidth = $('#jm_pop_tab').is('.jm_pop_tab_min');
+            console.log(flagWidth);
+            //var flagWidth = $("#jm_pop_tab").width();
+            if (!flagWidth) {
+                KISSY.one('.errorNotice').css('right','320px');
+            }
             KISSY.one(".errorNotice").css('display','block');
             //$('.qw-jstips').removeClass('qw-jstips-newimg').addClass('qw-jstips-img');
         });
@@ -614,6 +620,7 @@ KISSY.add('jmPopBase', function(S, Node, Base, IO) {
             //KISSY.one('.jm-tab:eq(5)').fire("click");
             //KISSY.one('.jm-tab:eq(0)').removeClass("click");
             KISSY.one('#jm-register').css('display','block');
+            KISSY.one('.jm-register').css('display','block');
             window.jmLogin.logout();
         }
         
@@ -1432,9 +1439,11 @@ KISSY.add('jmPopOpenQuestion', function(S, Node, Base, IO) {
                KISSY.one('.plugin_quickwrite').toggleClass('open');
                KISSY.one('.qw-openqz').parent().toggleClass('current');
                KISSY.one('#jm_pop_tab').toggleClass('.jm_pop_tab_min');
+               KISSY.one('.errorNotice').css('right','55px');
 
-               if (KISSY.one('#jm_pop_tab').css('width') == '380px') {
-                 $('#resumeEmptyNotice').addClass('jm_hidden');
+               if (KISSY.one('#jm_pop_tab').css('width') == '300px') {
+                    KISSY.one('.errorNotice').css('right','320px');
+                    $('#resumeEmptyNotice').addClass('jm_hidden');
                     $('.empty-flag').addClass('jm_hidden');
                     $('#jm_pop_tab').css('width','');
                     event.stopPropagation();

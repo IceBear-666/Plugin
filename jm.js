@@ -209,7 +209,7 @@ function isMatchedHomeWebSite() {
 function getMatchedWebSiteDomain() {
     for (var a = window.location.host, b = 0; b < allowWebSite.length; b++)
         //加入域名为xx.com 时的判断 原先为xx.xx.com
-        if ( - 1 != a.indexOf("." + allowWebSite[b])  ) return allowWebSite[b].replace(".com", "").replace(".de","").replace("6pm", "sixpm").replace("us-dc2-order.store.yahoo.net", "albeebaby").replace("order.store.yahoo.net", "albeebaby").replace(".co.jp","").replace(".com.cn", "").replace(".cn:8088","").replace(".cn", "").replace(".cc", "").replace(".me", "").replace(".net", "").replace(".com.hk","").replace(".hk","");
+        if ( - 1 != a.indexOf("." + allowWebSite[b])  ) return allowWebSite[b].replace(".com:8080", "").replace(".com", "").replace(".de","").replace("6pm", "sixpm").replace("us-dc2-order.store.yahoo.net", "albeebaby").replace("order.store.yahoo.net", "albeebaby").replace(".co.jp","").replace(".com.cn", "").replace(".cn:8088","").replace(".cn", "").replace(".cc", "").replace(".me", "").replace(".net", "").replace(".com.hk","").replace(".hk","");
     return "null"
 }
 function getMatchedHomeWebSiteDomain() {
