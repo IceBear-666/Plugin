@@ -24,6 +24,6 @@
    "name": "Icebear白熊求职助手",
    "permissions": [ "management", "proxy", "idle", "tabs", "cookies", "notifications", "webRequest", "webRequestBlocking", "http://*/*", "https://*/*",   "unlimitedStorage" ],
    "homepage_url":"http://www.icebear.me",
-   "version": "1.0.2.6",
+   "version": "1.0.2.7",
    "web_accessible_resources": [ "/extra/jobsminer.css", "/extra/popup.css", "popup.html" ]
 }
