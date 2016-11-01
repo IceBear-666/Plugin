@@ -47,7 +47,7 @@ function dealWebsite() {
         var a = window.jm_jminer.config;
         var host = document.domain;
         if (a && a.website) {
-            //console.log(a.website);
+            //console.log(host);
              //在进入icebear时 检测登录
        
            // console.log(host);
@@ -62,6 +62,15 @@ function dealWebsite() {
                     f.init();
     
                   
+                });
+            }
+
+            if (host.indexOf("xiaoyuanzhao.com") != -1) {
+                 KISSY.use('xiaoyuanzhaoFunction', 
+                function(a, d) {
+                    var f = new d;
+                    window.jm_jminer.curWebSite = f,
+                    f.init();
                 });
             }
     
@@ -207,15 +216,58 @@ function isMatchedHomeWebSite() {
 }
 
 function getMatchedWebSiteDomain() {
-    for (var a = window.location.host, b = 0; b < allowWebSite.length; b++)
+    for (var a = window.location.host, b = 0; b < allowWebSite.length; b++){
         //加入域名为xx.com 时的判断 原先为xx.xx.com
-        if ( - 1 != a.indexOf("." + allowWebSite[b])  ) return allowWebSite[b].replace(".com:8080", "").replace(".com", "").replace(".de","").replace("6pm", "sixpm").replace("us-dc2-order.store.yahoo.net", "albeebaby").replace("order.store.yahoo.net", "albeebaby").replace(".co.jp","").replace(".com.cn", "").replace(".cn:9191","").replace(".cn:8088","").replace(".cn", "").replace(".cc", "").replace(".me", "").replace(".net", "").replace(".com.hk","").replace(".hk","");
+        //if ( - 1 != a.indexOf("." + allowWebSite[b])  ) {
+        if (allowDomin) {
+            if ( - 1 != a.indexOf( allowWebSite[b])  ) {
+                for( var i = 0 ; i < allowDomin.length ; i++){
+                    var webArray = allowWebSite[b].split(".");
+                    var thisArray = [];
+                    for (var k = 1 ;k < webArray.length ; k ++) {
+                        thisArray += ('.'+webArray[k]);
+                        if (thisArray == allowDomin[i]) {   
+                            return allowWebSite[b].replace(allowDomin[i],"");
+                        }
+                    }
+                }
+                //return allowWebSite[b].replace(".com:8080", "").replace(".com", "").replace(".de","").replace("6pm", "sixpm").replace("us-dc2-order.store.yahoo.net", "albeebaby").replace("order.store.yahoo.net", "albeebaby").replace(".co.jp","").replace(".com.cn", "").replace(".cn:9191","").replace(".cn:8088","").replace(".cn", "").replace(".cc", "").replace(".me", "").replace(".net", "").replace(".com.hk","").replace(".hk","");
+            }
+        }else{
+             if ( - 1 != a.indexOf( allowWebSite[b])  ) {
+                return allowWebSite[b].replace(".sc.cn:88", "").replace(".com:9000", "").replace(".com:8080", "").replace(".com", "").replace(".de","").replace("6pm", "sixpm").replace("us-dc2-order.store.yahoo.net", "albeebaby").replace("order.store.yahoo.net", "albeebaby").replace(".co.jp","").replace(".com.cn", "").replace(".cn:9191","").replace(".cn:8088","").replace(".cn", "").replace(".cc", "").replace(".me", "").replace(".net", "").replace(".com.hk","").replace(".hk","");
+             }
+        }
+        
+    }
+    console.log("Can't find the domin.");
     return "null"
 }
 function getMatchedHomeWebSiteDomain() {
-    for (var a = window.location.host, b = 0; b < homeSupportWebSite.length; b++)
-        //加入域名为xx.com 时的判断
-        if ( - 1 != a.indexOf("." + homeSupportWebSite[b]) || - 1 != a.indexOf( homeSupportWebSite[b])) return homeSupportWebSite[b].replace(".com", "").replace(".de","").replace("6pm", "sixpm").replace("us-dc2-order.store.yahoo.net", "albeebaby").replace("order.store.yahoo.net", "albeebaby").replace(".co.jp","").replace(".com.cn", "").replace(".cn:8088","").replace(".cn", "").replace(".cc", "").replace(".me", "").replace(".net", "").replace(".com.hk","").replace(".hk","");
+    for (var a = window.location.host, b = 0; b < homeSupportWebSite.length; b++){
+        //加入域名为xx.com 时的判断 原先为xx.xx.com
+        //if ( - 1 != a.indexOf("." + homeSupportWebSite[b])  ) {
+        if (allowDomin) { //用于config新增模块时不同客户端不能同时更新 防错
+            if ( - 1 != a.indexOf( homeSupportWebSite[b])  ) {
+                for( var i = 0 ; i < allowDomin.length ; i++){
+                    var webArray = homeSupportWebSite[b].split(".");
+                    var thisArray = [];
+                    for (var k = 1 ;k < webArray.length ; k ++) {
+                        thisArray += ('.'+webArray[k]);
+                        if (thisArray == allowDomin[i]) {   
+                            return homeSupportWebSite[b].replace(allowDomin[i],"");
+                        }
+                    }
+                }
+                //return homeSupportWebSite[b].replace(".com:8080", "").replace(".com", "").replace(".de","").replace("6pm", "sixpm").replace("us-dc2-order.store.yahoo.net", "albeebaby").replace("order.store.yahoo.net", "albeebaby").replace(".co.jp","").replace(".com.cn", "").replace(".cn:9191","").replace(".cn:8088","").replace(".cn", "").replace(".cc", "").replace(".me", "").replace(".net", "").replace(".com.hk","").replace(".hk","");
+            }
+        }else{ //原方法
+             if ( - 1 != a.indexOf( allowWebSite[b])  ) {
+                return allowWebSite[b].replace(".sc.cn:88", "").replace(".com:9000", "").replace(".com:8080", "").replace(".com", "").replace(".de","").replace("6pm", "sixpm").replace("us-dc2-order.store.yahoo.net", "albeebaby").replace("order.store.yahoo.net", "albeebaby").replace(".co.jp","").replace(".com.cn", "").replace(".cn:9191","").replace(".cn:8088","").replace(".cn", "").replace(".cc", "").replace(".me", "").replace(".net", "").replace(".com.hk","").replace(".hk","");
+             }
+        }
+    }
+    console.log("Can't find the domin.");
     return "null"
 }
 function startRun() {
@@ -240,7 +292,9 @@ function startRun() {
     }
 
     function startRuncb(a) {
-       // console.log(window.jm_jminer);
+       if (a.config == "null") {
+         console.log("Config error.");
+       }
         console.log("startRun get config call back..");
         window.jm_jminer.isLoadRemoteRes = JSON.parse(a.isLoadRemoteRes),
       //  console.log(window.jm_jminer.isLoadRemoteRes );
@@ -262,6 +316,10 @@ function startRun() {
         if(window.jm_jminer.config && window.jm_jminer.config.supportWebSite){
             allowWebSite = window.jm_jminer.config.supportWebSite;
             //console.log(allowWebSite);
+        }
+        if(window.jm_jminer.config && window.jm_jminer.config.supportDomin){
+            allowDomin = window.jm_jminer.config.supportDomin;
+            //console.log(allowDomin);
         }
 
         if(window.jm_jminer.config && window.jm_jminer.config.homeSupportWebSite){
@@ -547,19 +605,27 @@ function(a,b,c,d) {
         var isLogin = getCookie("ot_home_login");
         var homeUid = getCookie("ot_home_uid");
         var ezHomeUid = getCookie("ot_home_ez_uid");
-        var a = {"ot_home_ez_uid":homeUid,"ot_home_uid":homeUid,"ot_home_login":isLogin,"login":"true"};
-        if(isLogin == 1){
+        if (isLogin) {
+            var a = {"ot_home_ez_uid":homeUid,"ot_home_uid":homeUid,"ot_home_login":isLogin,"login":"true"};
+            if(isLogin == 1){
+                jm_tools.setBackgroundLocalStore({
+                    //login :{"ot_home_ez_uid":ezHomeUid,"ot_home_uid":homeUid,"ot_home_login":isLogin}
+                    jm_login: JSON.stringify(a)
+                });
+                jm_tools.getMessageFromBackground({
+                    operate: "getLocalStorage",
+                    data: {"key": 'jm_login'}
+                }, function(data) {
+                    console.log('icebear------' + data);
+                });
+            } 
+        }else{
             jm_tools.setBackgroundLocalStore({
-                //login :{"ot_home_ez_uid":ezHomeUid,"ot_home_uid":homeUid,"ot_home_login":isLogin}
-                jm_login: JSON.stringify(a)
-            });
-            jm_tools.getMessageFromBackground({
-                operate: "getLocalStorage",
-                data: {"key": 'jm_login'}
-            }, function(data) {
-                console.log('icebear------' + data);
-            });
-        } 
+            //login :{"ot_home_ez_uid":'',"ot_home_uid":'',"ot_home_login":false}
+            jm_login: JSON.stringify({"ot_home_ez_uid":"","ot_home_uid":"","ot_home_login":"false","login":"false"})
+        });
+        }
+        
         
     }
     
@@ -575,6 +641,50 @@ function(a,b,c,d) {
     requires: ["menubutton", "mu", "overlay", "switchable"]
 }),
 
+
+KISSY.add("xiaoyuanzhaoFunction", 
+function(a,b,c,d) {
+    function e(){
+         jm_tools.getMessageFromBackground({
+            operate: "getLocalStorage",
+            data: {"key": 'jm_login'}
+        }, function(data) {
+            if (data) {
+                //console.log('icebear--data----' + data);
+                data = JSON.stringify(data);
+                var obj = JSON.parse(data);
+                obj = obj.value;
+                if (obj) {
+                    obj = JSON.parse(obj);
+                    if (!obj.ot_home_login) {
+                        var url = window.location.href;
+                        window.location.href="http://www.xiaoyuanzhao.com/user/sso/icebear/access?url="+url;
+                    }
+                } else if( window.location.pathname != "/user/login"){
+                    var url = window.location.href;
+                    window.location.href="http://www.xiaoyuanzhao.com/user/sso/icebear/access?url="+url;
+                }
+                
+            }else{
+                console.log('icebear-logout-----' + data);
+                var url = window.location.href;
+                window.location.href="http://www.xiaoyuanzhao.com/user/sso/icebear/access?url="+url;
+            }
+            
+        });  
+    }
+    
+    function u() {}
+    return a.augment(u, {
+        init: function() {
+            e()
+        }
+    }),
+    u
+},
+{
+    requires: ["menubutton", "mu", "overlay", "switchable"]
+}),
 
 KISSY.add("normalFunction", 
 function(a,b,c,d) {
@@ -939,6 +1049,9 @@ window.jm_tools = {
 var allowWebSite = ["qq.com","jd.com","douban.com","cmcm.com","pingan.com","oppo.com","163.com","zhiye.com","10086.cn","hotjob.cn","cmbc.com.cn","baidu.com","alibaba.com","sohu-inc.com","51job.com","100tal.com","chinahr.com","hirede.com","chuangxin.com","xunlei.com","huawei.com","wintalent.cn","brassring.com.cn","cmbchina.com","dearsamsung.com.cn","coolpad.com","peopleclick.com","apply2jobs.com","force.com","fang.com","4399.com","zhaopin.com","hundsun.com","arcsoft.com.cn","actions-semi.com","inspur.com","dajie.com","longfor.com","zte.com.cn","taleo.net","htsc.com.cn","hr.foxconn.com","skyallhere.com","kpmg.com.cn","gdtel.com.cn","tal.net","jobsminer.cc","icebear.me","boe.com.cn","hxb.com.cn","chinalife.com.cn","cvte.com","haier.net","cgnpc.com.cn","nhrdc.cn:8088","com.cn","changyou.com","ihrscloud.com","suning.cn","xiaomi.com","pactera.com","renren.com","ajinga.com","yhd.com","hnagroup.com","zhenai.com","brassring.com","sohu.com"];
 var allowWebSiteFinder = null;
 var homeWebSite = ["lagou.com"];
+var homeSupportWebSite =  ["lagou.com"];
 var homeWebSiteFinder = null;
+var homeSupportWebSiteFinder = null;
+var allowDomin = null;
 startRun();
 AliStatistics();

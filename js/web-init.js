@@ -37,9 +37,12 @@ function(a, b, c, d, e, f) {
     }, function(data) {
         data = JSON.stringify(data);
         var obj = JSON.parse(data);
+
         obj = obj.value;
         obj = JSON.parse(obj);
+        console.log(obj);
         checkuserid = obj.ot_home_uid;
+        console.log(checkuserid);
         //console.log(checkuserid);
         //console.log('user------' +  checkuserid);
         var formlink =  window.location.href;
