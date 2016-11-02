@@ -1224,6 +1224,7 @@ content:"...";
   height: 47px;
   line-height: 47px;
   border-bottom: 3px solid #ffd733;
+  box-sizing: content-box;
   transition: width 1s;
     -moz-transition: width 1s; /* Firefox 4 */
     -webkit-transition: width 1s; /* Safari 和 Chrome */
